@@ -1,14 +1,241 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Ellipse?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.shape.SVGPath?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Controller_view_main">
-    <stylesheets>
-        <URL value="@/Styles/Style_sheets.css"/>
-    </stylesheets>
-</AnchorPane>
+<HBox fx:id="paneRaiz" prefHeight="700.0" prefWidth="1280.0" styleClass="login-root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Controller_view_main">
+   <stylesheets>
+      <URL value="@/Styles/Style_sheets.css" />
+   </stylesheets>
+   <fx:define>
+      <ToggleGroup fx:id="tgRol" />
+   </fx:define>
+   <children>
+
+      <!-- ===== PANEL IZQUIERDO: MARCA ===== -->
+      <StackPane fx:id="paneMarca" maxWidth="620.0" minWidth="620.0" prefWidth="620.0" styleClass="brand-panel">
+         <children>
+
+            <!-- Fondo: colina verde anclada a la parte inferior -->
+            <AnchorPane fx:id="paneColina" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="0.0">
+               <children>
+                  <Ellipse fx:id="elpColina" radiusX="370.0" radiusY="360.0" styleClass="brand-hill" AnchorPane.bottomAnchor="-550.0" AnchorPane.leftAnchor="-120.0" />
+               </children>
+            </AnchorPane>
+
+            <!-- Logo, eslogan y ligas -->
+            <VBox fx:id="vbMarca" styleClass="brand-content">
+               <children>
+                  <HBox fx:id="hbLogo" alignment="CENTER_LEFT" spacing="16.0">
+                     <children>
+                        <StackPane fx:id="paneLogo">
+                           <children>
+                              <Circle fx:id="cirLogoExterior" radius="29.0" styleClass="logo-outer" />
+                              <Circle fx:id="cirLogoInterior" radius="11.0" styleClass="logo-inner" />
+                           </children>
+                        </StackPane>
+                        <VBox fx:id="vbNombreMarca">
+                           <children>
+                              <HBox fx:id="hbNombreMarca">
+                                 <children>
+                                    <Label fx:id="lblMarcaOff" styleClass="logo-name-off" text="OFF" />
+                                    <Label fx:id="lblMarcaSide" styleClass="logo-name-side" text="SIDE" />
+                                 </children>
+                              </HBox>
+                              <Label fx:id="lblMarcaSubtitulo" styleClass="logo-tagline" text="C&#8201;A&#8201;M&#8201;I&#8201;S&#8201;E&#8201;T&#8201;A&#8201;S&#8195;D&#8201;E&#8195;F&#8201;Ú&#8201;T&#8201;B&#8201;O&#8201;L" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <Label fx:id="lblEslogan" styleClass="brand-headline" text="Tu pasión, en cada camiseta">
+                     <VBox.margin>
+                        <Insets top="72.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="lblDescripcionMarca" styleClass="brand-description" text="Las 5 grandes ligas de Europa, 15 equipos y una sola tienda.">
+                     <VBox.margin>
+                        <Insets top="8.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox fx:id="hbLigas" spacing="8.0">
+                     <children>
+                        <Label fx:id="lblLigaPremier" styleClass="league-chip" text="Premier League" />
+                        <Label fx:id="lblLigaLaLiga" styleClass="league-chip" text="LaLiga" />
+                        <Label fx:id="lblLigaSerieA" styleClass="league-chip" text="Serie A" />
+                        <Label fx:id="lblLigaBundesliga" styleClass="league-chip" text="Bundesliga" />
+                        <Label fx:id="lblLigaLigue1" styleClass="league-chip" text="Ligue 1" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+
+            <!-- Camisetas -->
+            <HBox fx:id="hbCamisetas" maxHeight="-Infinity" maxWidth="-Infinity" spacing="12.0" StackPane.alignment="BOTTOM_LEFT">
+               <StackPane.margin>
+                  <Insets bottom="90.0" left="21.0" />
+               </StackPane.margin>
+               <children>
+
+                  <Pane fx:id="paneCamisetaBarcelona" prefHeight="108.0" prefWidth="106.0">
+                     <children>
+                        <SVGPath content="M34,0 Q53,13 72,0 L106,18 L95,41 L80,34 L80,108 L26,108 L26,34 L11,41 L0,18 Z" styleClass="shirt-body, shirt-barcelona" />
+                        <Rectangle height="82.0" layoutX="32.0" layoutY="25.0" styleClass="stripe-barcelona" width="10.0" />
+                        <Rectangle height="82.0" layoutX="48.0" layoutY="25.0" styleClass="stripe-barcelona" width="10.0" />
+                        <Rectangle height="82.0" layoutX="64.0" layoutY="25.0" styleClass="stripe-barcelona" width="10.0" />
+                     </children>
+                  </Pane>
+
+                  <Pane fx:id="paneCamisetaLiverpool" prefHeight="108.0" prefWidth="106.0">
+                     <children>
+                        <SVGPath content="M34,0 Q53,13 72,0 L106,18 L95,41 L80,34 L80,108 L26,108 L26,34 L11,41 L0,18 Z" styleClass="shirt-body, shirt-liverpool" />
+                        <Label alignment="CENTER" layoutX="26.0" layoutY="44.0" prefWidth="54.0" styleClass="shirt-text" text="LIV" />
+                     </children>
+                  </Pane>
+
+                  <Pane fx:id="paneCamisetaJuventus" prefHeight="108.0" prefWidth="106.0">
+                     <children>
+                        <SVGPath content="M34,0 Q53,13 72,0 L106,18 L95,41 L80,34 L80,108 L26,108 L26,34 L11,41 L0,18 Z" styleClass="shirt-body, shirt-juventus" />
+                        <Rectangle height="82.0" layoutX="32.0" layoutY="25.0" styleClass="stripe-juventus" width="10.0" />
+                        <Rectangle height="82.0" layoutX="48.0" layoutY="25.0" styleClass="stripe-juventus" width="10.0" />
+                        <Rectangle height="82.0" layoutX="64.0" layoutY="25.0" styleClass="stripe-juventus" width="10.0" />
+                     </children>
+                  </Pane>
+
+                  <Pane fx:id="paneCamisetaBayern" prefHeight="108.0" prefWidth="106.0">
+                     <children>
+                        <SVGPath content="M34,0 Q53,13 72,0 L106,18 L95,41 L80,34 L80,108 L26,108 L26,34 L11,41 L0,18 Z" styleClass="shirt-body, shirt-bayern" />
+                        <Label alignment="CENTER" layoutX="26.0" layoutY="44.0" prefWidth="54.0" styleClass="shirt-text" text="BAY" />
+                     </children>
+                  </Pane>
+
+                  <Pane fx:id="paneCamisetaPsg" prefHeight="108.0" prefWidth="106.0">
+                     <children>
+                        <SVGPath content="M34,0 Q53,13 72,0 L106,18 L95,41 L80,34 L80,108 L26,108 L26,34 L11,41 L0,18 Z" styleClass="shirt-body, shirt-psg" />
+                        <Rectangle height="82.0" layoutX="46.0" layoutY="25.0" styleClass="stripe-psg" width="14.0" />
+                     </children>
+                  </Pane>
+
+               </children>
+            </HBox>
+         </children>
+      </StackPane>
+
+      <!-- ===== PANEL DERECHO: FORMULARIO ===== -->
+      <StackPane fx:id="paneFormulario" styleClass="form-panel" HBox.hgrow="ALWAYS">
+         <children>
+            <VBox fx:id="vbTarjetaLogin" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="560.0" styleClass="login-card">
+               <children>
+                  <Label fx:id="lblTitulo" styleClass="login-title" text="Iniciar sesión" />
+                  <Label fx:id="lblSubtitulo" styleClass="login-subtitle" text="Accede a tu cuenta para continuar" />
+
+                  <!-- Selector de rol -->
+                  <HBox fx:id="hbRoles" spacing="20.0">
+                     <VBox.margin>
+                        <Insets top="26.0" />
+                     </VBox.margin>
+                     <children>
+                        <RadioButton fx:id="rbUsuario" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="70.0" prefWidth="230.0" selected="true" styleClass="role-option" toggleGroup="$tgRol" HBox.hgrow="ALWAYS">
+                           <graphic>
+                              <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                 <children>
+                                    <Circle fx:id="cirIndicadorUsuario" radius="14.0" styleClass="role-indicator" />
+                                    <VBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <Label fx:id="lblRolUsuario" styleClass="role-title" text="Usuario" />
+                                          <Label fx:id="lblRolUsuarioDetalle" styleClass="role-detail" text="Cliente" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </graphic>
+                        </RadioButton>
+                        <RadioButton fx:id="rbAdministrador" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="70.0" prefWidth="230.0" styleClass="role-option" toggleGroup="$tgRol" HBox.hgrow="ALWAYS">
+                           <graphic>
+                              <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                 <children>
+                                    <Circle fx:id="cirIndicadorAdministrador" radius="14.0" styleClass="role-indicator" />
+                                    <VBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <Label fx:id="lblRolAdministrador" styleClass="role-title" text="Administrador" />
+                                          <Label fx:id="lblRolAdministradorDetalle" styleClass="role-detail" text="Gestiona la tienda" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </graphic>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+
+                  <!-- Credenciales -->
+                  <TextField fx:id="txtCorreo" prefHeight="52.0" promptText="Correo electrónico" styleClass="login-field">
+                     <VBox.margin>
+                        <Insets top="26.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <StackPane fx:id="paneContrasena">
+                     <VBox.margin>
+                        <Insets top="16.0" />
+                     </VBox.margin>
+                     <children>
+                        <PasswordField fx:id="pwdContrasena" prefHeight="52.0" promptText="Contraseña" styleClass="login-field, login-field-password" />
+                        <Button fx:id="btnMostrarContrasena" mnemonicParsing="false" onAction="#onMostrarContrasena" styleClass="show-password-button" text="Mostrar" StackPane.alignment="CENTER_RIGHT">
+                           <StackPane.margin>
+                              <Insets right="10.0" />
+                           </StackPane.margin>
+                        </Button>
+                     </children>
+                  </StackPane>
+
+                  <!-- Acciones -->
+                  <Button fx:id="btnIniciarSesion" defaultButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onIniciarSesion" prefHeight="52.0" styleClass="primary-button" text="Iniciar sesión   →">
+                     <VBox.margin>
+                        <Insets top="26.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Hyperlink fx:id="lnkOlvidoContrasena" onAction="#onOlvidoContrasena" styleClass="forgot-link" text="¿Olvidaste tu contraseña?">
+                     <VBox.margin>
+                        <Insets top="12.0" />
+                     </VBox.margin>
+                  </Hyperlink>
+                  <Separator fx:id="sepFormulario" styleClass="form-separator">
+                     <VBox.margin>
+                        <Insets top="14.0" />
+                     </VBox.margin>
+                  </Separator>
+                  <Label fx:id="lblPrimeraVez" styleClass="first-time-label" text="¿Primera vez en OFFSIDE?">
+                     <VBox.margin>
+                        <Insets top="18.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Button fx:id="btnCrearCuenta" mnemonicParsing="false" onAction="#onCrearCuenta" prefHeight="44.0" prefWidth="240.0" styleClass="secondary-button" text="Crear cuenta">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </StackPane>
+   </children>
+</HBox>

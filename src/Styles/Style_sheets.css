@@ -1,3 +1,265 @@
-.mainFxmlClass {
+/* ==========================================================================
+   OFFSIDE - Hoja de estilos
+   ========================================================================== */
 
+.login-root {
+    -fx-font-family: "Segoe UI";
+    -fx-background-color: #0b211c;
+}
+
+/* --------------------------------------------------------------------------
+   Panel izquierdo: marca
+   -------------------------------------------------------------------------- */
+
+.brand-panel {
+    -fx-background-color: #0f2c25;
+}
+
+.brand-hill {
+    -fx-fill: #123f32;
+}
+
+.brand-content {
+    -fx-padding: 22 20 0 56;
+}
+
+/* Logo */
+.logo-outer {
+    -fx-fill: #ffffff;
+    -fx-stroke: #1f9d63;
+    -fx-stroke-width: 2;
+}
+
+.logo-inner {
+    -fx-fill: #0f2c25;
+}
+
+.logo-name-off,
+.logo-name-side {
+    -fx-font-size: 38px;
+    -fx-font-weight: bold;
+    -fx-padding: -8 0 -6 0;
+}
+
+.logo-name-off {
+    -fx-text-fill: #ffffff;
+}
+
+.logo-name-side {
+    -fx-text-fill: #2ecc7f;
+}
+
+.logo-tagline {
+    -fx-font-size: 12px;
+    -fx-text-fill: #b4c5bf;
+}
+
+/* Eslogan */
+.brand-headline {
+    -fx-font-size: 25px;
+    -fx-text-fill: #ffffff;
+}
+
+.brand-description {
+    -fx-font-size: 15px;
+    -fx-text-fill: #a9bdb6;
+}
+
+/* Ligas */
+.league-chip {
+    -fx-background-color: #173a31;
+    -fx-background-radius: 16;
+    -fx-font-size: 12px;
+    -fx-padding: 7 13 7 13;
+    -fx-text-fill: #e8f0ed;
+}
+
+/* --------------------------------------------------------------------------
+   Camisetas
+   -------------------------------------------------------------------------- */
+
+.shirt-body {
+    -fx-stroke: #cfd8d5;
+    -fx-stroke-width: 1;
+}
+
+.shirt-barcelona { -fx-fill: #a50044; }
+.stripe-barcelona { -fx-fill: #004d98; }
+
+.shirt-liverpool { -fx-fill: #c8102e; }
+
+.shirt-juventus { -fx-fill: #ffffff; }
+.stripe-juventus { -fx-fill: #111111; }
+
+.shirt-bayern { -fx-fill: #dc052d; }
+
+.shirt-psg { -fx-fill: #0d2252; }
+.stripe-psg { -fx-fill: #da291c; }
+
+.shirt-text {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   Panel derecho: tarjeta de inicio de sesión
+   -------------------------------------------------------------------------- */
+
+.form-panel {
+    -fx-background-color: #0b211c;
+}
+
+.login-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 24;
+    -fx-padding: 32 40 32 40;
+}
+
+.login-title {
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #12241f;
+}
+
+.login-subtitle {
+    -fx-font-size: 15px;
+    -fx-text-fill: #6b7a75;
+}
+
+/* Selector de rol: se oculta el círculo nativo del RadioButton */
+.role-option {
+    -fx-background-color: #dfe5e3, #ffffff;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 14, 13;
+    -fx-cursor: hand;
+    -fx-padding: 0 16 0 16;
+    -fx-alignment: center-left;
+    -fx-label-padding: 0;
+}
+
+.role-option .radio {
+    -fx-background-color: transparent;
+    -fx-opacity: 0;
+    -fx-padding: 0;
+    -fx-pref-width: 0;
+    -fx-pref-height: 0;
+}
+
+.role-option .dot {
+    -fx-padding: 0;
+}
+
+.role-option:selected {
+    -fx-background-color: #148a4f, #e6f4ec;
+}
+
+.role-indicator {
+    -fx-fill: #dfe5e3;
+}
+
+.role-option:selected .role-indicator {
+    -fx-fill: #148a4f;
+}
+
+.role-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #12241f;
+}
+
+.role-detail {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6b7a75;
+}
+
+/* Campos de texto */
+.login-field {
+    -fx-background-color: #dfe5e3, #ffffff;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 14, 13;
+    -fx-font-size: 15px;
+    -fx-padding: 0 22 0 22;
+    -fx-prompt-text-fill: #6b7a75;
+    -fx-text-fill: #12241f;
+}
+
+.login-field:focused {
+    -fx-background-color: #148a4f, #ffffff;
+    -fx-background-insets: 0, 1.5;
+    -fx-prompt-text-fill: #9aa7a2;
+}
+
+.login-field-password {
+    -fx-padding: 0 80 0 22;
+}
+
+.show-password-button {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+    -fx-text-fill: #5f6e69;
+}
+
+.show-password-button:hover {
+    -fx-text-fill: #0e4d3a;
+}
+
+/* Botón principal */
+.primary-button {
+    -fx-background-color: #0e4d3a;
+    -fx-background-radius: 12;
+    -fx-cursor: hand;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+.primary-button:hover {
+    -fx-background-color: #13624a;
+}
+
+.primary-button:pressed {
+    -fx-background-color: #0a3b2d;
+}
+
+/* Enlace de recuperación */
+.forgot-link,
+.forgot-link:visited,
+.forgot-link:hover {
+    -fx-border-color: transparent;
+    -fx-font-size: 14px;
+    -fx-text-fill: #0e4d3a;
+    -fx-underline: false;
+}
+
+.forgot-link:hover {
+    -fx-underline: true;
+}
+
+/* Separador */
+.form-separator .line {
+    -fx-background-color: transparent;
+    -fx-border-color: #e3e8e6;
+    -fx-border-width: 1 0 0 0;
+}
+
+.first-time-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #6b7a75;
+}
+
+/* Botón secundario */
+.secondary-button {
+    -fx-background-color: #0e4d3a, #ffffff;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 12, 11;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0e4d3a;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #0e4d3a, #e6f4ec;
 }
