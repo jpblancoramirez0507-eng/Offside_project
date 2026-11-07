@@ -1,0 +1,9 @@
+Nombre: Camiseta Local Manchester United 2026
+Marca: Adidas
+Equipo: Manchester United
+Liga: Premier League
+Precio: $429.950
+Tallas: S, M, L, XL
+Descripcion: Camiseta Manchester United – Temporada 2026/2027
+
+Representa la historia y la grandeza de los Red Devils con su nueva equipación. Su diseño destaca el tradicional color rojo del Manchester United, acompañado de detalles que reflejan la identidad y tradición del club. Fabricada con materiales ligeros y cómodos, es ideal para los aficionados que llevan al United en el corazón.
