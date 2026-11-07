@@ -1,0 +1,9 @@
+Nombre: Camiseta Local Inter De Milan 2026
+Marca: Nike
+Equipo: Inter De Milan
+Liga: Serie A
+Tallas: S, M, L, XL
+Precio: 460.000$
+Descripción: Camiseta Inter de Milan – Temporada 2026/2027
+
+Representa la historia y los colores de Inter De Milan con su nueva equipación. Inspirada en la identidad del club, presenta un diseño que combina sus colores tradicionales con detalles característicos de esta temporada. Fabricada con materiales ligeros y cómodos, es ideal para los aficionados que llevan su pasión por el fútbol a todas partes.

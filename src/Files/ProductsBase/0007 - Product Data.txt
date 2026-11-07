@@ -1,0 +1,9 @@
+Nombre: Camiseta Local Juventus 2026
+Marca: Adidas
+Equipo: Juventus
+Liga: Serie A
+Tallas: S, M, L, XL
+Precio: 430.000$
+Descripción: Camiseta Juventus – Temporada 2026/2027
+
+Representa la historia y los colores de la Juventus con su nueva equipación. Inspirada en la identidad del club, presenta un diseño que combina sus colores tradicionales con detalles característicos de esta temporada. Fabricada con materiales ligeros y cómodos, es ideal para los aficionados que llevan su pasión por el fútbol a todas partes.
