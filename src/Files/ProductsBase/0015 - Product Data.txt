@@ -1,0 +1,9 @@
+Nombre: Camiseta Local AS Monaco 2026
+Marca: Kappa
+Equipo: AS Monaco
+Liga: Ligue 1
+Precio: $499.999
+Tallas: S, M, L, XL
+Descripcion: Camiseta AS Monaco – Temporada 2026/2027
+
+Representa la historia y los colores del Monaco con su nueva equipacion. Su diseño combina el rojo y blanco con su inconfundible diagonal que refleja la identidad y grandeza del club. Fabricada con materiales ligeros y comodos, es ideal para los aficionados que llevan al Monaco en el corazon.

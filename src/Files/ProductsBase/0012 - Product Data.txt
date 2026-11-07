@@ -1,0 +1,9 @@
+Nombre: Camiseta Visitante Bayer Leverkusen 2026
+Marca: New Balance
+Equipo: Bayer Leverkusen
+Liga: Bundesliga
+Precio: $499.999
+Tallas: S, M, L, XL
+Descripcion: Camiseta Bayer Leverkusen – Temporada 2026/2027
+
+Representa la historia y los colores del Leverkusen con su nueva equipacion. Su diseño combina el negro y el rojo con un degradado de puntos que refleja la identidad y grandeza del club. Fabricada con materiales ligeros y comodos, es ideal para los aficionados que llevan al Bayer en el corazon.

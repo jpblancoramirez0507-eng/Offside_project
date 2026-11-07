@@ -1,0 +1,9 @@
+Nombre: Camiseta Local Olympique de Marsella 2026
+Marca: Puma
+Equipo: Olympique de Marsella
+Liga: Ligue 1
+Precio: $499.999
+Tallas: S, M, L, XL
+Descripcion: Camiseta Olympique de Marsella – Temporada 2026/2027
+
+Representa la historia y los colores del OM con su nueva equipacion. Su diseño combina el blanco clasico con detalles en azul y dorado que reflejan la identidad y grandeza del club. Fabricada con materiales ligeros y comodos, es ideal para los aficionados que llevan al Marsella en el corazon.
