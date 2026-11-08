@@ -1,5 +1,7 @@
 package Controllers;
 
+import DataStructures.Data_Manager;
+import DataStructures.List_Double_User;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -8,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -155,7 +158,29 @@ public class Controller_view_register implements Initializable {
 
     @FXML
     private void onRegistrar(ActionEvent event) {
-        // TODO
+        List_Double_User usuarios = Data_Manager.getManager().getList_user();
+
+        String contrasena = pwdContrasena.getText();
+
+        if (!contrasena.isEmpty() && contrasena.length() < 8) {
+            usuarios.alert(Alert.AlertType.WARNING, "Importante..!", "La contraseña debe tener al menos 8 caracteres.");
+            return;
+        }
+
+        if (!contrasena.equals(pwdConfirmarContrasena.getText())) {
+            usuarios.alert(Alert.AlertType.WARNING, "Importante..!", "Las contraseñas no coinciden.");
+            return;
+        }
+
+        String rol = rbAdministrador.isSelected() ? "ADMIN" : "CLIENT";
+
+        boolean registrado = usuarios.addUser(txtNombre, txtIdentificacion, txtCorreo, pwdContrasena, rol);
+
+        if (registrado) {
+            usuarios.save_data_file_users();
+            pwdConfirmarContrasena.clear();
+            onIrIniciarSesion(event);
+        }
     }
 
     @FXML

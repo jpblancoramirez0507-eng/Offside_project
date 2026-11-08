@@ -292,3 +292,24 @@
     -fx-font-size: 12px;
     -fx-text-fill: #8a9893;
 }
+
+/* --------------------------------------------------------------------------
+   Login: mensaje de resultado
+   -------------------------------------------------------------------------- */
+
+.login-message {
+    -fx-background-radius: 10;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 14 10 14;
+}
+
+.login-message-success {
+    -fx-background-color: #e6f4ec;
+    -fx-text-fill: #148a4f;
+}
+
+.login-message-error {
+    -fx-background-color: #fdecec;
+    -fx-text-fill: #c62828;
+}

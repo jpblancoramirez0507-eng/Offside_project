@@ -1,5 +1,10 @@
 package Controllers;
 
+import DataStructures.Data_Manager;
+import DataStructures.List_Double_User;
+import Models.Admin;
+import Models.Client;
+import Models.Nodes.Node_User;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -130,6 +135,8 @@ public class Controller_view_main implements Initializable {
     @FXML
     private PasswordField pwdContrasena;
     @FXML
+    private TextField txtContrasenaVisible;
+    @FXML
     private Button btnMostrarContrasena;
 
     // Acciones
@@ -143,23 +150,57 @@ public class Controller_view_main implements Initializable {
     private Label lblPrimeraVez;
     @FXML
     private Button btnCrearCuenta;
+    @FXML
+    private Label lblMensajeLogin;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        // Ambos campos comparten el mismo texto: lo escrito en uno aparece en el otro
+        txtContrasenaVisible.textProperty().bindBidirectional(pwdContrasena.textProperty());
     }
 
     @FXML
     private void onMostrarContrasena(ActionEvent event) {
-        // TODO
+        boolean mostrar = !txtContrasenaVisible.isVisible();
+
+        // Alterna cuál de los dos campos se ve (visible) y ocupa espacio (managed)
+        txtContrasenaVisible.setVisible(mostrar);
+        txtContrasenaVisible.setManaged(mostrar);
+        pwdContrasena.setVisible(!mostrar);
+        pwdContrasena.setManaged(!mostrar);
+
+        btnMostrarContrasena.setText(mostrar ? "Ocultar" : "Mostrar");
+
+        // Mantiene el foco y el cursor al final del texto en el campo que queda visible
+        TextField campoActivo = mostrar ? txtContrasenaVisible : pwdContrasena;
+        campoActivo.requestFocus();
+        campoActivo.positionCaret(campoActivo.getText().length());
     }
 
     @FXML
     private void onIniciarSesion(ActionEvent event) {
-        // TODO
+        List_Double_User usuarios = Data_Manager.getManager().getList_user();
+        Node_User encontrado = usuarios.validate_credentials(txtCorreo.getText(), pwdContrasena.getText());
+
+        // El tipo de cuenta elegido también debe coincidir (Usuario -> Client, Administrador -> Admin)
+        boolean rolCorrecto = encontrado != null && (rbAdministrador.isSelected() ? encontrado.getUser() instanceof Admin : encontrado.getUser() instanceof Client);
+
+        if (rolCorrecto) {
+            mostrarMensajeLogin("Credenciales correctas", true);
+        } else {
+            mostrarMensajeLogin("Credenciales incorrectas", false);
+        }
+    }
+
+    private void mostrarMensajeLogin(String mensaje, boolean exito) {
+        lblMensajeLogin.setText(mensaje);
+        lblMensajeLogin.getStyleClass().removeAll("login-message-success", "login-message-error");
+        lblMensajeLogin.getStyleClass().add(exito ? "login-message-success" : "login-message-error");
+        lblMensajeLogin.setManaged(true);
+        lblMensajeLogin.setVisible(true);
     }
 
     @FXML

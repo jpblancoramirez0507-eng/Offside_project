@@ -89,11 +89,11 @@ public class List_Double_User {
     }
 
     public Node_User create_user(TextField usernameField, TextField useridentField, TextField useremailField, PasswordField passwordField, String roll) {
-        
-        if (usernameField.getText().trim().isEmpty() || 
-            useridentField.getText().trim().isEmpty() || 
-            useremailField.getText().trim().isEmpty() || 
-            passwordField.getText().isEmpty()) {
+
+        if (usernameField.getText().trim().isEmpty()
+                || useridentField.getText().trim().isEmpty()
+                || useremailField.getText().trim().isEmpty()
+                || passwordField.getText().isEmpty()) {
             alert(Alert.AlertType.WARNING, "Importante..!", "Por favor, complete todos los campos.");
             return null;
         }
@@ -107,7 +107,7 @@ public class List_Double_User {
                 return null;
             } else {
                 Node_User newUser = null;
-                
+
                 String name = usernameField.getText().trim();
                 String email = useremailField.getText().trim();
                 String password = passwordField.getText();
@@ -162,12 +162,12 @@ public class List_Double_User {
             }
         }
     }
-    
-    public void addUser(TextField usernameField, TextField useridentField, TextField useremailField, PasswordField passwordField, String roll) {
+
+    public boolean addUser(TextField usernameField, TextField useridentField, TextField useremailField, PasswordField passwordField, String roll) {
 
         Node_User aux = create_user(usernameField, useridentField, useremailField, passwordField, roll);
 
-        if (aux != null) {            
+        if (aux != null) {
             if (getHead() == null) {
                 setHead(aux);
             } else {
@@ -175,9 +175,20 @@ public class List_Double_User {
                 ultimo.setNext(aux);
                 aux.setFormer(ultimo);
             }
+            return true;
         }
+        return false;
     }
-     
+
+    public Node_User validate_credentials(String email, String password) {
+        Node_User search = search_email(email.trim());
+
+        if (search != null && search.getUser().getPassword().equals(password)) {
+            return search;
+        }
+        return null;
+    }
+
     public void save_data_file_users() {
 
         String direccion = System.getProperty("user.dir") + "\\src\\Files\\Users";
@@ -191,7 +202,7 @@ public class List_Double_User {
                 if (current.getUser() != null) {
                     writer.write((current.getUser() instanceof Admin ? "ADMIN" : "CLIENT") + ", ");
                     writer.write(current.getUser().getName() + ", ");
-                    writer.write(current.getUser().getIdentification() + ", ");                
+                    writer.write(current.getUser().getIdentification() + ", ");
                     writer.write(current.getUser().getEmail() + ", ");
                     writer.write(current.getUser().getPassword());
                     writer.newLine();
@@ -220,13 +231,13 @@ public class List_Double_User {
 
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
-                                
+
                 if (line.isEmpty()) {
                     continue;
                 }
 
                 String[] atributes = line.split(", ");
-                
+
                 if (atributes.length != 5) {
                     System.out.println("Error: Formato incorrecto en línea: " + line);
                     continue;
@@ -238,7 +249,7 @@ public class List_Double_User {
                     int identification = Integer.parseInt(atributes[2].trim());
                     String email = atributes[3].trim();
                     String password = atributes[4].trim();
-                    
+
                     if (!roll.equals("ADMIN") && !roll.equals("CLIENT")) {
                         System.out.println("Error: Rol inválido en línea: " + line);
                         continue;
@@ -248,7 +259,7 @@ public class List_Double_User {
                 } catch (NumberFormatException e) {
                     System.out.println("Error: Identificación inválida en línea: " + line);
                 }
-            }            
+            }
         } catch (IOException e) {
             System.out.println("Error al cargar los datos desde el archivo Users: " + e.getMessage());
         } catch (Exception e) {

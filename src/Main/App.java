@@ -1,4 +1,6 @@
 package Main;
+
+import DataStructures.Data_Manager;
 import java.io.IOException;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -12,10 +14,12 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
+        Data_Manager.getManager().getList_user().load_data_from_file_users();
+
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/Views/View_main.fxml"));
             Scene scene = new Scene(root);
-            stage.setScene(scene);            
+            stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.getStackTrace();

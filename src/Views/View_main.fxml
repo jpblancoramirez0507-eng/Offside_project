@@ -20,9 +20,6 @@
 <?import javafx.scene.shape.SVGPath?>
 
 <HBox fx:id="paneRaiz" prefHeight="700.0" prefWidth="1280.0" styleClass="login-root" stylesheets="@../Styles/Style_sheet.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Controller_view_main">
-   <fx:define>
-      <ToggleGroup fx:id="tgRol" />
-   </fx:define>
    <children>
 
       <!-- ===== PANEL IZQUIERDO: MARCA ===== -->
@@ -198,6 +195,8 @@
                      </VBox.margin>
                      <children>
                         <PasswordField fx:id="pwdContrasena" prefHeight="52.0" promptText="Contraseña" styleClass="login-field, login-field-password" />
+                        <!-- Mismo texto que pwdContrasena, visible solo al pulsar "Mostrar" -->
+                        <TextField fx:id="txtContrasenaVisible" managed="false" prefHeight="52.0" promptText="Contraseña" styleClass="login-field, login-field-password" visible="false" />
                         <Button fx:id="btnMostrarContrasena" mnemonicParsing="false" onAction="#onMostrarContrasena" styleClass="show-password-button" text="Mostrar" StackPane.alignment="CENTER_RIGHT">
                            <StackPane.margin>
                               <Insets right="10.0" />
@@ -205,6 +204,13 @@
                         </Button>
                      </children>
                   </StackPane>
+
+                  <!-- Mensaje de resultado del inicio de sesión (oculto hasta intentar) -->
+                  <Label fx:id="lblMensajeLogin" alignment="CENTER" managed="false" maxWidth="1.7976931348623157E308" styleClass="login-message" visible="false">
+                     <VBox.margin>
+                        <Insets top="14.0" />
+                     </VBox.margin>
+                  </Label>
 
                   <!-- Acciones -->
                   <Button fx:id="btnIniciarSesion" defaultButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onIniciarSesion" prefHeight="52.0" styleClass="primary-button" text="Iniciar sesión   →">
