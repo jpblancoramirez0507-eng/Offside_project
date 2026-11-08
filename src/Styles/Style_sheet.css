@@ -263,3 +263,32 @@
 .secondary-button:hover {
     -fx-background-color: #0e4d3a, #e6f4ec;
 }
+
+/* --------------------------------------------------------------------------
+   Registro: beneficios y ayudas
+   -------------------------------------------------------------------------- */
+
+.benefit-check {
+    -fx-background-color: #1f9d63;
+    -fx-background-radius: 12;
+    -fx-min-width: 24;
+    -fx-min-height: 24;
+    -fx-max-width: 24;
+    -fx-max-height: 24;
+}
+
+.benefit-check-mark {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+.benefit-text {
+    -fx-font-size: 15px;
+    -fx-text-fill: #e8f0ed;
+}
+
+.field-hint {
+    -fx-font-size: 12px;
+    -fx-text-fill: #8a9893;
+}

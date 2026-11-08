@@ -1,10 +1,13 @@
 package Controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -166,7 +169,12 @@ public class Controller_view_main implements Initializable {
 
     @FXML
     private void onCrearCuenta(ActionEvent event) {
-        // TODO
+        // Navega a la vista de registro reutilizando la misma ventana
+        try {
+            Parent vistaRegistro = FXMLLoader.load(getClass().getResource("/Views/View_register.fxml"));
+            btnCrearCuenta.getScene().setRoot(vistaRegistro);
+        } catch (IOException e) {
+        }
     }
 
 }
