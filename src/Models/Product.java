@@ -12,6 +12,7 @@ public class Product {
     private String[] sizes;
     private float price;
     private String description;
+    private int stock;
     private String email_customer;
     private LocalDateTime date_purchase;
     private String selectedSize;
@@ -92,6 +93,14 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public String getEmail_customer() {

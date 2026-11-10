@@ -3,9 +3,13 @@ package DataStructures;
 import Models.Product;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -13,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.regex.Pattern;
 import javafx.scene.control.Alert;
 
 public class Stack_Of_Product {
@@ -103,12 +108,13 @@ public class Stack_Of_Product {
         alert.showAndWait();
     }
 
-    private Product loadProductFromCatalog(int idProduct) {
+    public Product loadProductFromCatalog(int idProduct) {
         String basePath = System.getProperty("user.dir");
         String fileName = String.format("%04d", idProduct) + " - Product Data.txt";
         Path fullPath = Paths.get(basePath, "src/Files/ProductsBase", fileName);
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(fullPath.toFile()))) {
+        // Los archivos del catálogo están en UTF-8 (tildes, ñ, –); FileReader usaría la codificación de Windows
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fullPath.toFile()), StandardCharsets.UTF_8))) {
             String name = "";
             String brand = "";
             String team = "";
@@ -116,6 +122,7 @@ public class Stack_Of_Product {
             String[] sizes = {};
             float price = 0;
             String description = "";
+            int stock = 0;
 
             String line;
             while ((line = reader.readLine()) != null) {
@@ -149,7 +156,8 @@ public class Stack_Of_Product {
                     String[] parts = line.split(":", 2);
                     if (parts.length > 1) {
                         String sizesStr = parts[1].trim();
-                        String[] rawSizes = sizesStr.split("[-\\s]+");
+                        // Acepta tallas separadas por comas, guiones o espacios ("S, M, L, XL")
+                        String[] rawSizes = sizesStr.split("[,\\-\\s]+");
                         List<String> sizeList = new ArrayList<>();
                         for (String size : rawSizes) {
                             String trimmed = size.trim();
@@ -159,7 +167,16 @@ public class Stack_Of_Product {
                         }
                         sizes = sizeList.toArray(new String[0]);
                     }
-                } else if (line.toLowerCase().startsWith("descripcion") || line.toLowerCase().startsWith("descripcion")) {
+                } else if (line.toLowerCase().startsWith("stock")) {
+                    String[] parts = line.split(":", 2);
+                    if (parts.length > 1) {
+                        try {
+                            stock = Integer.parseInt(parts[1].trim());
+                        } catch (NumberFormatException e) {
+                            System.out.println("Error al parsear el stock del producto " + idProduct + ": " + parts[1].trim());
+                        }
+                    }
+                } else if (line.toLowerCase().startsWith("descripcion") || line.toLowerCase().startsWith("descripción")) {
                     String[] parts = line.split(":", 2);
                     if (parts.length > 1) {
                         description = parts[1].trim();
@@ -168,7 +185,9 @@ public class Stack_Of_Product {
             }
 
             if (!name.isEmpty()) {
-                return new Product(idProduct, name, brand, team, league, sizes, price, description);
+                Product product = new Product(idProduct, name, brand, team, league, sizes, price, description);
+                product.setStock(stock);
+                return product;
             }
 
         } catch (IOException e) {
@@ -176,6 +195,40 @@ public class Stack_Of_Product {
         }
 
         return null;
+    }
+
+    /**
+     * Reescribe la línea "Stock: N" del archivo del producto en
+     * src/Files/ProductsBase. Si el archivo no tiene esa línea, la agrega antes
+     * de la descripción. Retorna true si se pudo guardar.
+     */
+    public boolean updateStockInCatalog(int idProduct, int newStock) {
+        String basePath = System.getProperty("user.dir");
+        String fileName = String.format("%04d", idProduct) + " - Product Data.txt";
+        Path fullPath = Paths.get(basePath, "src/Files/ProductsBase", fileName);
+
+        try {
+            String content = new String(Files.readAllBytes(fullPath), StandardCharsets.UTF_8);
+            String lineBreak = content.contains("\r\n") ? "\r\n" : "\n";
+            String stockLine = "Stock: " + newStock;
+
+            Pattern stockPattern = Pattern.compile("(?im)^stock\\s*:.*$");
+            Pattern descriptionPattern = Pattern.compile("(?im)^descripci(o|ó)n");
+
+            if (stockPattern.matcher(content).find()) {
+                content = stockPattern.matcher(content).replaceFirst(stockLine);
+            } else if (descriptionPattern.matcher(content).find()) {
+                content = descriptionPattern.matcher(content).replaceFirst(stockLine + lineBreak + "$0");
+            } else {
+                content = content + lineBreak + stockLine;
+            }
+
+            Files.write(fullPath, content.getBytes(StandardCharsets.UTF_8));
+            return true;
+        } catch (IOException e) {
+            System.out.println("Error al actualizar el stock del producto " + idProduct + ": " + e.getMessage());
+            return false;
+        }
     }
 
     public void saveToFile(Stack<Product> stack, String fileName) {
@@ -424,9 +477,9 @@ public class Stack_Of_Product {
         Product newProduct = new Product(
                 product.getIdProduct(),
                 product.getName(),
+                product.getBrand(),
                 product.getTeam(),
                 product.getLeague(),
-                product.getBrand(),
                 product.getSizes(),
                 product.getPrice(),
                 product.getDescription()
@@ -454,9 +507,9 @@ public class Stack_Of_Product {
         Product newProduct = new Product(
                 product.getIdProduct(),
                 product.getName(),
+                product.getBrand(),
                 product.getTeam(),
                 product.getLeague(),
-                product.getBrand(),
                 product.getSizes(),
                 product.getPrice(),
                 product.getDescription()
@@ -476,9 +529,9 @@ public class Stack_Of_Product {
         Product newProduct = new Product(
                 product.getIdProduct(),
                 product.getName(),
+                product.getBrand(),
                 product.getTeam(),
                 product.getLeague(),
-                product.getBrand(),
                 product.getSizes(),
                 product.getPrice(),
                 product.getDescription()

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.SVGPath?>
+
+<!-- Fila de un producto en la lista de gestión de inventario (vista del administrador) -->
+<HBox fx:id="paneFilaProducto" alignment="CENTER_LEFT" prefHeight="54.0" styleClass="admin-product-row" stylesheets="@../../Styles/StyleSheetsComponents/admin_product_component.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ComponentsControllers.Admin_Product_ComponentController">
+   <padding>
+      <Insets left="16.0" right="16.0" />
+   </padding>
+   <children>
+
+      <!-- Columna: producto (imagen + nombre) -->
+      <HBox fx:id="hbProducto" alignment="CENTER_LEFT" minWidth="0.0" prefWidth="260.0" spacing="12.0" HBox.hgrow="ALWAYS">
+         <children>
+            <StackPane fx:id="paneImagenProducto" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="38.0" minWidth="38.0" prefHeight="38.0" prefWidth="38.0" styleClass="product-thumb">
+               <children>
+                  <!-- Se muestra mientras no haya imagen (o si no se puede cargar) -->
+                  <SVGPath fx:id="svgCamisetaGenerica" content="M9.5,0 Q15,3.6 20.5,0 L30,5 L27,11.5 L22.5,9.5 L22.5,30 L7.5,30 L7.5,9.5 L3,11.5 L0,5 Z" styleClass="product-thumb-placeholder" />
+                  <ImageView fx:id="imgProducto" fitHeight="34.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </StackPane>
+            <VBox fx:id="vbInfoProducto" alignment="CENTER_LEFT" minWidth="0.0">
+               <children>
+                  <Label fx:id="lblNombreProducto" minWidth="0.0" styleClass="product-name" text="Camiseta Manchester City" />
+                  <Label fx:id="lblDetalleProducto" minWidth="0.0" styleClass="product-detail" text="Puma · Ref. 0001" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+
+      <!-- Columna: liga -->
+      <HBox fx:id="hbLiga" alignment="CENTER_LEFT" minWidth="130.0" prefWidth="130.0" spacing="7.0">
+         <children>
+            <Circle fx:id="cirLiga" radius="4.0" styleClass="league-dot" />
+            <Label fx:id="lblLiga" styleClass="product-league" text="Premier League" />
+         </children>
+      </HBox>
+
+      <!-- Columna: stock -->
+      <Label fx:id="lblStock" minWidth="60.0" prefWidth="60.0" styleClass="product-stock" text="31" />
+
+      <!-- Columna: acciones -->
+      <HBox fx:id="hbAcciones" alignment="CENTER_LEFT" minWidth="250.0" prefWidth="250.0" spacing="6.0">
+         <children>
+            <Button fx:id="btnAnadirStock" mnemonicParsing="false" onAction="#onAnadirStock" styleClass="row-button, row-button-add" text="+ Añadir" />
+            <Button fx:id="btnQuitarStock" mnemonicParsing="false" onAction="#onQuitarStock" styleClass="row-button, row-button-remove" text="− Quitar" />
+            <Button fx:id="btnEliminarProducto" mnemonicParsing="false" onAction="#onEliminarProducto" styleClass="row-button, row-button-delete" text="Eliminar" />
+         </children>
+      </HBox>
+   </children>
+</HBox>
