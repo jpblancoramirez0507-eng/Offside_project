@@ -188,7 +188,15 @@ public class Controller_view_main implements Initializable {
         // El tipo de cuenta elegido también debe coincidir (Usuario -> Client, Administrador -> Admin)
         boolean rolCorrecto = encontrado != null && (rbAdministrador.isSelected() ? encontrado.getUser() instanceof Admin : encontrado.getUser() instanceof Client);
 
-        if (rolCorrecto) {
+        if (rolCorrecto && encontrado.getUser() instanceof Admin) {
+            // El administrador pasa a la pantalla de gestión de inventario
+            try {
+                Parent vistaAdmin = FXMLLoader.load(getClass().getResource("/Views/View_admin.fxml"));
+                btnIniciarSesion.getScene().setRoot(vistaAdmin);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if (rolCorrecto) {
             mostrarMensajeLogin("Credenciales correctas", true);
         } else {
             mostrarMensajeLogin("Credenciales incorrectas", false);

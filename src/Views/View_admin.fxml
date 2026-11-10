@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane fx:id="paneRaiz" prefHeight="700.0" prefWidth="1280.0" styleClass="admin-root" stylesheets="@../Styles/Style_sheet.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Controller_view_admin">
+
+   <!-- ===== BARRA SUPERIOR ===== -->
+   <top>
+      <HBox fx:id="hbBarraSuperior" alignment="CENTER_LEFT" prefHeight="58.0" spacing="16.0" styleClass="admin-topbar">
+         <padding>
+            <Insets left="24.0" right="24.0" />
+         </padding>
+         <children>
+            <HBox fx:id="hbLogo" alignment="CENTER_LEFT" spacing="10.0">
+               <children>
+                  <StackPane fx:id="paneLogo">
+                     <children>
+                        <Circle fx:id="cirLogoExterior" radius="16.0" styleClass="logo-outer" />
+                        <Circle fx:id="cirLogoInterior" radius="6.0" styleClass="logo-inner" />
+                     </children>
+                  </StackPane>
+                  <VBox fx:id="vbNombreMarca" alignment="CENTER_LEFT">
+                     <children>
+                        <HBox fx:id="hbNombreMarca">
+                           <children>
+                              <Label fx:id="lblMarcaOff" styleClass="topbar-logo-off" text="OFF" />
+                              <Label fx:id="lblMarcaSide" styleClass="topbar-logo-side" text="SIDE" />
+                           </children>
+                        </HBox>
+                        <Label fx:id="lblMarcaSubtitulo" styleClass="topbar-logo-tagline" text="C&#8201;A&#8201;M&#8201;I&#8201;S&#8201;E&#8201;T&#8201;A&#8201;S&#8195;D&#8201;E&#8195;F&#8201;Ú&#8201;T&#8201;B&#8201;O&#8201;L" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <Region HBox.hgrow="ALWAYS" />
+            <TextField fx:id="txtBuscarGeneral" prefHeight="36.0" prefWidth="400.0" promptText="Buscar productos, pedidos, usuarios..." styleClass="topbar-search" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label fx:id="lblAdministrador" styleClass="topbar-user" text="Administrador ▾" />
+            <Button fx:id="btnCerrarSesion" mnemonicParsing="false" onAction="#onCerrarSesion" styleClass="topbar-logout" text="Cerrar sesión" />
+         </children>
+      </HBox>
+   </top>
+
+   <!-- ===== MENÚ LATERAL ===== -->
+   <left>
+      <VBox fx:id="vbMenuLateral" prefWidth="200.0" spacing="4.0" styleClass="admin-sidebar">
+         <padding>
+            <Insets bottom="16.0" left="12.0" right="12.0" top="18.0" />
+         </padding>
+         <children>
+            <Button fx:id="btnPanelControl" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-item" text="Panel de control" />
+            <Button fx:id="btnInventario" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-item, sidebar-item-active" text="Inventario" />
+            <Button fx:id="btnPedidos" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-item" text="Pedidos" />
+            <Button fx:id="btnUsuarios" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-item" text="Usuarios" />
+            <Button fx:id="btnReportes" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-item" text="Reportes" />
+            <Button fx:id="btnConfiguracion" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-item" text="Configuración" />
+            <Region VBox.vgrow="ALWAYS" />
+            <VBox fx:id="vbModoAdministrador" spacing="4.0" styleClass="admin-mode-box">
+               <children>
+                  <Label fx:id="lblModoAdministrador" styleClass="admin-mode-title" text="Modo administrador" />
+                  <Label fx:id="lblModoAdministradorDetalle" styleClass="admin-mode-detail" text="Gestiona productos, stock y pedidos de la tienda." wrapText="true" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </left>
+
+   <!-- ===== CONTENIDO: GESTIÓN DE INVENTARIO ===== -->
+   <center>
+      <VBox fx:id="vbContenido" styleClass="admin-content">
+         <padding>
+            <Insets bottom="20.0" left="24.0" right="24.0" top="18.0" />
+         </padding>
+         <children>
+
+            <!-- Encabezado -->
+            <HBox fx:id="hbEncabezado" alignment="CENTER_LEFT">
+               <children>
+                  <VBox>
+                     <children>
+                        <Label fx:id="lblTituloInventario" styleClass="admin-title" text="Gestión de inventario" />
+                        <Label fx:id="lblSubtituloInventario" styleClass="admin-subtitle" text="Registra, elimina y ajusta el stock de las camisetas de la tienda." />
+                     </children>
+                  </VBox>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button fx:id="btnRegistrarProductoEncabezado" mnemonicParsing="false" onAction="#onRegistrarProducto" prefHeight="38.0" styleClass="admin-button-primary" text="+   Registrar producto" />
+               </children>
+            </HBox>
+
+            <HBox fx:id="hbCuerpo" spacing="16.0" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets top="16.0" />
+               </VBox.margin>
+               <children>
+
+                  <!-- Columna izquierda: filtros + lista -->
+                  <VBox fx:id="vbColumnaLista" minWidth="0.0" spacing="12.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <HBox fx:id="hbFiltros" minHeight="-Infinity" spacing="12.0">
+                           <children>
+                              <TextField fx:id="txtBuscarProducto" prefHeight="38.0" promptText="Buscar por nombre, equipo o liga..." styleClass="admin-input" HBox.hgrow="ALWAYS" />
+                              <ComboBox fx:id="cbFiltroLiga" prefHeight="38.0" prefWidth="190.0" promptText="Todas las ligas" styleClass="admin-combo" />
+                           </children>
+                        </HBox>
+
+                        <VBox fx:id="vbTablaProductos" styleClass="admin-card" VBox.vgrow="ALWAYS">
+                           <children>
+                              <!-- Encabezado de columnas (mismos anchos que Admin_Product_Component) -->
+                              <!-- right = 16 + ancho de la barra de desplazamiento, para alinear con las filas -->
+                              <HBox fx:id="hbEncabezadoTabla" alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="40.0" styleClass="admin-table-header">
+                                 <padding>
+                                    <Insets left="16.0" right="26.0" />
+                                 </padding>
+                                 <children>
+                                    <Label minWidth="0.0" prefWidth="260.0" styleClass="admin-table-header-label" text="Producto" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
+                                    <Label minWidth="130.0" prefWidth="130.0" styleClass="admin-table-header-label" text="Liga" />
+                                    <Label minWidth="60.0" prefWidth="60.0" styleClass="admin-table-header-label" text="Stock" />
+                                    <Label minWidth="250.0" prefWidth="250.0" styleClass="admin-table-header-label" text="Acciones" />
+                                 </children>
+                              </HBox>
+
+                              <!-- Aquí se agregan las filas (Admin_Product_Component) desde el controlador -->
+                              <ScrollPane fx:id="spListaProductos" fitToWidth="true" hbarPolicy="NEVER" styleClass="admin-scroll" VBox.vgrow="ALWAYS">
+                                 <content>
+                                    <VBox fx:id="vbListaProductos" />
+                                 </content>
+                              </ScrollPane>
+
+                              <Label fx:id="lblTotalMostrados" minHeight="-Infinity" styleClass="admin-table-footer" text="Mostrando 0 de 0 productos" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+
+                  <!-- Columna derecha: acciones rápidas y resumen -->
+                  <VBox fx:id="vbColumnaResumen" minWidth="250.0" prefWidth="250.0" spacing="12.0">
+                     <children>
+                        <VBox fx:id="vbTarjetaRegistrar" spacing="6.0" styleClass="admin-card, action-card-green">
+                           <children>
+                              <Label fx:id="lblRegistrarTitulo" styleClass="action-card-title-green" text="Registrar producto" />
+                              <Label fx:id="lblRegistrarDetalle" styleClass="action-card-detail" text="Agrega una nueva camiseta de las 5 grandes ligas." wrapText="true" />
+                              <Button fx:id="btnRegistrarProducto" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onRegistrarProducto" prefHeight="36.0" styleClass="admin-button-primary" text="+   Registrar producto">
+                                 <VBox.margin>
+                                    <Insets top="8.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
+
+                        <VBox fx:id="vbTarjetaEliminar" spacing="6.0" styleClass="admin-card, action-card-red">
+                           <children>
+                              <Label fx:id="lblEliminarTitulo" styleClass="action-card-title-red" text="Eliminar producto" />
+                              <Label fx:id="lblEliminarDetalle" styleClass="action-card-detail" text="Quita del catálogo una camiseta descontinuada." wrapText="true" />
+                              <Button fx:id="btnEliminarDelCatalogo" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onEliminarDelCatalogo" prefHeight="36.0" styleClass="admin-button-danger" text="Eliminar del catálogo">
+                                 <VBox.margin>
+                                    <Insets top="8.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
+
+                        <VBox fx:id="vbTarjetaResumen" spacing="10.0" styleClass="admin-card, summary-card">
+                           <children>
+                              <Label fx:id="lblResumenTitulo" styleClass="summary-title" text="Resumen de inventario" />
+                              <HBox>
+                                 <children>
+                                    <Label styleClass="summary-label" text="Productos totales" />
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <Label fx:id="lblTotalProductos" styleClass="summary-value" text="0" />
+                                 </children>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <Label styleClass="summary-label" text="Unidades en stock" />
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <Label fx:id="lblUnidadesStock" styleClass="summary-value" text="0" />
+                                 </children>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <Label styleClass="summary-label" text="Stock bajo (&lt; 20)" />
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <Label fx:id="lblStockBajo" styleClass="summary-value, summary-value-danger" text="0" />
+                                 </children>
+                              </HBox>
+                              <Separator styleClass="form-separator" />
+                              <VBox>
+                                 <children>
+                                    <Label styleClass="summary-label-small" text="Valor total del inventario" />
+                                    <Label fx:id="lblValorInventario" styleClass="summary-total" text="\$ 0" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

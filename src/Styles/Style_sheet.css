@@ -313,3 +313,287 @@
     -fx-background-color: #fdecec;
     -fx-text-fill: #c62828;
 }
+
+/* ==========================================================================
+   Vista del administrador: gestión de inventario
+   ========================================================================== */
+
+.admin-root {
+    -fx-font-family: "Segoe UI";
+    -fx-background-color: #f3f5f4;
+}
+
+/* Barra superior */
+.admin-topbar {
+    -fx-background-color: #0f2c25;
+}
+
+.topbar-logo-off,
+.topbar-logo-side {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 -3 0;
+}
+
+.topbar-logo-off  { -fx-text-fill: #ffffff; }
+.topbar-logo-side { -fx-text-fill: #2ecc7f; }
+
+.topbar-logo-tagline {
+    -fx-font-size: 7px;
+    -fx-text-fill: #b4c5bf;
+}
+
+.topbar-search {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 18;
+    -fx-font-size: 13px;
+    -fx-padding: 0 18 0 18;
+    -fx-prompt-text-fill: #8a9893;
+}
+
+.topbar-user {
+    -fx-font-size: 13px;
+    -fx-text-fill: #ffffff;
+}
+
+.topbar-logout {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+    -fx-text-fill: #ffffff;
+}
+
+.topbar-logout:hover {
+    -fx-text-fill: #2ecc7f;
+}
+
+/* Menú lateral */
+.admin-sidebar {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent #e3e8e6 transparent transparent;
+    -fx-border-width: 0 1 0 0;
+}
+
+.sidebar-item {
+    -fx-alignment: center-left;
+    -fx-background-color: transparent;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+    -fx-padding: 9 12 9 12;
+    -fx-text-fill: #12241f;
+}
+
+.sidebar-item:hover {
+    -fx-background-color: #eef3f1;
+}
+
+.sidebar-item-active,
+.sidebar-item-active:hover {
+    -fx-background-color: #148a4f;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+.admin-mode-box {
+    -fx-background-color: #e6f4ec;
+    -fx-background-radius: 10;
+    -fx-padding: 12;
+}
+
+.admin-mode-title {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0e4d3a;
+}
+
+.admin-mode-detail {
+    -fx-font-size: 11px;
+    -fx-text-fill: #5f6e69;
+}
+
+/* Encabezado del contenido */
+.admin-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #12241f;
+}
+
+.admin-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #6b7a75;
+}
+
+.admin-button-primary {
+    -fx-background-color: #148a4f;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 20 0 20;
+    -fx-text-fill: #ffffff;
+}
+
+.admin-button-primary:hover {
+    -fx-background-color: #0e6f3f;
+}
+
+.admin-button-danger {
+    -fx-background-color: #d93636;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+.admin-button-danger:hover {
+    -fx-background-color: #b92b2b;
+}
+
+/* Filtros */
+.admin-input {
+    -fx-background-color: #dfe5e3, #ffffff;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 8, 7;
+    -fx-font-size: 13px;
+    -fx-padding: 0 14 0 14;
+    -fx-prompt-text-fill: #8a9893;
+}
+
+.admin-input:focused {
+    -fx-background-color: #148a4f, #ffffff;
+    -fx-background-insets: 0, 1.5;
+}
+
+.admin-combo {
+    -fx-background-color: #dfe5e3, #ffffff;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 8, 7;
+    -fx-font-size: 13px;
+}
+
+.admin-combo .list-cell {
+    -fx-padding: 0 0 0 8;
+    -fx-text-fill: #12241f;
+}
+
+/* Tarjetas y tabla */
+.admin-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12;
+    -fx-border-color: #e3e8e6;
+    -fx-border-radius: 12;
+}
+
+.admin-table-header {
+    -fx-border-color: transparent transparent #e3e8e6 transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.admin-table-header-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #12241f;
+}
+
+.admin-scroll,
+.admin-scroll > .viewport {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.admin-scroll .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 10;
+}
+
+.admin-scroll .scroll-bar .thumb {
+    -fx-background-color: #cdd6d2;
+    -fx-background-radius: 5;
+}
+
+.admin-scroll .scroll-bar .increment-button,
+.admin-scroll .scroll-bar .decrement-button {
+    -fx-padding: 0;
+}
+
+.admin-scroll .scroll-bar .increment-arrow,
+.admin-scroll .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0;
+}
+
+.admin-table-footer {
+    -fx-font-size: 11px;
+    -fx-padding: 10 16 10 16;
+    -fx-text-fill: #6b7a75;
+}
+
+/* Tarjetas de acción */
+.action-card-green {
+    -fx-background-color: #e6f4ec;
+    -fx-border-color: #bfe3cd;
+    -fx-padding: 14 16 16 16;
+}
+
+.action-card-red {
+    -fx-background-color: #fdecec;
+    -fx-border-color: #f5c6c6;
+    -fx-padding: 14 16 16 16;
+}
+
+.action-card-title-green {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0e4d3a;
+}
+
+.action-card-title-red {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #c62828;
+}
+
+.action-card-detail {
+    -fx-font-size: 12px;
+    -fx-text-fill: #5f6e69;
+}
+
+/* Resumen */
+.summary-card {
+    -fx-padding: 14 16 16 16;
+}
+
+.summary-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #12241f;
+}
+
+.summary-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #5f6e69;
+}
+
+.summary-value {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #12241f;
+}
+
+.summary-value-danger {
+    -fx-text-fill: #d32f2f;
+}
+
+.summary-label-small {
+    -fx-font-size: 11px;
+    -fx-text-fill: #6b7a75;
+}
+
+.summary-total {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #12241f;
+}
