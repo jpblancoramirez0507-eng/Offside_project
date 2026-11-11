@@ -1,0 +1,10 @@
+Nombre: Camiseta Local Borussia Dortmund 2026
+Marca: Puma
+Equipo: Borussia Dortmund
+Liga: Bundesliga
+Tallas: S, M, L, XL
+Precio: $449.999
+Stock: 20
+Descripcion: Camiseta Borussia Dortmund – Temporada 2026/2027
+
+Representa la ciudad y la pasión del Borussia Dortmund con su nueva equipación. Sobre el clásico amarillo del club, presenta un patrón gráfico tono sobre tono inspirado en la arquitectura de dos símbolos de Dortmund: la antigua mina de carbón Minister Stein y la torre Dortmunder U. Los detalles en negro bajo los brazos y la franja blanca en el cuello y los puños completan un diseño que une tradición y transformación. Fabricada con materiales ligeros y cómodos, es ideal para los aficionados que llevan al BVB en el corazón.

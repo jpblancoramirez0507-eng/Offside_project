@@ -4,6 +4,7 @@ Equipo: Manchester City
 Liga: Premier League
 Precio: $449.999
 Tallas: S, M, L, XL
+Stock: 20
 Descripcion: Camiseta Manchester City – Temporada 2026/2027
 
 Representa la identidad y el orgullo de los Citizens con su nueva equipacion. Su diseño combina el característico azul celeste del Manchester City con detalles que reflejan la historia y el estilo del club. Fabricada con materiales ligeros y cómodos, es ideal para los aficionados que llevan su pasión por el City a todas partes.

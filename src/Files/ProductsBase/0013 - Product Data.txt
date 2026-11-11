@@ -4,6 +4,7 @@ Equipo: Paris Saint-Germain
 Liga: Ligue 1
 Precio: $499.999
 Tallas: S, M, L, XL
+Stock: 20
 Descripcion: Camiseta Paris Saint-Germain – Temporada 2026/2027
 
 Representa la historia y los colores del PSG con su nueva equipacion. Su diseño combina el tradicional azul y rojo con franjas blancas que reflejan la identidad y grandeza del club. Fabricada con materiales ligeros y comodos, es ideal para los aficionados que llevan al PSG en el corazon.

@@ -4,6 +4,7 @@ Equipo: Real Madrid
 Liga: La Liga
 Precio: $599.999
 Tallas: S, M, L, XL
+Stock: 20
 Descripcion: Camiseta Real Madrid – Temporada 2026/2027
 
 Representa la historia y la grandeza de los Merengues con su nueva equipación. Su diseño destaca el tradicional color blanco del Real Madrid, acompañado de detalles que reflejan la elegancia y tradición del club. Fabricada con materiales ligeros y cómodos, es ideal para los aficionados que llevan al Madrid en el corazón.

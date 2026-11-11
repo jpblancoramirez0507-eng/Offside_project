@@ -4,6 +4,7 @@ Equipo: Barcelona
 Liga: La Liga
 Precio: $499.999
 Tallas: S, M, L, XL
+Stock: 20
 Descripcion: Camiseta Barcelona – Temporada 2026/2027
 
 Representa la historia y los colores del Barça con su nueva equipación. Su diseño combina los tradicionales tonos azulgrana con detalles que reflejan la identidad y grandeza del club. Fabricada con materiales ligeros y cómodos, es ideal para los aficionados que llevan al Barcelona en el corazón.

@@ -4,6 +4,7 @@ Equipo: Liverpool
 Liga: Premier League
 Precio: $429.990
 Tallas: S, M, L, XL
+Stock: 20
 Descripcion: Camiseta Liverpool – Temporada 2026/2027
 
 Representa la historia y la pasión de los Reds con su nueva equipación. Su diseño destaca el tradicional color rojo del Liverpool, acompañado de detalles que reflejan la identidad y grandeza del club. Fabricada con materiales ligeros y cómodos, es ideal para los aficionados que llevan al Liverpool en el corazón.
