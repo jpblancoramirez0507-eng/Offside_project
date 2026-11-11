@@ -1,0 +1,102 @@
+/* ==========================================================================
+   OFFSIDE - Fila de producto en la gestión de inventario
+   ========================================================================== */
+
+.admin-product-row {
+    -fx-font-family: "Segoe UI";
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent transparent #edf1ef transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.admin-product-row:hover {
+    -fx-background-color: #f7faf8;
+}
+
+/* Miniatura */
+.product-thumb {
+    -fx-background-color: #f1f4f3;
+    -fx-background-radius: 8;
+}
+
+.product-thumb-placeholder {
+    -fx-fill: #cdd6d2;
+}
+
+.product-name {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #12241f;
+}
+
+.product-detail {
+    -fx-font-size: 11px;
+    -fx-text-fill: #8a9893;
+}
+
+/* Liga: el color del punto se asigna desde el controlador */
+.league-dot {
+    -fx-fill: #8a9893;
+}
+
+.league-dot-premier    { -fx-fill: #3d195b; }
+.league-dot-laliga     { -fx-fill: #ee8707; }
+.league-dot-seriea     { -fx-fill: #008fd7; }
+.league-dot-bundesliga { -fx-fill: #d20515; }
+.league-dot-ligue1     { -fx-fill: #091c3e; }
+
+.product-league {
+    -fx-font-size: 12px;
+    -fx-text-fill: #3c4a45;
+}
+
+/* Stock */
+.product-stock {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #12241f;
+}
+
+.product-stock-low {
+    -fx-text-fill: #d32f2f;
+}
+
+/* Botones de acción */
+.row-button {
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-cursor: hand;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-pref-height: 28;
+    -fx-pref-width: 74;
+    -fx-padding: 0;
+}
+
+.row-button-add {
+    -fx-background-color: #148a4f;
+    -fx-text-fill: #ffffff;
+}
+
+.row-button-add:hover {
+    -fx-background-color: #0e6f3f;
+}
+
+.row-button-remove {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e57373;
+    -fx-text-fill: #d32f2f;
+}
+
+.row-button-remove:hover {
+    -fx-background-color: #fdecec;
+}
+
+.row-button-delete {
+    -fx-background-color: #fde3e3;
+    -fx-text-fill: #d32f2f;
+}
+
+.row-button-delete:hover {
+    -fx-background-color: #f9cccc;
+}
