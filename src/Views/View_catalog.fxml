@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.shape.SVGPath?>
+
+<BorderPane fx:id="paneRaiz" prefHeight="700.0" prefWidth="1280.0" styleClass="catalog-root" stylesheets="@../Styles/Style_sheet.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Controller_view_catalog">
+
+   <!-- ===== BARRA SUPERIOR ===== -->
+   <top>
+      <HBox fx:id="hbBarraSuperior" alignment="CENTER_LEFT" prefHeight="58.0" spacing="14.0" styleClass="admin-topbar">
+         <padding>
+            <Insets left="24.0" right="24.0" />
+         </padding>
+         <children>
+            <HBox fx:id="hbLogo" alignment="CENTER_LEFT" spacing="10.0">
+               <children>
+                  <StackPane fx:id="paneLogo">
+                     <children>
+                        <Circle fx:id="cirLogoExterior" radius="16.0" styleClass="logo-outer" />
+                        <Circle fx:id="cirLogoInterior" radius="6.0" styleClass="logo-inner" />
+                     </children>
+                  </StackPane>
+                  <VBox fx:id="vbNombreMarca" alignment="CENTER_LEFT">
+                     <children>
+                        <HBox fx:id="hbNombreMarca">
+                           <children>
+                              <Label fx:id="lblMarcaOff" styleClass="topbar-logo-off" text="OFF" />
+                              <Label fx:id="lblMarcaSide" styleClass="topbar-logo-side" text="SIDE" />
+                           </children>
+                        </HBox>
+                        <Label fx:id="lblMarcaSubtitulo" styleClass="topbar-logo-tagline" text="C&#8201;A&#8201;M&#8201;I&#8201;S&#8201;E&#8201;T&#8201;A&#8201;S&#8195;D&#8201;E&#8195;F&#8201;Ú&#8201;T&#8201;B&#8201;O&#8201;L" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <Region HBox.hgrow="ALWAYS" />
+            <TextField fx:id="txtBuscar" prefHeight="36.0" prefWidth="400.0" promptText="Buscar camisetas, equipos, ligas..." styleClass="topbar-search" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="btnMisCompras" mnemonicParsing="false" styleClass="topbar-logout" text="Mis compras" />
+            <Button fx:id="btnFavoritos" mnemonicParsing="false" styleClass="topbar-logout" text="♡  Favoritos" />
+            <MenuButton fx:id="mbMiCuenta" mnemonicParsing="false" styleClass="topbar-menu" text="Mi cuenta">
+               <items>
+                  <MenuItem fx:id="miCerrarSesion" mnemonicParsing="false" onAction="#onCerrarSesion" text="Cerrar sesión" />
+               </items>
+            </MenuButton>
+            <HBox fx:id="hbCarrito" alignment="CENTER_LEFT" spacing="6.0">
+               <children>
+                  <Button fx:id="btnCarrito" mnemonicParsing="false" styleClass="topbar-logout" text="Carrito" />
+                  <Label fx:id="lblContadorCarrito" alignment="CENTER" styleClass="cart-counter" text="0" />
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+   </top>
+
+   <!-- ===== FILTROS (MENÚ LATERAL) ===== -->
+   <left>
+      <VBox fx:id="vbFiltros" prefWidth="220.0" styleClass="admin-sidebar">
+         <padding>
+            <Insets bottom="16.0" left="12.0" right="12.0" top="18.0" />
+         </padding>
+         <children>
+            <Label fx:id="lblFiltrarLiga" styleClass="filter-title" text="Filtrar por liga">
+               <VBox.margin>
+                  <Insets bottom="8.0" left="4.0" />
+               </VBox.margin>
+            </Label>
+
+            <!-- Ligas: el userData es la clave que usa el controlador para filtrar -->
+            <VBox fx:id="vbLigas" spacing="4.0">
+               <children>
+                  <ToggleButton fx:id="tbTodasLigas" maxWidth="1.7976931348623157E308" mnemonicParsing="false" selected="true" styleClass="league-filter" userData="">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="tgLigas" />
+                     </toggleGroup>
+                     <graphic>
+                        <HBox alignment="CENTER_LEFT" prefWidth="170.0" spacing="10.0">
+                           <children>
+                              <Circle radius="7.0" styleClass="league-filter-dot, league-filter-dot-all" />
+                              <Label styleClass="league-filter-name" text="Todas las ligas" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Label fx:id="lblCantidadTodas" styleClass="league-filter-count" text="0" />
+                           </children>
+                        </HBox>
+                     </graphic>
+                  </ToggleButton>
+                  <ToggleButton fx:id="tbPremierLeague" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="league-filter" toggleGroup="$tgLigas" userData="premierleague">
+                     <graphic>
+                        <HBox alignment="CENTER_LEFT" prefWidth="170.0" spacing="10.0">
+                           <children>
+                              <Circle radius="7.0" styleClass="league-filter-dot, league-dot-premier" />
+                              <Label styleClass="league-filter-name" text="Premier League" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Label fx:id="lblCantidadPremier" styleClass="league-filter-count" text="0" />
+                           </children>
+                        </HBox>
+                     </graphic>
+                  </ToggleButton>
+                  <ToggleButton fx:id="tbLaLiga" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="league-filter" toggleGroup="$tgLigas" userData="laliga">
+                     <graphic>
+                        <HBox alignment="CENTER_LEFT" prefWidth="170.0" spacing="10.0">
+                           <children>
+                              <Circle radius="7.0" styleClass="league-filter-dot, league-dot-laliga" />
+                              <Label styleClass="league-filter-name" text="La Liga" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Label fx:id="lblCantidadLaLiga" styleClass="league-filter-count" text="0" />
+                           </children>
+                        </HBox>
+                     </graphic>
+                  </ToggleButton>
+                  <ToggleButton fx:id="tbSerieA" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="league-filter" toggleGroup="$tgLigas" userData="seriea">
+                     <graphic>
+                        <HBox alignment="CENTER_LEFT" prefWidth="170.0" spacing="10.0">
+                           <children>
+                              <Circle radius="7.0" styleClass="league-filter-dot, league-dot-seriea" />
+                              <Label styleClass="league-filter-name" text="Serie A" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Label fx:id="lblCantidadSerieA" styleClass="league-filter-count" text="0" />
+                           </children>
+                        </HBox>
+                     </graphic>
+                  </ToggleButton>
+                  <ToggleButton fx:id="tbBundesliga" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="league-filter" toggleGroup="$tgLigas" userData="bundesliga">
+                     <graphic>
+                        <HBox alignment="CENTER_LEFT" prefWidth="170.0" spacing="10.0">
+                           <children>
+                              <Circle radius="7.0" styleClass="league-filter-dot, league-dot-bundesliga" />
+                              <Label styleClass="league-filter-name" text="Bundesliga" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Label fx:id="lblCantidadBundesliga" styleClass="league-filter-count" text="0" />
+                           </children>
+                        </HBox>
+                     </graphic>
+                  </ToggleButton>
+                  <ToggleButton fx:id="tbLigue1" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="league-filter" toggleGroup="$tgLigas" userData="ligue1">
+                     <graphic>
+                        <HBox alignment="CENTER_LEFT" prefWidth="170.0" spacing="10.0">
+                           <children>
+                              <Circle radius="7.0" styleClass="league-filter-dot, league-dot-ligue1" />
+                              <Label styleClass="league-filter-name" text="Ligue 1" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Label fx:id="lblCantidadLigue1" styleClass="league-filter-count" text="0" />
+                           </children>
+                        </HBox>
+                     </graphic>
+                  </ToggleButton>
+               </children>
+            </VBox>
+
+            <!-- Precio -->
+            <Label fx:id="lblFiltrarPrecio" styleClass="filter-title" text="Precio">
+               <VBox.margin>
+                  <Insets left="4.0" top="22.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="lblRangoPrecio" styleClass="filter-detail" text="\$ 0 – \$ 0">
+               <VBox.margin>
+                  <Insets left="4.0" top="2.0" />
+               </VBox.margin>
+            </Label>
+            <Slider fx:id="sldPrecioMaximo" styleClass="price-slider">
+               <VBox.margin>
+                  <Insets left="2.0" right="2.0" top="8.0" />
+               </VBox.margin>
+            </Slider>
+
+            <!-- Talla -->
+            <Label fx:id="lblFiltrarTalla" styleClass="filter-title" text="Talla">
+               <VBox.margin>
+                  <Insets left="4.0" top="22.0" />
+               </VBox.margin>
+            </Label>
+            <TilePane fx:id="tpTallas" hgap="8.0" prefColumns="3" vgap="8.0">
+               <VBox.margin>
+                  <Insets left="4.0" top="10.0" />
+               </VBox.margin>
+               <children>
+                  <ToggleButton fx:id="tbTallaXS" mnemonicParsing="false" styleClass="size-filter" text="XS" userData="XS">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="tgTallas" />
+                     </toggleGroup>
+                  </ToggleButton>
+                  <ToggleButton fx:id="tbTallaS" mnemonicParsing="false" styleClass="size-filter" text="S" toggleGroup="$tgTallas" userData="S" />
+                  <ToggleButton fx:id="tbTallaM" mnemonicParsing="false" styleClass="size-filter" text="M" toggleGroup="$tgTallas" userData="M" />
+                  <ToggleButton fx:id="tbTallaL" mnemonicParsing="false" styleClass="size-filter" text="L" toggleGroup="$tgTallas" userData="L" />
+                  <ToggleButton fx:id="tbTallaXL" mnemonicParsing="false" styleClass="size-filter" text="XL" toggleGroup="$tgTallas" userData="XL" />
+                  <ToggleButton fx:id="tbTallaXXL" mnemonicParsing="false" styleClass="size-filter" text="XXL" toggleGroup="$tgTallas" userData="XXL" />
+               </children>
+            </TilePane>
+
+            <Region VBox.vgrow="ALWAYS" />
+            <Button fx:id="btnLimpiarFiltros" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onVerTodas" styleClass="clear-filters-button" text="Limpiar filtros" />
+         </children>
+      </VBox>
+   </left>
+
+   <!-- ===== CONTENIDO: BANNER + CATÁLOGO ===== -->
+   <center>
+      <ScrollPane fx:id="spContenido" fitToWidth="true" hbarPolicy="NEVER" styleClass="admin-scroll">
+         <content>
+            <VBox fx:id="vbContenido" spacing="18.0" styleClass="catalog-content">
+               <padding>
+                  <Insets bottom="24.0" left="24.0" right="24.0" top="18.0" />
+               </padding>
+               <children>
+
+                  <!-- Banner -->
+                  <HBox fx:id="hbBanner" alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="150.0" styleClass="catalog-banner">
+                     <padding>
+                        <Insets left="28.0" right="40.0" />
+                     </padding>
+                     <children>
+                        <VBox fx:id="vbBannerTexto" alignment="CENTER_LEFT" spacing="4.0">
+                           <children>
+                              <Label fx:id="lblBannerEtiqueta" styleClass="banner-caption" text="L&#8201;A&#8201;S&#8195;M&#8201;E&#8201;J&#8201;O&#8201;R&#8201;E&#8201;S&#8195;C&#8201;A&#8201;M&#8201;I&#8201;S&#8201;E&#8201;T&#8201;A&#8201;S" />
+                              <Label fx:id="lblBannerTitulo" styleClass="banner-title" text="DE LAS 5 GRANDES LIGAS" />
+                              <Button fx:id="btnVerTodasBanner" mnemonicParsing="false" onAction="#onVerTodas" styleClass="banner-button" text="Ver todas las camisetas   →">
+                                 <VBox.margin>
+                                    <Insets top="12.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <HBox fx:id="hbBannerCamisetas" alignment="CENTER" fillHeight="false" spacing="-10.0">
+                           <children>
+                              <Pane fx:id="paneBannerCamisetaBarcelona" prefHeight="108.0" prefWidth="106.0">
+                                 <children>
+                                    <SVGPath content="M34,0 Q53,13 72,0 L106,18 L95,41 L80,34 L80,108 L26,108 L26,34 L11,41 L0,18 Z" styleClass="shirt-body, shirt-barcelona" />
+                                    <Rectangle height="82.0" layoutX="32.0" layoutY="25.0" styleClass="stripe-barcelona" width="10.0" />
+                                    <Rectangle height="82.0" layoutX="48.0" layoutY="25.0" styleClass="stripe-barcelona" width="10.0" />
+                                    <Rectangle height="82.0" layoutX="64.0" layoutY="25.0" styleClass="stripe-barcelona" width="10.0" />
+                                 </children>
+                              </Pane>
+                              <Pane fx:id="paneBannerCamisetaRealMadrid" prefHeight="108.0" prefWidth="106.0">
+                                 <children>
+                                    <SVGPath content="M34,0 Q53,13 72,0 L106,18 L95,41 L80,34 L80,108 L26,108 L26,34 L11,41 L0,18 Z" styleClass="shirt-body, shirt-juventus" />
+                                    <Label alignment="CENTER" layoutX="26.0" layoutY="44.0" prefWidth="54.0" styleClass="shirt-text-dark" text="RMA" />
+                                 </children>
+                              </Pane>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+
+                  <!-- Encabezado de la sección -->
+                  <HBox fx:id="hbEncabezadoCatalogo" alignment="CENTER_LEFT">
+                     <children>
+                        <Label fx:id="lblTituloCatalogo" styleClass="catalog-section-title" text="Camisetas destacadas" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Hyperlink fx:id="lnkVerTodas" onAction="#onVerTodas" styleClass="catalog-see-all" text="Ver todas  →" />
+                     </children>
+                  </HBox>
+
+                  <!-- Aquí se agregan los cards (Product_Component) desde el controlador -->
+                  <FlowPane fx:id="fpProductos" hgap="16.0" vgap="16.0" />
+
+                  <Label fx:id="lblSinResultados" managed="false" maxWidth="1.7976931348623157E308" styleClass="catalog-empty" text="No hay camisetas que coincidan con los filtros." visible="false" />
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </center>
+</BorderPane>

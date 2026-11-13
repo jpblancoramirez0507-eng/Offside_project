@@ -1,14 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.SVGPath?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ComponentsControllers.Product_ComponentController">
-    <stylesheets>
-        <URL value="@/Styles/StyleSheetsComponents/product_component.css"/>
-    </stylesheets>
-</AnchorPane>
+<!-- Card de un producto en el catálogo del cliente -->
+<VBox fx:id="paneCardProducto" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="236.0" styleClass="product-card" stylesheets="@../../Styles/StyleSheetsComponents/product_component.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ComponentsControllers.Product_ComponentController">
+   <padding>
+      <Insets bottom="12.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+   <children>
+
+      <!-- Imagen con etiqueta y botón de favorito -->
+      <StackPane fx:id="paneImagenProducto" minHeight="170.0" prefHeight="170.0" styleClass="card-image-area">
+         <children>
+            <!-- Se muestra mientras no haya imagen (o si no se puede cargar) -->
+            <SVGPath fx:id="svgCamisetaGenerica" content="M34,0 Q53,13 72,0 L106,18 L95,41 L80,34 L80,108 L26,108 L26,34 L11,41 L0,18 Z" styleClass="card-image-placeholder" />
+            <ImageView fx:id="imgProducto" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="lblEtiqueta" managed="false" styleClass="card-badge" text="Últimas unidades" visible="false" StackPane.alignment="TOP_LEFT">
+               <StackPane.margin>
+                  <Insets left="8.0" top="8.0" />
+               </StackPane.margin>
+            </Label>
+            <Button fx:id="btnFavorito" mnemonicParsing="false" onAction="#onFavorito" styleClass="card-fav-button" text="♡" StackPane.alignment="TOP_RIGHT">
+               <StackPane.margin>
+                  <Insets right="8.0" top="8.0" />
+               </StackPane.margin>
+            </Button>
+         </children>
+      </StackPane>
+
+      <!-- Información -->
+      <VBox fx:id="vbInfoProducto" spacing="2.0">
+         <padding>
+            <Insets left="4.0" right="4.0" top="12.0" />
+         </padding>
+         <children>
+            <Label fx:id="lblNombreEquipo" styleClass="card-team" text="Real Madrid" />
+            <Label fx:id="lblTipoTemporada" styleClass="card-season" text="Local 2026/27" />
+            <HBox fx:id="hbLiga" alignment="CENTER_LEFT" spacing="6.0">
+               <VBox.margin>
+                  <Insets top="2.0" />
+               </VBox.margin>
+               <children>
+                  <Circle fx:id="cirLiga" radius="3.5" styleClass="league-dot" />
+                  <Label fx:id="lblLiga" styleClass="card-league" text="La Liga" />
+               </children>
+            </HBox>
+
+            <!-- Precio y botón de agregar al carrito -->
+            <HBox fx:id="hbPrecio" alignment="CENTER_LEFT">
+               <VBox.margin>
+                  <Insets top="12.0" />
+               </VBox.margin>
+               <children>
+                  <Label fx:id="lblPrecio" styleClass="card-price" text="\$ 189.900" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button fx:id="btnAgregarCarrito" mnemonicParsing="false" onAction="#onAgregarCarrito" styleClass="card-add-button" text="+" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</VBox>

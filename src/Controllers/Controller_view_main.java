@@ -197,7 +197,13 @@ public class Controller_view_main implements Initializable {
                 e.printStackTrace();
             }
         } else if (rolCorrecto) {
-            mostrarMensajeLogin("Credenciales correctas", true);
+            // El cliente pasa al catálogo
+            try {
+                Parent vistaCatalogo = FXMLLoader.load(getClass().getResource("/Views/View_catalog.fxml"));
+                btnIniciarSesion.getScene().setRoot(vistaCatalogo);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
             mostrarMensajeLogin("Credenciales incorrectas", false);
         }

@@ -597,3 +597,216 @@
     -fx-font-weight: bold;
     -fx-text-fill: #12241f;
 }
+
+/* ==========================================================================
+   Vista del cliente: catálogo
+   ========================================================================== */
+
+.catalog-root {
+    -fx-font-family: "Segoe UI";
+    -fx-background-color: #f3f5f4;
+}
+
+.catalog-content {
+    -fx-background-color: #f3f5f4;
+}
+
+/* Barra superior: menú "Mi cuenta" y contador del carrito */
+.topbar-menu {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.topbar-menu > .label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #ffffff;
+}
+
+.topbar-menu > .arrow-button > .arrow {
+    -fx-background-color: #ffffff;
+}
+
+.cart-counter {
+    -fx-background-color: #2ecc7f;
+    -fx-background-radius: 10;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-min-height: 20;
+    -fx-min-width: 20;
+    -fx-padding: 0 6 0 6;
+    -fx-text-fill: #0f2c25;
+}
+
+/* Filtros */
+.filter-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #12241f;
+}
+
+.filter-detail {
+    -fx-font-size: 11px;
+    -fx-text-fill: #6b7a75;
+}
+
+.league-filter {
+    -fx-alignment: center-left;
+    -fx-background-color: transparent;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-padding: 8 10 8 10;
+}
+
+.league-filter:hover {
+    -fx-background-color: #eef3f1;
+}
+
+.league-filter:selected {
+    -fx-background-color: #148a4f;
+}
+
+.league-filter-name {
+    -fx-font-size: 13px;
+    -fx-text-fill: #12241f;
+}
+
+.league-filter:selected .league-filter-name {
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+.league-filter-count {
+    -fx-font-size: 11px;
+    -fx-text-fill: #6b7a75;
+}
+
+.league-filter:selected .league-filter-count {
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+.league-filter-dot-all {
+    -fx-fill: #ffffff;
+    -fx-stroke: #cdd6d2;
+}
+
+.league-filter-dot.league-dot-premier    { -fx-fill: #3d195b; }
+.league-filter-dot.league-dot-laliga     { -fx-fill: #ee8707; }
+.league-filter-dot.league-dot-seriea     { -fx-fill: #008fd7; }
+.league-filter-dot.league-dot-bundesliga { -fx-fill: #d20515; }
+.league-filter-dot.league-dot-ligue1     { -fx-fill: #091c3e; }
+
+/* Slider de precio */
+.price-slider .track {
+    -fx-background-color: #148a4f;
+    -fx-background-radius: 2;
+    -fx-pref-height: 4;
+    -fx-padding: 0;
+}
+
+.price-slider .thumb {
+    -fx-background-color: #148a4f, #ffffff;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 9, 7;
+    -fx-padding: 8;
+}
+
+/* Tallas */
+.size-filter {
+    -fx-background-color: #dfe5e3, #ffffff;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 6, 5;
+    -fx-cursor: hand;
+    -fx-font-size: 11px;
+    -fx-pref-height: 30;
+    -fx-pref-width: 54;
+    -fx-text-fill: #12241f;
+}
+
+.size-filter:hover {
+    -fx-background-color: #148a4f, #ffffff;
+}
+
+.size-filter:selected {
+    -fx-background-color: #148a4f;
+    -fx-background-insets: 0;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+.clear-filters-button {
+    -fx-background-color: #dfe5e3, #ffffff;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 8, 7;
+    -fx-cursor: hand;
+    -fx-font-size: 12px;
+    -fx-padding: 8 0 8 0;
+    -fx-text-fill: #0e4d3a;
+}
+
+.clear-filters-button:hover {
+    -fx-background-color: #148a4f, #e6f4ec;
+}
+
+/* Banner */
+.catalog-banner {
+    -fx-background-color: #0f3d30;
+    -fx-background-radius: 14;
+}
+
+.banner-caption {
+    -fx-font-size: 10px;
+    -fx-text-fill: #b4c5bf;
+}
+
+.banner-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+.banner-button {
+    -fx-background-color: #148a4f;
+    -fx-background-radius: 16;
+    -fx-cursor: hand;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 8 18 8 18;
+    -fx-text-fill: #ffffff;
+}
+
+.banner-button:hover {
+    -fx-background-color: #1aa35f;
+}
+
+.shirt-text-dark {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1b2a5c;
+}
+
+/* Sección del catálogo */
+.catalog-section-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #12241f;
+}
+
+.catalog-see-all,
+.catalog-see-all:visited {
+    -fx-border-color: transparent;
+    -fx-font-size: 12px;
+    -fx-text-fill: #5f6e69;
+    -fx-underline: false;
+}
+
+.catalog-see-all:hover {
+    -fx-text-fill: #0e4d3a;
+}
+
+.catalog-empty {
+    -fx-alignment: center;
+    -fx-font-size: 14px;
+    -fx-padding: 40 0 40 0;
+    -fx-text-fill: #6b7a75;
+}
