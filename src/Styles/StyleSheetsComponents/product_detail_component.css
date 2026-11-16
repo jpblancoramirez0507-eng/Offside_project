@@ -1,0 +1,312 @@
+/* ==========================================================================
+   OFFSIDE - Detalle de una camiseta
+   ========================================================================== */
+
+.detail-scroll,
+.detail-scroll > .viewport {
+    -fx-background-color: #f3f5f4;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.detail-scroll .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 10;
+}
+
+.detail-scroll .scroll-bar .thumb {
+    -fx-background-color: #cdd6d2;
+    -fx-background-radius: 5;
+}
+
+.detail-scroll .scroll-bar .increment-button,
+.detail-scroll .scroll-bar .decrement-button {
+    -fx-padding: 0;
+}
+
+.detail-scroll .scroll-bar .increment-arrow,
+.detail-scroll .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0;
+}
+
+.detail-root {
+    -fx-background-color: #f3f5f4;
+    -fx-font-family: "Segoe UI";
+}
+
+/* Navegación */
+.detail-back-link,
+.detail-back-link:visited {
+    -fx-border-color: transparent;
+    -fx-font-size: 12px;
+    -fx-padding: 0;
+    -fx-text-fill: #148a4f;
+    -fx-underline: false;
+}
+
+.detail-back-link:hover {
+    -fx-underline: true;
+}
+
+.detail-breadcrumb-link,
+.detail-breadcrumb-link:visited {
+    -fx-border-color: transparent;
+    -fx-font-size: 11px;
+    -fx-padding: 0;
+    -fx-text-fill: #6b7a75;
+    -fx-underline: false;
+}
+
+.detail-breadcrumb-link:hover {
+    -fx-text-fill: #148a4f;
+}
+
+.detail-breadcrumb {
+    -fx-font-size: 11px;
+    -fx-text-fill: #6b7a75;
+}
+
+/* Galería */
+.detail-gallery-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 16;
+    -fx-border-color: #e3e8e6;
+    -fx-border-radius: 16;
+    -fx-padding: 12;
+}
+
+.detail-main-image {
+    -fx-background-color: #eef1f0;
+    -fx-background-radius: 12;
+}
+
+.detail-image-placeholder {
+    -fx-fill: #d5ddd9;
+}
+
+.detail-thumb {
+    -fx-background-color: #dfe5e3, #eef1f0;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 10, 9;
+    -fx-cursor: hand;
+}
+
+.detail-thumb:hover {
+    -fx-background-color: #8fcaa8, #eef1f0;
+}
+
+.detail-thumb-selected,
+.detail-thumb-selected:hover {
+    -fx-background-color: #148a4f, #eef1f0;
+    -fx-background-insets: 0, 2;
+}
+
+/* Información */
+.detail-version-chip {
+    -fx-background-color: #e6f4ec;
+    -fx-background-radius: 10;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-padding: 3 10 3 10;
+    -fx-text-fill: #0e4d3a;
+}
+
+.detail-name {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #12241f;
+}
+
+.detail-league,
+.detail-brand {
+    -fx-font-size: 12px;
+    -fx-text-fill: #5f6e69;
+}
+
+.league-dot {
+    -fx-fill: #8a9893;
+}
+
+.league-dot-premier    { -fx-fill: #3d195b; }
+.league-dot-laliga     { -fx-fill: #ee8707; }
+.league-dot-seriea     { -fx-fill: #008fd7; }
+.league-dot-bundesliga { -fx-fill: #d20515; }
+.league-dot-ligue1     { -fx-fill: #091c3e; }
+
+.detail-price {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #12241f;
+}
+
+.detail-muted {
+    -fx-font-size: 11px;
+    -fx-text-fill: #6b7a75;
+}
+
+.detail-separator .line {
+    -fx-background-color: transparent;
+    -fx-border-color: #e3e8e6;
+    -fx-border-width: 1 0 0 0;
+}
+
+.detail-section-title {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #12241f;
+}
+
+/* Tallas */
+.detail-size {
+    -fx-background-color: #dfe5e3, #ffffff;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 8, 7;
+    -fx-cursor: hand;
+    -fx-font-size: 12px;
+    -fx-pref-height: 34;
+    -fx-pref-width: 46;
+    -fx-text-fill: #12241f;
+}
+
+.detail-size:hover {
+    -fx-background-color: #148a4f, #ffffff;
+}
+
+.detail-size:selected {
+    -fx-background-color: #148a4f;
+    -fx-background-insets: 0;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+.detail-size:disabled {
+    -fx-opacity: 0.4;
+}
+
+/* Cantidad */
+.detail-stepper {
+    -fx-background-color: #dfe5e3, #ffffff;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 8, 7;
+    -fx-padding: 2;
+}
+
+.detail-stepper-button {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-pref-height: 32;
+    -fx-pref-width: 34;
+    -fx-padding: 0;
+    -fx-text-fill: #12241f;
+}
+
+.detail-stepper-button:hover {
+    -fx-background-color: #eef3f1;
+    -fx-background-radius: 6;
+}
+
+.detail-stepper-button:disabled {
+    -fx-opacity: 0.35;
+}
+
+.detail-stepper-value {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #12241f;
+}
+
+.detail-available {
+    -fx-font-size: 12px;
+    -fx-text-fill: #148a4f;
+}
+
+.detail-available-none {
+    -fx-text-fill: #d32f2f;
+}
+
+/* Botones */
+.detail-button-primary {
+    -fx-background-color: #148a4f;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+.detail-button-primary:hover {
+    -fx-background-color: #0e6f3f;
+}
+
+.detail-button-dark {
+    -fx-background-color: #0e4d3a;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+.detail-button-dark:hover {
+    -fx-background-color: #0a3b2d;
+}
+
+.detail-button-outline {
+    -fx-background-color: #0e4d3a, #ffffff;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 10, 9;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0e4d3a;
+}
+
+.detail-button-outline:hover {
+    -fx-background-color: #0e4d3a, #e6f4ec;
+}
+
+.detail-button-primary:disabled,
+.detail-button-dark:disabled {
+    -fx-opacity: 0.45;
+}
+
+/* Garantías y descripción */
+.detail-info-box {
+    -fx-background-color: #e6f4ec;
+    -fx-background-radius: 12;
+    -fx-padding: 14;
+}
+
+.detail-info-title {
+    -fx-font-size: 12px;
+    -fx-text-fill: #0e4d3a;
+}
+
+.detail-description {
+    -fx-font-size: 13px;
+    -fx-line-spacing: 3;
+    -fx-text-fill: #3c4a45;
+}
+
+.detail-description-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 16;
+    -fx-border-color: #e3e8e6;
+    -fx-border-radius: 16;
+    -fx-padding: 20 24 22 24;
+}
+
+.detail-description-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #12241f;
+}
+
+.detail-description-subtitle {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0e4d3a;
+}

@@ -3,6 +3,7 @@ package DataStructures;
 import Models.Product;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -12,10 +13,13 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Stack;
 import java.util.regex.Pattern;
 import javafx.scene.control.Alert;
@@ -197,11 +201,6 @@ public class Stack_Of_Product {
         return null;
     }
 
-    /**
-     * Reescribe la línea "Stock: N" del archivo del producto en
-     * src/Files/ProductsBase. Si el archivo no tiene esa línea, la agrega antes
-     * de la descripción. Retorna true si se pudo guardar.
-     */
     public boolean updateStockInCatalog(int idProduct, int newStock) {
         String basePath = System.getProperty("user.dir");
         String fileName = String.format("%04d", idProduct) + " - Product Data.txt";
@@ -227,6 +226,115 @@ public class Stack_Of_Product {
             return true;
         } catch (IOException e) {
             System.out.println("Error al actualizar el stock del producto " + idProduct + ": " + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Retorna el párrafo que está después de la línea "Descripcion: ..." en el
+     * archivo del producto (Product solo guarda esa primera línea). Si no hay
+     * párrafo retorna una cadena vacía.
+     */
+    public String loadLongDescriptionFromCatalog(int idProduct) {
+        String fileName = String.format("%04d", idProduct) + " - Product Data.txt";
+        Path fullPath = Paths.get(System.getProperty("user.dir"), "src/Files/ProductsBase", fileName);
+
+        try {
+            List<String> lines = Files.readAllLines(fullPath, StandardCharsets.UTF_8);
+            StringBuilder paragraph = new StringBuilder();
+            boolean afterDescription = false;
+
+            for (String line : lines) {
+                String trimmed = line.trim();
+                if (!afterDescription) {
+                    afterDescription = trimmed.toLowerCase().startsWith("descripcion") || trimmed.toLowerCase().startsWith("descripción");
+                } else if (!trimmed.isEmpty()) {
+                    if (paragraph.length() > 0) {
+                        paragraph.append("\n\n");
+                    }
+                    paragraph.append(trimmed);
+                }
+            }
+            return paragraph.toString();
+        } catch (IOException e) {
+            System.out.println("Error al leer la descripción del producto " + idProduct + ": " + e.getMessage());
+            return "";
+        }
+    }
+
+    public int getNextProductId() {
+        File folder = Paths.get(System.getProperty("user.dir"), "src/Files/ProductsBase").toFile();
+        String[] names = folder.list((dir, name) -> name.matches("\\d{4} - Product Data\\.txt"));
+
+        int maxId = 0;
+        if (names != null) {
+            for (String name : names) {
+                maxId = Math.max(maxId, Integer.parseInt(name.substring(0, 4)));
+            }
+        }
+        return maxId + 1;
+    }
+
+    public boolean existsProductWithName(String name) {
+        for (int id = 1; id < getNextProductId(); id++) {
+            Product product = loadProductFromCatalog(id);
+            if (product != null && product.getName().equalsIgnoreCase(name.trim())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean saveProductToCatalog(Product product, String longDescription) {
+        String fileName = String.format("%04d", product.getIdProduct()) + " - Product Data.txt";
+        Path fullPath = Paths.get(System.getProperty("user.dir"), "src/Files/ProductsBase", fileName);
+
+        if (Files.exists(fullPath)) {
+            System.out.println("Ya existe un producto con el id " + product.getIdProduct());
+            return false;
+        }
+
+        NumberFormat priceFormat = NumberFormat.getIntegerInstance(new Locale("es", "CO"));
+        String lineBreak = "\r\n";
+
+        StringBuilder content = new StringBuilder();
+        content.append("Nombre: ").append(product.getName()).append(lineBreak);
+        content.append("Marca: ").append(product.getBrand()).append(lineBreak);
+        content.append("Equipo: ").append(product.getTeam()).append(lineBreak);
+        content.append("Liga: ").append(product.getLeague()).append(lineBreak);
+        content.append("Tallas: ").append(String.join(", ", product.getSizes())).append(lineBreak);
+        content.append("Precio: $").append(priceFormat.format(product.getPrice())).append(lineBreak);
+        content.append("Stock: ").append(product.getStock()).append(lineBreak);
+        content.append("Descripcion: ").append(product.getDescription());
+
+        if (longDescription != null && !longDescription.trim().isEmpty()) {
+            content.append(lineBreak).append(lineBreak).append(longDescription.trim().replaceAll("\\R", " "));
+        }
+
+        try {
+            Files.write(fullPath, content.toString().getBytes(StandardCharsets.UTF_8));
+            return true;
+        } catch (IOException e) {
+            System.out.println("Error al guardar el producto " + product.getIdProduct() + ": " + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Copia una imagen del producto a src/Images/ProductImages como
+     * "NNNN - Equipo - N.png" (o .jpg). La imagen 1 es la principal, la que
+     * muestran los cards.
+     */
+    public boolean saveProductImage(int idProduct, String team, File source, int imageNumber) {
+        String extension = source.getName().toLowerCase().endsWith(".png") ? ".png" : ".jpg";
+        String fileName = String.format("%04d", idProduct) + " - " + team.replaceAll("[\\\\/:*?\"<>|]", "") + " - " + imageNumber + extension;
+        Path target = Paths.get(System.getProperty("user.dir"), "src/Images/ProductImages", fileName);
+
+        try {
+            Files.copy(source.toPath(), target, StandardCopyOption.REPLACE_EXISTING);
+            return true;
+        } catch (IOException e) {
+            System.out.println("Error al guardar la imagen del producto " + idProduct + ": " + e.getMessage());
             return false;
         }
     }

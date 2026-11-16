@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -185,7 +186,26 @@ public class Controller_view_admin implements Initializable {
 
     @FXML
     private void onRegistrarProducto(ActionEvent event) {
-        // TODO
+        // Se cambia solo el contenido central: la barra superior y el menú lateral se mantienen
+        Node contenidoInventario = paneRaiz.getCenter();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/View_admin_register_product.fxml"));
+            Parent formulario = loader.load();
+            Controller_view_admin_register_product controladorFormulario = loader.getController();
+
+            // Al cancelar o guardar se vuelve al inventario (y se recarga si hay un producto nuevo)
+            controladorFormulario.setAlVolver(productoGuardado -> {
+                paneRaiz.setCenter(contenidoInventario);
+                if (productoGuardado) {
+                    cargarProductos();
+                }
+            });
+
+            paneRaiz.setCenter(formulario);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

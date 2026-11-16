@@ -1,6 +1,7 @@
 package Controllers;
 
 import Controllers.ComponentsControllers.Product_ComponentController;
+import Controllers.ComponentsControllers.Product_Detail_ComponentController;
 import DataStructures.Data_Manager;
 import DataStructures.Stack_Of_Product;
 import Models.Product;
@@ -145,6 +146,11 @@ public class Controller_view_catalog implements Initializable {
     private final NumberFormat formatoPrecio = NumberFormat.getIntegerInstance(new Locale("es", "CO"));
     private double precioMinimo = 0;
 
+    // Mientras se ve el detalle de un producto se guardan el catálogo y los filtros
+    private Node vistaDetalle;
+    private Node contenidoCatalogo;
+    private Node filtrosCatalogo;
+
     /**
      * Initializes the controller class.
      */
@@ -163,7 +169,11 @@ public class Controller_view_catalog implements Initializable {
             }
         });
         tgTallas.selectedToggleProperty().addListener((obs, anterior, nuevo) -> aplicarFiltros());
-        txtBuscar.textProperty().addListener((obs, anterior, nuevo) -> aplicarFiltros());
+        txtBuscar.textProperty().addListener((obs, anterior, nuevo) -> {
+            // Si se busca desde el detalle, se vuelve al catálogo para ver los resultados
+            volverAlCatalogo();
+            aplicarFiltros();
+        });
         sldPrecioMaximo.valueProperty().addListener((obs, anterior, nuevo) -> {
             actualizarTextoPrecio();
             aplicarFiltros();
@@ -194,6 +204,7 @@ public class Controller_view_catalog implements Initializable {
                 Parent card = loader.load();
                 Product_ComponentController controladorCard = loader.getController();
                 controladorCard.setProducto(producto);
+                controladorCard.setAlSeleccionar(this::abrirDetalle);
 
                 cards.add(controladorCard);
                 nodosCards.add(card);
@@ -317,6 +328,39 @@ public class Controller_view_catalog implements Initializable {
         sldPrecioMaximo.setValue(sldPrecioMaximo.getMax());
         aplicarFiltros();
         spContenido.setVvalue(0);
+    }
+
+    /**
+     * Muestra el detalle del producto (Product_Detail_Component) en lugar del
+     * catálogo. Se ocultan los filtros y se guardan para poder volver.
+     */
+    private void abrirDetalle(Product producto) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/Components/Product_Detail_Component.fxml"));
+            Parent detalle = loader.load();
+            Product_Detail_ComponentController controladorDetalle = loader.getController();
+            controladorDetalle.setProducto(producto);
+            controladorDetalle.setAlVolver(this::volverAlCatalogo);
+
+            if (vistaDetalle == null) {
+                contenidoCatalogo = paneRaiz.getCenter();
+                filtrosCatalogo = paneRaiz.getLeft();
+            }
+            vistaDetalle = detalle;
+            paneRaiz.setLeft(null);
+            paneRaiz.setCenter(detalle);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void volverAlCatalogo() {
+        if (vistaDetalle == null) {
+            return;
+        }
+        paneRaiz.setLeft(filtrosCatalogo);
+        paneRaiz.setCenter(contenidoCatalogo);
+        vistaDetalle = null;
     }
 
     @FXML

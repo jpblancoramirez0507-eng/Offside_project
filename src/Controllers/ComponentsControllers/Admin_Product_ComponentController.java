@@ -109,7 +109,7 @@ public class Admin_Product_ComponentController implements Initializable {
         File carpeta = new File(System.getProperty("user.dir"), "src/Images/ProductImages");
         String prefijo = String.format("%04d", idProduct) + " - ";
 
-        File[] archivos = carpeta.listFiles((dir, nombre) -> nombre.startsWith(prefijo) && nombre.endsWith(" - 1.png"));
+        File[] archivos = carpeta.listFiles((dir, nombre) -> nombre.startsWith(prefijo) && nombre.toLowerCase().matches(".* - 1\\.(png|jpg|jpeg)"));
         if (archivos == null || archivos.length == 0) {
             return;
         }

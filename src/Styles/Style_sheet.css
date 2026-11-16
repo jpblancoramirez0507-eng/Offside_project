@@ -810,3 +810,194 @@
     -fx-padding: 40 0 40 0;
     -fx-text-fill: #6b7a75;
 }
+
+/* ==========================================================================
+   Panel del administrador: registrar producto
+   ========================================================================== */
+
+.back-link,
+.back-link:visited {
+    -fx-border-color: transparent;
+    -fx-font-size: 12px;
+    -fx-padding: 0 0 2 0;
+    -fx-text-fill: #148a4f;
+    -fx-underline: false;
+}
+
+.back-link:hover {
+    -fx-underline: true;
+}
+
+.product-form {
+    -fx-padding: 18 20 20 20;
+}
+
+.form-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #12241f;
+}
+
+.form-hint {
+    -fx-font-size: 11px;
+    -fx-text-fill: #8a9893;
+}
+
+.admin-combo:focused {
+    -fx-background-color: #148a4f, #ffffff;
+    -fx-background-insets: 0, 1.5;
+}
+
+.admin-combo .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.admin-combo .text-field {
+    -fx-background-color: transparent;
+    -fx-font-size: 13px;
+    -fx-padding: 0 0 0 8;
+}
+
+.admin-textarea {
+    -fx-background-color: #dfe5e3, #ffffff;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 8, 7;
+    -fx-font-size: 13px;
+    -fx-prompt-text-fill: #8a9893;
+}
+
+.admin-textarea:focused {
+    -fx-background-color: #148a4f, #ffffff;
+    -fx-background-insets: 0, 1.5;
+}
+
+.admin-textarea .content {
+    -fx-background-color: transparent;
+    -fx-padding: 6 8 6 8;
+}
+
+.admin-textarea .scroll-pane,
+.admin-textarea .scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Stock por talla */
+.size-stock-box {
+    -fx-background-color: #dfe5e3, #ffffff;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 8, 7;
+    -fx-padding: 6 10 4 10;
+}
+
+.size-stock-label {
+    -fx-font-size: 10px;
+    -fx-text-fill: #8a9893;
+}
+
+.size-stock-field {
+    -fx-background-color: transparent;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 0;
+    -fx-prompt-text-fill: #b4c0bb;
+    -fx-text-fill: #12241f;
+}
+
+/* Zona para subir la imagen */
+.image-drop-zone {
+    -fx-background-color: #f5faf7;
+    -fx-background-radius: 10;
+    -fx-border-color: #8fcaa8;
+    -fx-border-radius: 10;
+    -fx-border-style: segments(6, 5);
+    -fx-border-width: 1.5;
+    -fx-cursor: hand;
+}
+
+.image-drop-zone:hover,
+.image-drop-zone-active {
+    -fx-background-color: #e6f4ec;
+    -fx-border-color: #148a4f;
+}
+
+.drop-zone-title {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0e4d3a;
+}
+
+.drop-zone-detail {
+    -fx-font-size: 11px;
+    -fx-text-fill: #6b7a75;
+}
+
+.admin-button-outline {
+    -fx-background-color: #dfe5e3, #ffffff;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 8, 7;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #12241f;
+}
+
+.admin-button-outline:hover {
+    -fx-background-color: #148a4f, #f5faf7;
+}
+
+.stock-total-box {
+    -fx-background-color: #e6f4ec;
+    -fx-background-radius: 10;
+    -fx-border-color: #bfe3cd;
+    -fx-border-radius: 10;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 12;
+    -fx-text-fill: #0e4d3a;
+}
+
+/* Miniaturas de las imágenes del producto */
+.image-thumb {
+    -fx-background-color: #dfe5e3, #f1f4f3;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 10, 9;
+    -fx-cursor: hand;
+}
+
+.image-thumb:hover {
+    -fx-background-color: #8fcaa8, #f1f4f3;
+}
+
+.image-thumb-main,
+.image-thumb-main:hover {
+    -fx-background-color: #148a4f, #f1f4f3;
+    -fx-background-insets: 0, 2;
+}
+
+.image-thumb-badge {
+    -fx-background-color: #148a4f;
+    -fx-background-radius: 6;
+    -fx-font-size: 9px;
+    -fx-font-weight: bold;
+    -fx-padding: 1 6 1 6;
+    -fx-text-fill: #ffffff;
+}
+
+.image-thumb-remove {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.18), 3, 0, 0, 1);
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-min-height: 20;
+    -fx-min-width: 20;
+    -fx-pref-height: 20;
+    -fx-pref-width: 20;
+    -fx-padding: 0 0 1 0;
+    -fx-text-fill: #d32f2f;
+}
+
+.image-thumb-remove:hover {
+    -fx-background-color: #fdecec;
+}

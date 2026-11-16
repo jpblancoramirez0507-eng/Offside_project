@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- Contenido central del panel del administrador para registrar un producto.
+     Controller_view_admin lo coloca en el centro del BorderPane. -->
+<VBox fx:id="vbRegistrarProducto" styleClass="admin-content" stylesheets="@../Styles/Style_sheet.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Controller_view_admin_register_product">
+   <padding>
+      <Insets bottom="20.0" left="24.0" right="24.0" top="14.0" />
+   </padding>
+   <children>
+      <Hyperlink fx:id="lnkVolverInventario" onAction="#onVolver" styleClass="back-link" text="←  Volver al inventario" />
+      <Label fx:id="lblTitulo" styleClass="admin-title" text="Registrar producto" />
+
+      <HBox fx:id="hbCuerpo" spacing="16.0" VBox.vgrow="ALWAYS">
+         <VBox.margin>
+            <Insets top="12.0" />
+         </VBox.margin>
+         <children>
+
+            <!-- ===== FORMULARIO ===== -->
+            <ScrollPane fx:id="spFormulario" fitToWidth="true" hbarPolicy="NEVER" styleClass="admin-scroll" HBox.hgrow="ALWAYS">
+               <content>
+                  <VBox fx:id="vbFormulario" spacing="6.0" styleClass="admin-card, product-form">
+                     <children>
+
+                        <!-- Nombre -->
+                        <Label styleClass="form-label" text="Nombre del producto" />
+                        <TextField fx:id="txtNombreProducto" prefHeight="38.0" promptText="Camiseta Local Real Madrid 2026" styleClass="admin-input" />
+
+                        <!-- Liga y equipo -->
+                        <HBox spacing="16.0">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                           <children>
+                              <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label styleClass="form-label" text="Liga" />
+                                    <ComboBox fx:id="cbLiga" maxWidth="1.7976931348623157E308" prefHeight="38.0" promptText="Selecciona la liga" styleClass="admin-combo" />
+                                    <Label styleClass="form-hint" text="Solo equipos principales de las 5 grandes ligas." />
+                                 </children>
+                              </VBox>
+                              <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label styleClass="form-label" text="Equipo" />
+                                    <ComboBox fx:id="cbEquipo" maxWidth="1.7976931348623157E308" prefHeight="38.0" promptText="Primero elige la liga" styleClass="admin-combo" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+
+                        <!-- Versión, marca y precio -->
+                        <HBox spacing="16.0">
+                           <VBox.margin>
+                              <Insets top="8.0" />
+                           </VBox.margin>
+                           <children>
+                              <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label styleClass="form-label" text="Versión" />
+                                    <ComboBox fx:id="cbVersion" maxWidth="1.7976931348623157E308" prefHeight="38.0" styleClass="admin-combo" />
+                                 </children>
+                              </VBox>
+                              <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label styleClass="form-label" text="Marca" />
+                                    <ComboBox fx:id="cbMarca" editable="true" maxWidth="1.7976931348623157E308" prefHeight="38.0" promptText="Adidas, Nike, Puma..." styleClass="admin-combo" />
+                                 </children>
+                              </VBox>
+                              <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label styleClass="form-label" text="Precio (COP)" />
+                                    <TextField fx:id="txtPrecio" prefHeight="38.0" promptText="\$ 189.900" styleClass="admin-input" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+
+                        <!-- Stock por talla -->
+                        <Label styleClass="form-label" text="Stock inicial por talla">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox fx:id="hbStockTallas" spacing="10.0">
+                           <children>
+                              <VBox styleClass="size-stock-box" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label styleClass="size-stock-label" text="XS" />
+                                    <TextField fx:id="txtStockXS" promptText="0" styleClass="size-stock-field" />
+                                 </children>
+                              </VBox>
+                              <VBox styleClass="size-stock-box" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label styleClass="size-stock-label" text="S" />
+                                    <TextField fx:id="txtStockS" promptText="0" styleClass="size-stock-field" />
+                                 </children>
+                              </VBox>
+                              <VBox styleClass="size-stock-box" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label styleClass="size-stock-label" text="M" />
+                                    <TextField fx:id="txtStockM" promptText="0" styleClass="size-stock-field" />
+                                 </children>
+                              </VBox>
+                              <VBox styleClass="size-stock-box" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label styleClass="size-stock-label" text="L" />
+                                    <TextField fx:id="txtStockL" promptText="0" styleClass="size-stock-field" />
+                                 </children>
+                              </VBox>
+                              <VBox styleClass="size-stock-box" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label styleClass="size-stock-label" text="XL" />
+                                    <TextField fx:id="txtStockXL" promptText="0" styleClass="size-stock-field" />
+                                 </children>
+                              </VBox>
+                              <VBox styleClass="size-stock-box" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label styleClass="size-stock-label" text="XXL" />
+                                    <TextField fx:id="txtStockXXL" promptText="0" styleClass="size-stock-field" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+
+                        <!-- Descripción -->
+                        <Label styleClass="form-label" text="Descripción (opcional)">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextArea fx:id="txtDescripcion" prefHeight="58.0" prefRowCount="2" promptText="Cuenta qué tiene de especial esta camiseta..." styleClass="admin-textarea" wrapText="true" />
+
+                        <!-- Imagen -->
+                        <Label fx:id="lblImagenesProducto" styleClass="form-label" text="Imágenes del producto">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <StackPane fx:id="paneZonaImagen" minHeight="84.0" onMouseClicked="#onElegirImagen" prefHeight="84.0" styleClass="image-drop-zone">
+                           <children>
+                              <VBox alignment="CENTER" spacing="4.0">
+                                 <children>
+                                    <Label fx:id="lblZonaImagenTitulo" styleClass="drop-zone-title" text="Arrastra imágenes o haz clic para subirlas" />
+                                    <Label fx:id="lblZonaImagenDetalle" styleClass="drop-zone-detail" text="PNG o JPG · máximo 5 MB cada una · hasta 6 imágenes" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </StackPane>
+
+                        <!-- Miniaturas de las imágenes elegidas (se crean desde el controlador) -->
+                        <FlowPane fx:id="fpImagenes" hgap="10.0" managed="false" vgap="10.0" visible="false">
+                           <VBox.margin>
+                              <Insets top="6.0" />
+                           </VBox.margin>
+                        </FlowPane>
+                        <Label fx:id="lblAyudaImagenes" managed="false" styleClass="form-hint" text="La primera imagen es la principal (la que se ve en el catálogo). Haz clic en otra para hacerla principal." visible="false" wrapText="true" />
+
+                        <!-- Mensaje de validación -->
+                        <Label fx:id="lblErrorFormulario" managed="false" maxWidth="1.7976931348623157E308" styleClass="login-message, login-message-error" visible="false" wrapText="true">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Label>
+
+                        <!-- Acciones -->
+                        <HBox spacing="12.0">
+                           <VBox.margin>
+                              <Insets top="16.0" />
+                           </VBox.margin>
+                           <children>
+                              <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#onVolver" prefHeight="42.0" prefWidth="190.0" styleClass="admin-button-outline" text="Cancelar" />
+                              <Button fx:id="btnGuardarProducto" defaultButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onGuardarProducto" prefHeight="42.0" styleClass="admin-button-primary" text="Guardar producto" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+
+            <!-- ===== VISTA PREVIA ===== -->
+            <VBox fx:id="vbVistaPrevia" minWidth="250.0" prefWidth="250.0" spacing="10.0">
+               <children>
+                  <Label styleClass="filter-title" text="Vista previa" />
+                  <!-- Aquí se agrega un Product_Component desde el controlador -->
+                  <StackPane fx:id="paneVistaPrevia" alignment="TOP_LEFT" />
+                  <Label fx:id="lblStockTotal" alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="stock-total-box" text="Stock total: 0 unidades" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</VBox>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.SVGPath?>
+
+<!-- Detalle de una camiseta del catálogo. Controller_view_catalog lo coloca en el centro de la vista. -->
+<ScrollPane fx:id="spDetalleProducto" fitToWidth="true" hbarPolicy="NEVER" styleClass="detail-scroll" stylesheets="@../../Styles/StyleSheetsComponents/product_detail_component.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ComponentsControllers.Product_Detail_ComponentController">
+   <content>
+      <VBox fx:id="vbDetalleProducto" styleClass="detail-root">
+         <padding>
+            <Insets bottom="24.0" left="24.0" right="24.0" top="16.0" />
+         </padding>
+         <children>
+
+            <!-- Volver + ruta -->
+            <HBox fx:id="hbNavegacion" alignment="CENTER_LEFT" spacing="60.0">
+               <children>
+                  <Hyperlink fx:id="lnkVolverCatalogo" onAction="#onVolver" styleClass="detail-back-link" text="←  Volver al catálogo" />
+                  <HBox fx:id="hbRuta" alignment="CENTER_LEFT" spacing="6.0">
+                     <children>
+                        <Hyperlink fx:id="lnkRutaInicio" onAction="#onVolver" styleClass="detail-breadcrumb-link" text="Inicio" />
+                        <Label styleClass="detail-breadcrumb" text="/" />
+                        <Label fx:id="lblRutaLiga" styleClass="detail-breadcrumb" text="La Liga" />
+                        <Label styleClass="detail-breadcrumb" text="/" />
+                        <Label fx:id="lblRutaEquipo" styleClass="detail-breadcrumb" text="Barcelona" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+
+            <HBox fx:id="hbCuerpo" spacing="28.0">
+               <VBox.margin>
+                  <Insets top="14.0" />
+               </VBox.margin>
+               <children>
+
+                  <!-- ===== GALERÍA ===== -->
+                  <VBox fx:id="vbGaleria" minWidth="460.0" prefWidth="500.0" spacing="12.0" styleClass="detail-gallery-card">
+                     <children>
+                        <StackPane fx:id="paneImagenPrincipal" minHeight="380.0" prefHeight="380.0" styleClass="detail-main-image">
+                           <children>
+                              <!-- Se muestra si el producto no tiene imagen (o no se puede leer) -->
+                              <SVGPath fx:id="svgCamisetaGenerica" content="M34,0 Q53,13 72,0 L106,18 L95,41 L80,34 L80,108 L26,108 L26,34 L11,41 L0,18 Z" scaleX="2.4" scaleY="2.4" styleClass="detail-image-placeholder" />
+                              <ImageView fx:id="imgPrincipal" fitHeight="350.0" fitWidth="420.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </StackPane>
+                        <!-- Miniaturas de las demás imágenes (se crean desde el controlador) -->
+                        <HBox fx:id="hbMiniaturas" managed="false" spacing="10.0" visible="false" />
+                     </children>
+                  </VBox>
+
+                  <!-- ===== INFORMACIÓN ===== -->
+                  <VBox fx:id="vbInformacion" spacing="6.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="lblVersion" styleClass="detail-version-chip" text="Local 2026/27" />
+                        <Label fx:id="lblNombre" styleClass="detail-name" text="Camiseta Barcelona" wrapText="true">
+                           <VBox.margin>
+                              <Insets top="6.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox fx:id="hbLiga" alignment="CENTER_LEFT" spacing="7.0">
+                           <children>
+                              <Circle fx:id="cirLiga" radius="4.0" styleClass="league-dot" />
+                              <Label fx:id="lblLiga" styleClass="detail-league" text="La Liga" />
+                              <Label fx:id="lblMarca" styleClass="detail-brand" text="· Nike" />
+                           </children>
+                        </HBox>
+                        <Label fx:id="lblPrecio" styleClass="detail-price" text="\$ 189.900">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="lblEnvio" styleClass="detail-muted" text="Envío a todo el país · Cuotas sin interés" />
+                        <Separator styleClass="detail-separator">
+                           <VBox.margin>
+                              <Insets bottom="8.0" top="8.0" />
+                           </VBox.margin>
+                        </Separator>
+
+                        <!-- Talla: las que no tiene el producto quedan deshabilitadas -->
+                        <Label styleClass="detail-section-title" text="Talla" />
+                        <HBox fx:id="hbTallas" spacing="8.0">
+                           <VBox.margin>
+                              <Insets top="4.0" />
+                           </VBox.margin>
+                           <children>
+                              <ToggleButton fx:id="tbTallaXS" mnemonicParsing="false" styleClass="detail-size" text="XS" userData="XS">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="tgTallas" />
+                                 </toggleGroup>
+                              </ToggleButton>
+                              <ToggleButton fx:id="tbTallaS" mnemonicParsing="false" styleClass="detail-size" text="S" toggleGroup="$tgTallas" userData="S" />
+                              <ToggleButton fx:id="tbTallaM" mnemonicParsing="false" styleClass="detail-size" text="M" toggleGroup="$tgTallas" userData="M" />
+                              <ToggleButton fx:id="tbTallaL" mnemonicParsing="false" styleClass="detail-size" text="L" toggleGroup="$tgTallas" userData="L" />
+                              <ToggleButton fx:id="tbTallaXL" mnemonicParsing="false" styleClass="detail-size" text="XL" toggleGroup="$tgTallas" userData="XL" />
+                              <ToggleButton fx:id="tbTallaXXL" mnemonicParsing="false" styleClass="detail-size" text="XXL" toggleGroup="$tgTallas" userData="XXL" />
+                           </children>
+                        </HBox>
+
+                        <!-- Cantidad -->
+                        <Label styleClass="detail-section-title" text="Cantidad">
+                           <VBox.margin>
+                              <Insets top="14.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox fx:id="hbCantidad" alignment="CENTER_LEFT" spacing="14.0">
+                           <VBox.margin>
+                              <Insets top="4.0" />
+                           </VBox.margin>
+                           <children>
+                              <HBox alignment="CENTER" styleClass="detail-stepper">
+                                 <children>
+                                    <Button fx:id="btnRestarCantidad" mnemonicParsing="false" onAction="#onRestarCantidad" styleClass="detail-stepper-button" text="−" />
+                                    <Label fx:id="lblCantidad" alignment="CENTER" minWidth="40.0" styleClass="detail-stepper-value" text="1" />
+                                    <Button fx:id="btnSumarCantidad" mnemonicParsing="false" onAction="#onSumarCantidad" styleClass="detail-stepper-button" text="+" />
+                                 </children>
+                              </HBox>
+                              <Label fx:id="lblDisponibles" styleClass="detail-available" text="36 unidades disponibles" />
+                           </children>
+                        </HBox>
+
+                        <!-- Acciones (sin funcionalidad por ahora) -->
+                        <HBox fx:id="hbAcciones" spacing="10.0">
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                           <children>
+                              <Button fx:id="btnAgregarCarrito" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAgregarCarrito" prefHeight="44.0" styleClass="detail-button-primary" text="Agregar al carrito" HBox.hgrow="ALWAYS" />
+                              <Button fx:id="btnComprarAhora" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onComprarAhora" prefHeight="44.0" styleClass="detail-button-dark" text="Comprar ahora" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                        <Button fx:id="btnAnadirFavoritos" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAnadirFavoritos" prefHeight="40.0" styleClass="detail-button-outline" text="♡   Añadir a favoritos">
+                           <VBox.margin>
+                              <Insets top="4.0" />
+                           </VBox.margin>
+                        </Button>
+
+                        <VBox fx:id="vbGarantias" alignment="CENTER" spacing="4.0" styleClass="detail-info-box">
+                           <VBox.margin>
+                              <Insets top="16.0" />
+                           </VBox.margin>
+                           <children>
+                              <Label styleClass="detail-info-title" text="Envíos a todo el país · Devolución gratis en 30 días" />
+                              <Label styleClass="detail-muted" text="Pago 100% seguro" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+
+            <!-- ===== DESCRIPCIÓN (abajo, a todo el ancho) ===== -->
+            <VBox fx:id="vbDescripcion" spacing="8.0" styleClass="detail-description-card">
+               <VBox.margin>
+                  <Insets top="24.0" />
+               </VBox.margin>
+               <children>
+                  <Label fx:id="lblTituloDescripcion" styleClass="detail-description-title" text="Descripción" />
+                  <Label fx:id="lblSubtituloDescripcion" styleClass="detail-description-subtitle" text="Camiseta Barcelona – Temporada 2026/2027" wrapText="true" />
+                  <Label fx:id="lblDescripcion" styleClass="detail-description" text="Descripción del producto." wrapText="true" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>
