@@ -1001,3 +1001,8 @@
 .image-thumb-remove:hover {
     -fx-background-color: #fdecec;
 }
+
+/* Login: camisetas reales en el panel de marca */
+.login-shirt-image {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 14, 0, 0, 5);
+}

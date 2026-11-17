@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
@@ -9,15 +10,14 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Ellipse?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.shape.SVGPath?>
 
 <HBox fx:id="paneRaiz" prefHeight="700.0" prefWidth="1280.0" styleClass="login-root" stylesheets="@../Styles/Style_sheet.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Controller_view_main">
    <children>
@@ -83,51 +83,52 @@
             </VBox>
 
             <!-- Camisetas -->
-            <HBox fx:id="hbCamisetas" maxHeight="-Infinity" maxWidth="-Infinity" spacing="12.0" StackPane.alignment="BOTTOM_LEFT">
+            <HBox fx:id="hbCamisetas" alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" spacing="14.0" StackPane.alignment="BOTTOM_CENTER">
                <StackPane.margin>
-                  <Insets bottom="90.0" left="21.0" />
+                  <Insets bottom="90.0" />
                </StackPane.margin>
                <children>
-
-                  <Pane fx:id="paneCamisetaBarcelona" prefHeight="108.0" prefWidth="106.0">
-                     <children>
-                        <SVGPath content="M34,0 Q53,13 72,0 L106,18 L95,41 L80,34 L80,108 L26,108 L26,34 L11,41 L0,18 Z" styleClass="shirt-body, shirt-barcelona" />
-                        <Rectangle height="82.0" layoutX="32.0" layoutY="25.0" styleClass="stripe-barcelona" width="10.0" />
-                        <Rectangle height="82.0" layoutX="48.0" layoutY="25.0" styleClass="stripe-barcelona" width="10.0" />
-                        <Rectangle height="82.0" layoutX="64.0" layoutY="25.0" styleClass="stripe-barcelona" width="10.0" />
-                     </children>
-                  </Pane>
-
-                  <Pane fx:id="paneCamisetaLiverpool" prefHeight="108.0" prefWidth="106.0">
-                     <children>
-                        <SVGPath content="M34,0 Q53,13 72,0 L106,18 L95,41 L80,34 L80,108 L26,108 L26,34 L11,41 L0,18 Z" styleClass="shirt-body, shirt-liverpool" />
-                        <Label alignment="CENTER" layoutX="26.0" layoutY="44.0" prefWidth="54.0" styleClass="shirt-text" text="LIV" />
-                     </children>
-                  </Pane>
-
-                  <Pane fx:id="paneCamisetaJuventus" prefHeight="108.0" prefWidth="106.0">
-                     <children>
-                        <SVGPath content="M34,0 Q53,13 72,0 L106,18 L95,41 L80,34 L80,108 L26,108 L26,34 L11,41 L0,18 Z" styleClass="shirt-body, shirt-juventus" />
-                        <Rectangle height="82.0" layoutX="32.0" layoutY="25.0" styleClass="stripe-juventus" width="10.0" />
-                        <Rectangle height="82.0" layoutX="48.0" layoutY="25.0" styleClass="stripe-juventus" width="10.0" />
-                        <Rectangle height="82.0" layoutX="64.0" layoutY="25.0" styleClass="stripe-juventus" width="10.0" />
-                     </children>
-                  </Pane>
-
-                  <Pane fx:id="paneCamisetaBayern" prefHeight="108.0" prefWidth="106.0">
-                     <children>
-                        <SVGPath content="M34,0 Q53,13 72,0 L106,18 L95,41 L80,34 L80,108 L26,108 L26,34 L11,41 L0,18 Z" styleClass="shirt-body, shirt-bayern" />
-                        <Label alignment="CENTER" layoutX="26.0" layoutY="44.0" prefWidth="54.0" styleClass="shirt-text" text="BAY" />
-                     </children>
-                  </Pane>
-
-                  <Pane fx:id="paneCamisetaPsg" prefHeight="108.0" prefWidth="106.0">
-                     <children>
-                        <SVGPath content="M34,0 Q53,13 72,0 L106,18 L95,41 L80,34 L80,108 L26,108 L26,34 L11,41 L0,18 Z" styleClass="shirt-body, shirt-psg" />
-                        <Rectangle height="82.0" layoutX="46.0" layoutY="25.0" styleClass="stripe-psg" width="14.0" />
-                     </children>
-                  </Pane>
-
+                  <!-- Imágenes reales (PNG con fondo transparente) de src/Images/ProductImages -->
+                  <ImageView fx:id="imgCamisetaInter" fitHeight="112.0" fitWidth="108.0" pickOnBounds="true" preserveRatio="true" styleClass="login-shirt-image">
+                     <viewport>
+                        <Rectangle2D height="1243.0" minX="93.0" minY="6.0" width="1046.0" />
+                     </viewport>
+                     <image>
+                        <Image url="@../Images/ProductImages/0008%20-%20Inter%20de%20Milan%20-%201.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="imgCamisetaBayern" fitHeight="112.0" fitWidth="108.0" pickOnBounds="true" preserveRatio="true" styleClass="login-shirt-image">
+                     <viewport>
+                        <Rectangle2D height="367.0" minX="67.0" minY="24.0" width="281.0" />
+                     </viewport>
+                     <image>
+                        <Image url="@../Images/ProductImages/0010%20-%20Bayern%20Munich%20-%201.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="imgCamisetaJuventus" fitHeight="112.0" fitWidth="108.0" pickOnBounds="true" preserveRatio="true" styleClass="login-shirt-image">
+                     <viewport>
+                        <Rectangle2D height="1231.0" minX="118.0" minY="8.0" width="1018.0" />
+                     </viewport>
+                     <image>
+                        <Image url="@../Images/ProductImages/0007%20-%20Juventus%20-%201.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="imgCamisetaDortmund" fitHeight="112.0" fitWidth="108.0" pickOnBounds="true" preserveRatio="true" styleClass="login-shirt-image">
+                     <viewport>
+                        <Rectangle2D height="368.0" minX="4.0" minY="4.0" width="356.0" />
+                     </viewport>
+                     <image>
+                        <Image url="@../Images/ProductImages/0011%20-%20Dortmund%20-%201.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="imgCamisetaPsg" fitHeight="112.0" fitWidth="108.0" pickOnBounds="true" preserveRatio="true" styleClass="login-shirt-image">
+                     <viewport>
+                        <Rectangle2D height="748.0" minX="4.0" minY="4.0" width="628.0" />
+                     </viewport>
+                     <image>
+                        <Image url="@../Images/ProductImages/0013%20-%20Psg%20-%201.png" />
+                     </image>
+                  </ImageView>
                </children>
             </HBox>
          </children>

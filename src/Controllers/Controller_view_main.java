@@ -5,6 +5,7 @@ import DataStructures.List_Double_User;
 import Models.Admin;
 import Models.Client;
 import Models.Nodes.Node_User;
+import Utilities.Shirt_Carousel;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,9 +22,9 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
@@ -87,15 +88,15 @@ public class Controller_view_main implements Initializable {
     @FXML
     private HBox hbCamisetas;
     @FXML
-    private Pane paneCamisetaBarcelona;
+    private ImageView imgCamisetaInter;
     @FXML
-    private Pane paneCamisetaLiverpool;
+    private ImageView imgCamisetaBayern;
     @FXML
-    private Pane paneCamisetaJuventus;
+    private ImageView imgCamisetaJuventus;
     @FXML
-    private Pane paneCamisetaBayern;
+    private ImageView imgCamisetaDortmund;
     @FXML
-    private Pane paneCamisetaPsg;
+    private ImageView imgCamisetaPsg;
 
     // Panel derecho: formulario
     @FXML
@@ -160,6 +161,9 @@ public class Controller_view_main implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // Ambos campos comparten el mismo texto: lo escrito en uno aparece en el otro
         txtContrasenaVisible.textProperty().bindBidirectional(pwdContrasena.textProperty());
+
+        // Las camisetas del panel de marca van rotando con los productos del catálogo
+        new Shirt_Carousel(imgCamisetaInter, imgCamisetaBayern, imgCamisetaJuventus, imgCamisetaDortmund, imgCamisetaPsg).start();
     }
 
     @FXML
