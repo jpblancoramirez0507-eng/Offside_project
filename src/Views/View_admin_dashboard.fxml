@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- Sección "Panel de control" del administrador (Controller_view_admin la pone en el centro) -->
+<ScrollPane fx:id="spPanelControl" fitToWidth="true" hbarPolicy="NEVER" styleClass="admin-scroll" stylesheets="@../Styles/Style_sheet.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Controller_view_admin_dashboard">
+   <content>
+      <VBox fx:id="vbPanelControl" spacing="14.0" styleClass="admin-content">
+         <padding>
+            <Insets bottom="24.0" left="24.0" right="24.0" top="18.0" />
+         </padding>
+         <children>
+
+            <!-- Encabezado -->
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <VBox>
+                     <children>
+                        <Label fx:id="lblTitulo" styleClass="admin-title" text="Panel de control" />
+                        <Label fx:id="lblSaludo" styleClass="admin-subtitle" text="Hola. Este es el resumen de la tienda." />
+                     </children>
+                  </VBox>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Label fx:id="lblFecha" styleClass="dashboard-date" text="Jueves, 19 de noviembre de 2026" />
+               </children>
+            </HBox>
+
+            <!-- Indicadores -->
+            <HBox fx:id="hbIndicadores" minHeight="-Infinity" spacing="14.0">
+               <children>
+                  <VBox spacing="2.0" styleClass="kpi-card" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label styleClass="kpi-label" text="Ingresos" />
+                        <Label fx:id="lblIngresos" styleClass="kpi-value, kpi-value-green" text="\$ 0" />
+                        <Label fx:id="lblDetalleIngresos" styleClass="kpi-detail" text="0 camisetas vendidas" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="2.0" styleClass="kpi-card" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label styleClass="kpi-label" text="Pedidos" />
+                        <Label fx:id="lblPedidos" styleClass="kpi-value" text="0" />
+                        <Label fx:id="lblDetallePedidos" styleClass="kpi-detail" text="0 en los últimos 7 días" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="2.0" styleClass="kpi-card" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label styleClass="kpi-label" text="Productos a la venta" />
+                        <Label fx:id="lblProductos" styleClass="kpi-value" text="0" />
+                        <Label fx:id="lblDetalleProductos" styleClass="kpi-detail" text="0 unidades en stock" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="2.0" styleClass="kpi-card" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="lblTituloStockBajo" styleClass="kpi-label" text="Stock bajo" />
+                        <Label fx:id="lblStockBajo" styleClass="kpi-value" text="0" />
+                        <Label fx:id="lblDetalleStockBajo" styleClass="kpi-detail" text="0 agotados" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+
+            <!-- Pedidos recientes + acciones rápidas -->
+            <HBox fx:id="hbFilaSuperior" minHeight="-Infinity" spacing="14.0">
+               <children>
+                  <VBox spacing="6.0" styleClass="report-card" HBox.hgrow="ALWAYS">
+                     <children>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label styleClass="report-card-title" text="Pedidos recientes" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Hyperlink fx:id="lnkVerPedidos" onAction="#onVerPedidos" styleClass="catalog-see-all" text="Ver todos  →" />
+                           </children>
+                        </HBox>
+                        <VBox fx:id="vbPedidosRecientes" />
+                     </children>
+                  </VBox>
+
+                  <VBox minWidth="260.0" prefWidth="260.0" spacing="8.0" styleClass="report-card">
+                     <children>
+                        <Label styleClass="report-card-title" text="Acciones rápidas" />
+                        <Button fx:id="btnAccionRegistrar" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onRegistrarProducto" prefHeight="38.0" styleClass="admin-button-primary" text="+   Registrar producto">
+                           <VBox.margin>
+                              <Insets top="4.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button fx:id="btnAccionInventario" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onVerInventario" prefHeight="36.0" styleClass="admin-button-outline" text="Gestionar inventario" />
+                        <Button fx:id="btnAccionReportes" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onVerReportes" prefHeight="36.0" styleClass="admin-button-outline" text="Ver reportes" />
+                        <Button fx:id="btnAccionConfiguracion" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onVerConfiguracion" prefHeight="36.0" styleClass="admin-button-outline" text="Configuración" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+
+            <!-- Stock bajo + usuarios recientes -->
+            <HBox fx:id="hbFilaInferior" minHeight="-Infinity" spacing="14.0">
+               <children>
+                  <VBox spacing="6.0" styleClass="report-card" HBox.hgrow="ALWAYS">
+                     <children>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label fx:id="lblTituloListaStock" styleClass="report-card-title" text="Necesitan reposición" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Hyperlink fx:id="lnkVerInventario" onAction="#onVerInventario" styleClass="catalog-see-all" text="Ir al inventario  →" />
+                           </children>
+                        </HBox>
+                        <VBox fx:id="vbStockBajo" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="6.0" styleClass="report-card" HBox.hgrow="ALWAYS">
+                     <children>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label styleClass="report-card-title" text="Usuarios recientes" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Hyperlink fx:id="lnkVerUsuarios" onAction="#onVerUsuarios" styleClass="catalog-see-all" text="Ver usuarios  →" />
+                           </children>
+                        </HBox>
+                        <VBox fx:id="vbUsuariosRecientes" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- Sección "Pedidos" del panel del administrador (Controller_view_admin la pone en el centro) -->
+<VBox fx:id="vbPedidos" spacing="14.0" styleClass="admin-content" stylesheets="@../Styles/Style_sheet.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Controller_view_admin_orders">
+   <padding>
+      <Insets bottom="20.0" left="24.0" right="24.0" top="18.0" />
+   </padding>
+   <children>
+      <VBox>
+         <children>
+            <Label fx:id="lblTitulo" styleClass="admin-title" text="Pedidos" />
+            <Label fx:id="lblSubtitulo" styleClass="admin-subtitle" text="Compras realizadas por los clientes desde el catálogo." />
+         </children>
+      </VBox>
+
+      <!-- Indicadores -->
+      <HBox fx:id="hbIndicadores" minHeight="-Infinity" spacing="14.0">
+         <children>
+            <VBox spacing="2.0" styleClass="kpi-card" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label styleClass="kpi-label" text="Pedidos" />
+                  <Label fx:id="lblTotalPedidos" styleClass="kpi-value" text="0" />
+               </children>
+            </VBox>
+            <VBox spacing="2.0" styleClass="kpi-card" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label styleClass="kpi-label" text="Camisetas vendidas" />
+                  <Label fx:id="lblUnidadesVendidas" styleClass="kpi-value" text="0" />
+               </children>
+            </VBox>
+            <VBox spacing="2.0" styleClass="kpi-card" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label styleClass="kpi-label" text="Ingresos" />
+                  <Label fx:id="lblIngresos" styleClass="kpi-value, kpi-value-green" text="\$ 0" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+
+      <!-- Filtros -->
+      <HBox fx:id="hbFiltros" minHeight="-Infinity" spacing="12.0">
+         <children>
+            <TextField fx:id="txtBuscarPedido" prefHeight="38.0" promptText="Buscar por cliente, correo o camiseta..." styleClass="admin-input" HBox.hgrow="ALWAYS" />
+            <ComboBox fx:id="cbOrdenPedidos" prefHeight="38.0" prefWidth="190.0" styleClass="admin-combo" />
+         </children>
+      </HBox>
+
+      <!-- Tabla de pedidos -->
+      <VBox fx:id="vbTablaPedidos" styleClass="admin-card" VBox.vgrow="ALWAYS">
+         <children>
+            <HBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="40.0" styleClass="admin-table-header">
+               <padding>
+                  <Insets left="16.0" right="26.0" />
+               </padding>
+               <children>
+                  <Label minWidth="90.0" prefWidth="90.0" styleClass="admin-table-header-label" text="Pedido" />
+                  <Label maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="200.0" styleClass="admin-table-header-label" text="Cliente" HBox.hgrow="ALWAYS" />
+                  <Label minWidth="140.0" prefWidth="140.0" styleClass="admin-table-header-label" text="Fecha" />
+                  <Label minWidth="260.0" prefWidth="260.0" styleClass="admin-table-header-label" text="Camisetas" />
+                  <Label alignment="CENTER_RIGHT" minWidth="110.0" prefWidth="110.0" styleClass="admin-table-header-label" text="Total" />
+               </children>
+            </HBox>
+            <ScrollPane fx:id="spListaPedidos" fitToWidth="true" hbarPolicy="NEVER" styleClass="admin-scroll" VBox.vgrow="ALWAYS">
+               <content>
+                  <VBox fx:id="vbListaPedidos" />
+               </content>
+            </ScrollPane>
+            <Label fx:id="lblTotalMostrados" minHeight="-Infinity" styleClass="admin-table-footer" text="Mostrando 0 de 0 pedidos" />
+         </children>
+      </VBox>
+   </children>
+</VBox>

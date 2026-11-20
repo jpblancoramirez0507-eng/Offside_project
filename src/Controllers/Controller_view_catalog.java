@@ -188,16 +188,9 @@ public class Controller_view_catalog implements Initializable {
      */
     private void cargarProductos() {
         Stack_Of_Product catalogo = Data_Manager.getManager().getStacks_products();
-        File carpetaProductos = new File(System.getProperty("user.dir"), "src/Files/ProductsBase");
 
-        int id = 1;
-        while (new File(carpetaProductos, String.format("%04d", id) + " - Product Data.txt").exists()) {
-            Product producto = catalogo.loadProductFromCatalog(id);
-            id++;
-
-            if (producto == null) {
-                continue;
-            }
+        // Solo los productos a la venta (los descontinuados no se muestran)
+        for (Product producto : catalogo.loadActiveCatalog()) {
 
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/Components/Product_Component.fxml"));
@@ -366,6 +359,7 @@ public class Controller_view_catalog implements Initializable {
     @FXML
     private void onCerrarSesion(ActionEvent event) {
         // Regresa al inicio de sesión reutilizando la misma ventana
+        Data_Manager.getManager().setCurrent_user(null);
         try {
             Parent vistaLogin = FXMLLoader.load(getClass().getResource("/Views/View_main.fxml"));
             paneRaiz.getScene().setRoot(vistaLogin);

@@ -1,5 +1,6 @@
 package Controllers.ComponentsControllers;
 
+import DataStructures.Data_Manager;
 import Models.Product;
 import java.io.File;
 import java.net.URL;
@@ -23,9 +24,10 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.SVGPath;
 
 public class Product_ComponentController implements Initializable {
-
-    // Con menos unidades que este valor se muestra la etiqueta "Últimas unidades"
-    public static final int ULTIMAS_UNIDADES = 10;
+    
+    public static int ultimasUnidades() {
+        return Data_Manager.getManager().getSettings().getUltimasUnidades();
+    }
 
     @FXML
     private VBox paneCardProducto;
@@ -133,7 +135,7 @@ public class Product_ComponentController implements Initializable {
         if (stock == 0) {
             texto = "Agotado";
             lblEtiqueta.getStyleClass().add("card-badge-sold-out");
-        } else if (stock < ULTIMAS_UNIDADES) {
+        } else if (stock < ultimasUnidades()) {
             texto = "Últimas unidades";
         }
 

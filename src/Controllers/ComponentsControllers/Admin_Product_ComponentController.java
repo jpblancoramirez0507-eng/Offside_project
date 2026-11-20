@@ -7,6 +7,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,7 +25,9 @@ import javafx.scene.shape.SVGPath;
 
 public class Admin_Product_ComponentController implements Initializable {
 
-    public static final int STOCK_BAJO = 20;
+    public static int stockBajo() {
+        return Data_Manager.getManager().getSettings().getStockBajo();
+    }
 
     @FXML
     private HBox paneFilaProducto;
@@ -69,6 +72,7 @@ public class Admin_Product_ComponentController implements Initializable {
 
     private Product producto;
     private Runnable alCambiarStock;
+    private Consumer<Product> alEliminar;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -91,7 +95,7 @@ public class Admin_Product_ComponentController implements Initializable {
     public void setStock(int stock) {
         lblStock.setText(String.valueOf(stock));
         lblStock.getStyleClass().remove("product-stock-low");
-        if (stock < STOCK_BAJO) {
+        if (stock < stockBajo()) {
             lblStock.getStyleClass().add("product-stock-low");
         }
     }
@@ -234,7 +238,13 @@ public class Admin_Product_ComponentController implements Initializable {
 
     @FXML
     private void onEliminarProducto(ActionEvent event) {
-        // TODO
+        if (alEliminar != null) {
+            alEliminar.accept(producto);
+        }
+    }
+
+    public void setAlEliminar(Consumer<Product> alEliminar) {
+        this.alEliminar = alEliminar;
     }
 
 }

@@ -180,6 +180,54 @@ public class List_Double_User {
         return false;
     }
 
+    public void remove_user(Node_User node) {
+        if (node == null) {
+            return;
+        }
+
+        if (node.getFormer() != null) {
+            node.getFormer().setNext(node.getNext());
+        } else {
+            head = node.getNext();
+        }
+
+        if (node.getNext() != null) {
+            node.getNext().setFormer(node.getFormer());
+        }
+
+        node.setNext(null);
+        node.setFormer(null);
+    }
+
+    public void change_role(Node_User node, String roll) {
+        if (node == null) {
+            return;
+        }
+
+        int identification = node.getUser().getIdentification();
+        String name = node.getUser().getName();
+        String email = node.getUser().getEmail();
+        String password = node.getUser().getPassword();
+
+        if (roll.equals("ADMIN")) {
+            node.setUser(new Admin(identification, name, email, password));
+        } else {
+            node.setUser(new Client(identification, name, email, password));
+        }
+    }
+
+    public int count_admins() {
+        int count = 0;
+        Node_User aux = head;
+        while (aux != null) {
+            if (aux.getUser() instanceof Admin) {
+                count++;
+            }
+            aux = aux.getNext();
+        }
+        return count;
+    }
+
     public Node_User validate_credentials(String email, String password) {
         Node_User search = search_email(email.trim());
 

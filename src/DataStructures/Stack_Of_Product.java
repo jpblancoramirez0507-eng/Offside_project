@@ -1,5 +1,6 @@
 package DataStructures;
 
+import Models.Order;
 import Models.Product;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -17,9 +18,13 @@ import java.nio.file.StandardCopyOption;
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Stack;
 import java.util.regex.Pattern;
 import javafx.scene.control.Alert;
@@ -127,6 +132,7 @@ public class Stack_Of_Product {
             float price = 0;
             String description = "";
             int stock = 0;
+            boolean active = true;
 
             String line;
             while ((line = reader.readLine()) != null) {
@@ -180,6 +186,8 @@ public class Stack_Of_Product {
                             System.out.println("Error al parsear el stock del producto " + idProduct + ": " + parts[1].trim());
                         }
                     }
+                } else if (line.toLowerCase().startsWith("estado")) {
+                    active = !line.toLowerCase().contains("descontinuad");
                 } else if (line.toLowerCase().startsWith("descripcion") || line.toLowerCase().startsWith("descripción")) {
                     String[] parts = line.split(":", 2);
                     if (parts.length > 1) {
@@ -191,6 +199,7 @@ public class Stack_Of_Product {
             if (!name.isEmpty()) {
                 Product product = new Product(idProduct, name, brand, team, league, sizes, price, description);
                 product.setStock(stock);
+                product.setActive(active);
                 return product;
             }
 
@@ -262,6 +271,96 @@ public class Stack_Of_Product {
         }
     }
 
+    /**
+     * Retorna los productos del catálogo que siguen a la venta (sin los
+     * descontinuados), en orden de id. Si falta algún archivo intermedio se
+     * salta sin detenerse.
+     */
+    public List<Product> loadActiveCatalog() {
+        List<Product> products = new ArrayList<>();
+        int lastId = getNextProductId() - 1;
+
+        for (int id = 1; id <= lastId; id++) {
+            Product product = loadProductFromCatalog(id);
+            if (product != null && product.isActive()) {
+                products.add(product);
+            }
+        }
+        return products;
+    }
+
+    /**
+     * Quita un producto del catálogo: agrega "Estado: Descontinuado" a su
+     * archivo (no se borra, para que las compras anteriores sigan apareciendo
+     * en pedidos y reportes) y lo saca de los carritos y favoritos.
+     */
+    public boolean discontinueProduct(int idProduct) {
+        String fileName = String.format("%04d", idProduct) + " - Product Data.txt";
+        Path fullPath = Paths.get(System.getProperty("user.dir"), "src/Files/ProductsBase", fileName);
+
+        try {
+            String content = new String(Files.readAllBytes(fullPath), StandardCharsets.UTF_8);
+            String lineBreak = content.contains("\r\n") ? "\r\n" : "\n";
+            String statusLine = "Estado: Descontinuado";
+
+            Pattern statusPattern = Pattern.compile("(?im)^estado\\s*:.*$");
+            Pattern descriptionPattern = Pattern.compile("(?im)^descripci(o|ó)n");
+
+            if (statusPattern.matcher(content).find()) {
+                content = statusPattern.matcher(content).replaceFirst(statusLine);
+            } else if (descriptionPattern.matcher(content).find()) {
+                content = descriptionPattern.matcher(content).replaceFirst(statusLine + lineBreak + "$0");
+            } else {
+                content = content + lineBreak + statusLine;
+            }
+
+            Files.write(fullPath, content.getBytes(StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            System.out.println("Error al descontinuar el producto " + idProduct + ": " + e.getMessage());
+            return false;
+        }
+
+        loadCartFromFile();
+        if (cartProducts.removeIf(product -> product.getIdProduct() == idProduct)) {
+            saveCartToFile();
+        }
+        loadFavoritesFromFile();
+        if (favoriteProducts.removeIf(product -> product.getIdProduct() == idProduct)) {
+            saveFavoritesToFile();
+        }
+        return true;
+    }
+
+    /**
+     * Lee el historial de compras y agrupa como un pedido las compras de un
+     * mismo cliente hechas en el mismo minuto. Los pedidos quedan numerados
+     * por fecha (el más antiguo es el 1) y ordenados del más antiguo al más
+     * reciente.
+     */
+    public List<Order> groupHistoryIntoOrders() {
+        loadHistoryFromFile();
+
+        Map<String, Order> grouped = new LinkedHashMap<>();
+        for (Product product : historyProducts) {
+            LocalDateTime date = product.getDate_purchase() == null ? null : product.getDate_purchase().truncatedTo(ChronoUnit.MINUTES);
+            String key = product.getEmail_customer() + "|" + (date == null ? "sin-fecha" : date.toString());
+
+            Order order = grouped.get(key);
+            if (order == null) {
+                order = new Order(product.getEmail_customer(), date);
+                grouped.put(key, order);
+            }
+            order.getProducts().add(product);
+        }
+
+        List<Order> orders = new ArrayList<>(grouped.values());
+        orders.sort(Comparator.comparing(Order::getDate_purchase, Comparator.nullsFirst(Comparator.naturalOrder())));
+        for (int i = 0; i < orders.size(); i++) {
+            orders.get(i).setNumber(i + 1);
+        }
+        return orders;
+    }
+
     public int getNextProductId() {
         File folder = Paths.get(System.getProperty("user.dir"), "src/Files/ProductsBase").toFile();
         String[] names = folder.list((dir, name) -> name.matches("\\d{4} - Product Data\\.txt"));
@@ -276,13 +375,54 @@ public class Stack_Of_Product {
     }
 
     public boolean existsProductWithName(String name) {
+        return findProductByName(name) != null;
+    }
+
+    /**
+     * Busca un producto por nombre (sin distinguir mayúsculas), esté a la
+     * venta o descontinuado. Retorna null si no existe.
+     */
+    public Product findProductByName(String name) {
         for (int id = 1; id < getNextProductId(); id++) {
             Product product = loadProductFromCatalog(id);
             if (product != null && product.getName().equalsIgnoreCase(name.trim())) {
-                return true;
+                return product;
             }
         }
-        return false;
+        return null;
+    }
+
+    /**
+     * Retorna los productos que el administrador quitó del catálogo.
+     */
+    public List<Product> loadDiscontinuedProducts() {
+        List<Product> products = new ArrayList<>();
+        for (int id = 1; id < getNextProductId(); id++) {
+            Product product = loadProductFromCatalog(id);
+            if (product != null && !product.isActive()) {
+                products.add(product);
+            }
+        }
+        return products;
+    }
+
+    /**
+     * Vuelve a poner a la venta un producto descontinuado: quita la línea
+     * "Estado: ..." de su archivo. Retorna true si se pudo guardar.
+     */
+    public boolean restoreProduct(int idProduct) {
+        String fileName = String.format("%04d", idProduct) + " - Product Data.txt";
+        Path fullPath = Paths.get(System.getProperty("user.dir"), "src/Files/ProductsBase", fileName);
+
+        try {
+            String content = new String(Files.readAllBytes(fullPath), StandardCharsets.UTF_8);
+            content = Pattern.compile("(?im)^estado\\s*:.*(\\r\\n|\\n)?").matcher(content).replaceAll("");
+            Files.write(fullPath, content.getBytes(StandardCharsets.UTF_8));
+            return true;
+        } catch (IOException e) {
+            System.out.println("Error al restaurar el producto " + idProduct + ": " + e.getMessage());
+            return false;
+        }
     }
 
     public boolean saveProductToCatalog(Product product, String longDescription) {

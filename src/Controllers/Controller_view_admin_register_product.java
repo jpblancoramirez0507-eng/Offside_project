@@ -427,7 +427,12 @@ public class Controller_view_admin_register_product implements Initializable {
             mostrarError("Agrega stock en al menos una talla.");
             return;
         }
-        if (catalogo.existsProductWithName(nombre)) {
+        Product existente = catalogo.findProductByName(nombre);
+        if (existente != null && !existente.isActive()) {
+            mostrarError("Hay un producto eliminado con el nombre \"" + nombre + "\". Puedes restaurarlo desde \"Ver productos eliminados\" en el inventario.");
+            return;
+        }
+        if (existente != null) {
             mostrarError("Ya existe un producto con el nombre \"" + nombre + "\".");
             return;
         }

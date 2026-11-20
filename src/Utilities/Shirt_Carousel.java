@@ -30,8 +30,6 @@ import javafx.util.Duration;
  */
 public class Shirt_Carousel {
 
-    // Cada cuánto cambian las camisetas
-    private static final Duration INTERVALO = Duration.seconds(4);
     // Retraso entre una camiseta y la siguiente al cambiar (efecto en cascada)
     private static final Duration RETRASO_ENTRE_CAMISETAS = Duration.millis(90);
     private static final Duration DURACION_FUNDIDO = Duration.millis(280);
@@ -87,7 +85,7 @@ public class Shirt_Carousel {
         mostrarGrupo(true);
 
         if (camisetas.size() > espacios.length) {
-            temporizador = new Timeline(new KeyFrame(INTERVALO, evento -> avanzar()));
+            temporizador = new Timeline(new KeyFrame(Duration.seconds(Data_Manager.getManager().getSettings().getIntervaloCarrusel()), evento -> avanzar()));
             temporizador.setCycleCount(Timeline.INDEFINITE);
             temporizador.play();
         }
@@ -159,7 +157,8 @@ public class Shirt_Carousel {
 
         int ultimoId = catalogo.getNextProductId() - 1;
         for (int id = 1; id <= ultimoId; id++) {
-            if (catalogo.loadProductFromCatalog(id) == null) {
+            Models.Product producto = catalogo.loadProductFromCatalog(id);
+            if (producto == null || !producto.isActive()) {
                 continue;
             }
 

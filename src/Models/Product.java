@@ -13,6 +13,8 @@ public class Product {
     private float price;
     private String description;
     private int stock;
+    // false cuando el administrador lo quitó del catálogo (línea "Estado: Descontinuado")
+    private boolean active = true;
     private String email_customer;
     private LocalDateTime date_purchase;
     private String selectedSize;
@@ -101,6 +103,14 @@ public class Product {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public String getEmail_customer() {

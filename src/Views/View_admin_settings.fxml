@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- Sección "Configuración" del panel del administrador (Controller_view_admin la pone en el centro) -->
+<ScrollPane fx:id="spConfiguracion" fitToWidth="true" hbarPolicy="NEVER" styleClass="admin-scroll" stylesheets="@../Styles/Style_sheet.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Controller_view_admin_settings">
+   <content>
+      <VBox fx:id="vbConfiguracion" spacing="14.0" styleClass="admin-content">
+         <padding>
+            <Insets bottom="24.0" left="24.0" right="24.0" top="18.0" />
+         </padding>
+         <children>
+            <VBox>
+               <children>
+                  <Label fx:id="lblTitulo" styleClass="admin-title" text="Configuración" />
+                  <Label fx:id="lblSubtitulo" styleClass="admin-subtitle" text="Ajustes de la tienda y de tu cuenta de administrador." />
+               </children>
+            </VBox>
+
+            <HBox fx:id="hbTarjetas" spacing="16.0">
+               <children>
+
+                  <!-- ===== AJUSTES DE LA TIENDA ===== -->
+                  <VBox fx:id="vbTienda" spacing="6.0" styleClass="settings-card" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label styleClass="settings-card-title" text="Tienda" />
+                        <Label styleClass="settings-field-hint" text="Se guardan en src/Files/Settings y se aplican al volver a cada pantalla." />
+
+                        <Label styleClass="form-label" text="Umbral de stock bajo">
+                           <VBox.margin>
+                              <Insets top="12.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="txtStockBajo" prefHeight="38.0" styleClass="admin-input" />
+                        <Label styleClass="settings-field-hint" text="En el inventario se marcan en rojo los productos con menos unidades que este número." wrapText="true" />
+
+                        <Label styleClass="form-label" text="Umbral de &quot;Últimas unidades&quot;">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="txtUltimasUnidades" prefHeight="38.0" styleClass="admin-input" />
+                        <Label styleClass="settings-field-hint" text="En el catálogo se muestra la etiqueta &quot;Últimas unidades&quot; con menos unidades que este número." wrapText="true" />
+
+                        <Label styleClass="form-label" text="Cambio de camisetas en el login (segundos)">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="txtIntervaloCarrusel" prefHeight="38.0" styleClass="admin-input" />
+                        <Label styleClass="settings-field-hint" text="Cada cuántos segundos rotan las camisetas del login y el registro (entre 2 y 60)." wrapText="true" />
+
+                        <Label fx:id="lblMensajeTienda" managed="false" maxWidth="1.7976931348623157E308" visible="false" wrapText="true">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Region VBox.vgrow="ALWAYS" />
+                        <HBox spacing="10.0">
+                           <VBox.margin>
+                              <Insets top="14.0" />
+                           </VBox.margin>
+                           <children>
+                              <Button fx:id="btnRestablecer" mnemonicParsing="false" onAction="#onRestablecer" prefHeight="38.0" prefWidth="170.0" styleClass="admin-button-outline" text="Valores por defecto" />
+                              <Button fx:id="btnGuardarTienda" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onGuardarTienda" prefHeight="38.0" styleClass="admin-button-primary" text="Guardar ajustes" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+
+                  <!-- ===== MI CUENTA ===== -->
+                  <VBox fx:id="vbCuenta" spacing="6.0" styleClass="settings-card" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label styleClass="settings-card-title" text="Mi cuenta" />
+                        <Label styleClass="settings-field-hint" text="Datos de la cuenta con la que iniciaste sesión." />
+
+                        <Label styleClass="form-label" text="Nombre">
+                           <VBox.margin>
+                              <Insets top="12.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="txtNombre" prefHeight="38.0" styleClass="admin-input" />
+                        <HBox spacing="12.0">
+                           <VBox.margin>
+                              <Insets top="6.0" />
+                           </VBox.margin>
+                           <children>
+                              <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label styleClass="form-label" text="Correo" />
+                                    <TextField fx:id="txtCorreo" disable="true" prefHeight="38.0" styleClass="admin-input" />
+                                 </children>
+                              </VBox>
+                              <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label styleClass="form-label" text="Identificación" />
+                                    <TextField fx:id="txtIdentificacion" disable="true" prefHeight="38.0" styleClass="admin-input" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+
+                        <Separator styleClass="form-separator">
+                           <VBox.margin>
+                              <Insets bottom="4.0" top="12.0" />
+                           </VBox.margin>
+                        </Separator>
+                        <Label styleClass="form-label" text="Cambiar contraseña (opcional)" />
+                        <PasswordField fx:id="pwdActual" prefHeight="38.0" promptText="Contraseña actual" styleClass="admin-input" />
+                        <HBox spacing="12.0">
+                           <children>
+                              <PasswordField fx:id="pwdNueva" prefHeight="38.0" promptText="Nueva contraseña" styleClass="admin-input" HBox.hgrow="ALWAYS" />
+                              <PasswordField fx:id="pwdConfirmar" prefHeight="38.0" promptText="Confirmar nueva" styleClass="admin-input" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                        <Label styleClass="settings-field-hint" text="Usa al menos 8 caracteres." />
+
+                        <Label fx:id="lblMensajeCuenta" managed="false" maxWidth="1.7976931348623157E308" visible="false" wrapText="true">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Region VBox.vgrow="ALWAYS" />
+                        <Button fx:id="btnGuardarCuenta" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onGuardarCuenta" prefHeight="38.0" styleClass="admin-button-primary" text="Guardar cuenta">
+                           <VBox.margin>
+                              <Insets top="14.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>

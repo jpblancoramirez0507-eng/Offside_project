@@ -192,6 +192,11 @@ public class Controller_view_main implements Initializable {
         // El tipo de cuenta elegido también debe coincidir (Usuario -> Client, Administrador -> Admin)
         boolean rolCorrecto = encontrado != null && (rbAdministrador.isSelected() ? encontrado.getUser() instanceof Admin : encontrado.getUser() instanceof Client);
 
+        // Se guarda quién inició sesión (lo usan, por ejemplo, Usuarios y Configuración)
+        if (rolCorrecto) {
+            Data_Manager.getManager().setCurrent_user(encontrado);
+        }
+
         if (rolCorrecto && encontrado.getUser() instanceof Admin) {
             // El administrador pasa a la pantalla de gestión de inventario
             try {

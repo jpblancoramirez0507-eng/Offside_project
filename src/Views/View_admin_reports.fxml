@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- Sección "Reportes" del panel del administrador (Controller_view_admin la pone en el centro) -->
+<ScrollPane fx:id="spReportes" fitToWidth="true" hbarPolicy="NEVER" styleClass="admin-scroll" stylesheets="@../Styles/Style_sheet.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Controller_view_admin_reports">
+   <content>
+      <VBox fx:id="vbReportes" spacing="14.0" styleClass="admin-content">
+         <padding>
+            <Insets bottom="24.0" left="24.0" right="24.0" top="18.0" />
+         </padding>
+         <children>
+            <VBox>
+               <children>
+                  <Label fx:id="lblTitulo" styleClass="admin-title" text="Reportes" />
+                  <Label fx:id="lblSubtitulo" styleClass="admin-subtitle" text="Resumen de ventas, clientes e inventario de la tienda." />
+               </children>
+            </VBox>
+
+            <!-- Indicadores -->
+            <HBox fx:id="hbIndicadores" minHeight="-Infinity" spacing="14.0">
+               <children>
+                  <VBox spacing="2.0" styleClass="kpi-card" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label styleClass="kpi-label" text="Ingresos totales" />
+                        <Label fx:id="lblIngresos" styleClass="kpi-value, kpi-value-green" text="\$ 0" />
+                        <Label fx:id="lblDetalleIngresos" styleClass="kpi-detail" text="0 camisetas vendidas" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="2.0" styleClass="kpi-card" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label styleClass="kpi-label" text="Pedidos" />
+                        <Label fx:id="lblPedidos" styleClass="kpi-value" text="0" />
+                        <Label fx:id="lblDetallePedidos" styleClass="kpi-detail" text="Ticket promedio: \$ 0" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="2.0" styleClass="kpi-card" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label styleClass="kpi-label" text="Clientes registrados" />
+                        <Label fx:id="lblClientes" styleClass="kpi-value" text="0" />
+                        <Label fx:id="lblDetalleClientes" styleClass="kpi-detail" text="0 han comprado" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="2.0" styleClass="kpi-card" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label styleClass="kpi-label" text="Valor del inventario" />
+                        <Label fx:id="lblValorInventario" styleClass="kpi-value" text="\$ 0" />
+                        <Label fx:id="lblDetalleInventario" styleClass="kpi-detail" text="0 unidades en stock" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+
+            <!-- Gráficas por liga -->
+            <HBox fx:id="hbGraficas" minHeight="-Infinity" spacing="14.0">
+               <children>
+                  <VBox spacing="4.0" styleClass="report-card" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label styleClass="report-card-title" text="Unidades en stock por liga" />
+                        <BarChart fx:id="chStockPorLiga" animated="false" barGap="4.0" categoryGap="26.0" legendVisible="false" prefHeight="230.0" styleClass="report-chart">
+                           <xAxis>
+                              <CategoryAxis side="BOTTOM" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis minorTickVisible="false" side="LEFT" />
+                           </yAxis>
+                        </BarChart>
+                     </children>
+                  </VBox>
+                  <VBox spacing="4.0" styleClass="report-card" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label styleClass="report-card-title" text="Camisetas vendidas por liga" />
+                        <StackPane>
+                           <children>
+                              <BarChart fx:id="chVentasPorLiga" animated="false" barGap="4.0" categoryGap="26.0" legendVisible="false" prefHeight="230.0" styleClass="report-chart">
+                                 <xAxis>
+                                    <CategoryAxis side="BOTTOM" />
+                                 </xAxis>
+                                 <yAxis>
+                                    <NumberAxis minorTickVisible="false" side="LEFT" />
+                                 </yAxis>
+                              </BarChart>
+                              <Label fx:id="lblSinVentas" styleClass="empty-state" text="Aún no hay ventas registradas." />
+                           </children>
+                        </StackPane>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+
+            <!-- Listas -->
+            <HBox fx:id="hbListas" minHeight="-Infinity" spacing="14.0">
+               <children>
+                  <VBox spacing="6.0" styleClass="report-card" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="lblTituloStockBajo" styleClass="report-card-title" text="Productos con stock bajo" />
+                        <VBox fx:id="vbStockBajo" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="6.0" styleClass="report-card" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label styleClass="report-card-title" text="Más vendidos" />
+                        <VBox fx:id="vbMasVendidos" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>

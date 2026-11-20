@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- Productos que el administrador quitó del catálogo (Controller_view_admin la pone en el centro) -->
+<VBox fx:id="vbProductosEliminados" spacing="12.0" styleClass="admin-content" stylesheets="@../Styles/Style_sheet.css, @../Styles/StyleSheetsComponents/admin_product_component.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Controller_view_admin_discontinued">
+   <padding>
+      <Insets bottom="20.0" left="24.0" right="24.0" top="14.0" />
+   </padding>
+   <children>
+      <VBox>
+         <children>
+            <Hyperlink fx:id="lnkVolverInventario" onAction="#onVolver" styleClass="back-link" text="←  Volver al inventario" />
+            <Label fx:id="lblTitulo" styleClass="admin-title" text="Productos eliminados" />
+            <Label fx:id="lblSubtitulo" styleClass="admin-subtitle" text="Camisetas que quitaste del catálogo. Al restaurarlas vuelven a estar a la venta con el stock que tenían." wrapText="true" />
+         </children>
+      </VBox>
+
+      <!-- Mensaje de resultado al restaurar -->
+      <Label fx:id="lblMensaje" managed="false" maxWidth="1.7976931348623157E308" visible="false" wrapText="true" />
+
+      <VBox fx:id="vbTablaEliminados" styleClass="admin-card" VBox.vgrow="ALWAYS">
+         <children>
+            <HBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="40.0" styleClass="admin-table-header">
+               <padding>
+                  <Insets left="16.0" right="26.0" />
+               </padding>
+               <children>
+                  <Label maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="260.0" styleClass="admin-table-header-label" text="Producto" HBox.hgrow="ALWAYS" />
+                  <Label minWidth="140.0" prefWidth="140.0" styleClass="admin-table-header-label" text="Liga" />
+                  <Label minWidth="80.0" prefWidth="80.0" styleClass="admin-table-header-label" text="Stock" />
+                  <Label minWidth="120.0" prefWidth="120.0" styleClass="admin-table-header-label" text="Precio" />
+                  <Label minWidth="110.0" prefWidth="110.0" styleClass="admin-table-header-label" text="Acción" />
+               </children>
+            </HBox>
+            <ScrollPane fx:id="spListaEliminados" fitToWidth="true" hbarPolicy="NEVER" styleClass="admin-scroll" VBox.vgrow="ALWAYS">
+               <content>
+                  <VBox fx:id="vbListaEliminados" />
+               </content>
+            </ScrollPane>
+            <Label fx:id="lblTotal" minHeight="-Infinity" styleClass="admin-table-footer" text="0 productos eliminados" />
+         </children>
+      </VBox>
+   </children>
+</VBox>
