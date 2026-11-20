@@ -10,6 +10,9 @@ public class Order {
     private final String email_customer;
     private final LocalDateTime date_purchase;
     private final List<Product> products = new ArrayList<>();
+    private double discount;
+    private double shipping;
+    private String discountCode;
 
     public Order(String email_customer, LocalDateTime date_purchase) {
         this.email_customer = email_customer;
@@ -36,11 +39,47 @@ public class Order {
         return products;
     }
 
-    public double getTotal() {
+    public double getProductsTotal() {
         double total = 0;
         for (Product product : products) {
-            total += product.getPrice();
+            total += (double) product.getPrice() * product.getQuantity();
         }
         return total;
+    }
+
+    public double getTotal() {
+        return getProductsTotal() - discount + shipping;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public double getShipping() {
+        return shipping;
+    }
+
+    public void setShipping(double shipping) {
+        this.shipping = shipping;
+    }
+
+    public String getDiscountCode() {
+        return discountCode;
+    }
+
+    public void setDiscountCode(String discountCode) {
+        this.discountCode = discountCode;
+    }
+
+    public int getUnits() {
+        int units = 0;
+        for (Product product : products) {
+            units += product.getQuantity();
+        }
+        return units;
     }
 }

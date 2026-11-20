@@ -15,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -342,7 +343,7 @@ public class Stack_Of_Product {
 
         Map<String, Order> grouped = new LinkedHashMap<>();
         for (Product product : historyProducts) {
-            LocalDateTime date = product.getDate_purchase() == null ? null : product.getDate_purchase().truncatedTo(ChronoUnit.MINUTES);
+            LocalDateTime date = product.getDate_purchase() == null ? null : product.getDate_purchase().truncatedTo(ChronoUnit.SECONDS);
             String key = product.getEmail_customer() + "|" + (date == null ? "sin-fecha" : date.toString());
 
             Order order = grouped.get(key);
@@ -353,12 +354,95 @@ public class Stack_Of_Product {
             order.getProducts().add(product);
         }
 
+        // Descuento y envío de cada pedido (los pedidos sin línea en OrderCharges quedan en 0)
+        for (String[] charge : loadOrderCharges()) {
+            Order order = grouped.get(charge[0]);
+            if (order == null) {
+                // El historial guarda el correo tal como está; se busca sin distinguir mayúsculas
+                for (Map.Entry<String, Order> entry : grouped.entrySet()) {
+                    if (entry.getKey().equalsIgnoreCase(charge[0])) {
+                        order = entry.getValue();
+                    }
+                }
+            }
+            if (order != null) {
+                order.setDiscount(order.getDiscount() + Double.parseDouble(charge[1]));
+                order.setShipping(order.getShipping() + Double.parseDouble(charge[2]));
+                if (!charge[3].equals("NULL")) {
+                    order.setDiscountCode(charge[3]);
+                }
+            }
+        }
+
         List<Order> orders = new ArrayList<>(grouped.values());
         orders.sort(Comparator.comparing(Order::getDate_purchase, Comparator.nullsFirst(Comparator.naturalOrder())));
         for (int i = 0; i < orders.size(); i++) {
             orders.get(i).setNumber(i + 1);
         }
         return orders;
+    }
+
+    /**
+     * Agrega una línea a src/Files/OrderCharges con el formato:
+     * correo, dd/MM/yyyy HH:mm:ss, descuento, envío, código (o NULL).
+     */
+    private void saveOrderCharges(String email, LocalDateTime date, double discount, double shipping, String discountCode) {
+        Path filePath = Paths.get(System.getProperty("user.dir"), "src/Files/OrderCharges");
+        String line = email + ", " + DATE_FORMAT.format(date) + ", "
+                + Math.round(discount) + ", " + Math.round(shipping) + ", "
+                + (discountCode == null || discountCode.trim().isEmpty() ? "NULL" : discountCode.trim().toUpperCase())
+                + System.lineSeparator();
+
+        try {
+            Files.write(filePath, line.getBytes(StandardCharsets.UTF_8), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            System.out.println("Error al guardar los cargos del pedido: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Lee src/Files/OrderCharges. Cada elemento es {clave del pedido
+     * ("correo|fecha"), descuento, envío, código}.
+     */
+    private List<String[]> loadOrderCharges() {
+        List<String[]> charges = new ArrayList<>();
+        Path filePath = Paths.get(System.getProperty("user.dir"), "src/Files/OrderCharges");
+        if (!Files.exists(filePath)) {
+            return charges;
+        }
+
+        try {
+            for (String line : Files.readAllLines(filePath, StandardCharsets.UTF_8)) {
+                String[] parts = line.trim().split(", ");
+                if (parts.length < 5) {
+                    continue;
+                }
+                try {
+                    LocalDateTime date = parseDate(parts[1].trim());
+                    Double.parseDouble(parts[2].trim());
+                    Double.parseDouble(parts[3].trim());
+                    charges.add(new String[]{parts[0].trim() + "|" + date.toString(), parts[2].trim(), parts[3].trim(), parts[4].trim()});
+                } catch (Exception e) {
+                    System.out.println("Línea inválida en OrderCharges: " + line);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error al leer los cargos de los pedidos: " + e.getMessage());
+        }
+        return charges;
+    }
+
+    // Formato de fecha de History, CartShop, Favorites y OrderCharges
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+    // Formato anterior (sin segundos): las líneas viejas se siguen leyendo
+    private static final DateTimeFormatter OLD_DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+    private static LocalDateTime parseDate(String text) {
+        try {
+            return LocalDateTime.parse(text, DATE_FORMAT);
+        } catch (Exception e) {
+            return LocalDateTime.parse(text, OLD_DATE_FORMAT);
+        }
     }
 
     public int getNextProductId() {
@@ -493,14 +577,16 @@ public class Stack_Of_Product {
                 writer.write((product.getEmail_customer() != null ? product.getEmail_customer() : "") + ", ");
 
                 if (product.getDate_purchase() != null) {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-                    writer.write(formatter.format(product.getDate_purchase()));
+                    // Con segundos, para que dos compras del mismo minuto sean pedidos distintos
+                    writer.write(DATE_FORMAT.format(product.getDate_purchase()));
                 } else {
                     writer.write("NULL");
                 }
 
                 writer.write(", ");
                 writer.write((product.getSelectedSize() != null ? product.getSelectedSize() : "NULL"));
+                writer.write(", ");
+                writer.write(String.valueOf(product.getQuantity()));
                 writer.newLine();
             }
         } catch (IOException e) {
@@ -546,9 +632,7 @@ public class Stack_Of_Product {
 
                         if (attributes.length > 2 && !attributes[2].trim().equals("NULL")) {
                             try {
-                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-                                LocalDateTime datePurchase = LocalDateTime.parse(attributes[2].trim(), formatter);
-                                product.setDate_purchase(datePurchase);
+                                product.setDate_purchase(parseDate(attributes[2].trim()));
                             } catch (Exception e) {
                                 System.out.println("Error al parsear la fecha: " + attributes[2] + " - " + e.getMessage());
                             }
@@ -560,7 +644,18 @@ public class Stack_Of_Product {
                             product.setSelectedSize(null);
                         }
 
-                        pushProduct(stack, product);
+                        // Quinto campo: cantidad (las líneas antiguas sin cantidad valen 1)
+                        if (attributes.length > 4) {
+                            try {
+                                product.setQuantity(Math.max(1, Integer.parseInt(attributes[4].trim())));
+                            } catch (NumberFormatException e) {
+                                product.setQuantity(1);
+                            }
+                        }
+
+                        // El archivo es la fuente de verdad: se cargan todas sus líneas (la
+                        // misma camiseta puede estar en dos tallas o comprarse varias veces)
+                        stack.push(product);
                     } else {
                         System.out.println("Producto no encontrado en el catálogo: ID " + idProduct);
                     }
@@ -767,6 +862,285 @@ public class Stack_Of_Product {
         pushProduct(favoriteProducts, newProduct);
         saveFavoritesToFile();
         return true;
+    }
+
+    /**
+     * Copia de un producto del catálogo para guardarla en una pila (carrito,
+     * favoritos o historial) con los datos del cliente.
+     */
+    private Product copyForCustomer(Product product, String email, String size, int quantity) {
+        Product copy = new Product(product.getIdProduct(), product.getName(), product.getBrand(), product.getTeam(),
+                product.getLeague(), product.getSizes(), product.getPrice(), product.getDescription());
+        copy.setStock(product.getStock());
+        copy.setEmail_customer(email);
+        copy.setSelectedSize(size);
+        copy.setQuantity(quantity);
+        return copy;
+    }
+
+    private boolean sameCustomer(Product product, String email) {
+        return product.getEmail_customer() != null && email != null && product.getEmail_customer().equalsIgnoreCase(email);
+    }
+
+    private boolean sameSize(String a, String b) {
+        return a == null ? b == null : a.equalsIgnoreCase(b);
+    }
+
+    /**
+     * Línea del carrito de un cliente para un producto y una talla (null si no
+     * está).
+     */
+    public Product getCartItem(int idProduct, String email, String size) {
+        loadCartFromFile();
+        for (Product item : cartProducts) {
+            if (item.getIdProduct() == idProduct && sameCustomer(item, email) && sameSize(item.getSelectedSize(), size)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Líneas del carrito de un cliente, en el orden en que las agregó.
+     */
+    public List<Product> getCartItems(String email) {
+        loadCartFromFile();
+        List<Product> items = new ArrayList<>();
+        for (Product item : cartProducts) {
+            if (sameCustomer(item, email)) {
+                items.add(item);
+            }
+        }
+        return items;
+    }
+
+    /**
+     * Total de unidades en el carrito del cliente (para el contador).
+     */
+    public int getCartUnits(String email) {
+        int units = 0;
+        for (Product item : getCartItems(email)) {
+            units += item.getQuantity();
+        }
+        return units;
+    }
+
+    /**
+     * Unidades de un producto que el cliente ya tiene en el carrito (sumando
+     * todas las tallas). Sirve para no pasar del stock.
+     */
+    public int getUnitsInCart(int idProduct, String email) {
+        int units = 0;
+        for (Product item : getCartItems(email)) {
+            if (item.getIdProduct() == idProduct) {
+                units += item.getQuantity();
+            }
+        }
+        return units;
+    }
+
+    /**
+     * Agrega unidades de un producto en una talla al carrito. Si ya estaba en
+     * esa talla se suman. No deja pasar del stock disponible. Retorna las
+     * unidades que realmente se agregaron (0 si no había stock).
+     */
+    public int addItemToCart(Product product, String email, String size, int quantity) {
+        if (product == null || email == null || quantity <= 0) {
+            return 0;
+        }
+
+        Product current = loadProductFromCatalog(product.getIdProduct());
+        if (current == null || !current.isActive()) {
+            return 0;
+        }
+
+        int available = current.getStock() - getUnitsInCart(product.getIdProduct(), email);
+        int toAdd = Math.min(quantity, Math.max(0, available));
+        if (toAdd == 0) {
+            return 0;
+        }
+
+        Product item = getCartItem(product.getIdProduct(), email, size);
+        if (item != null) {
+            item.setQuantity(item.getQuantity() + toAdd);
+        } else {
+            cartProducts.push(copyForCustomer(current, email, size, toAdd));
+        }
+        saveCartToFile();
+        return toAdd;
+    }
+
+    /**
+     * Cambia la cantidad de una línea del carrito (entre 1 y el stock que
+     * queda, contando las otras tallas del mismo producto). Retorna la
+     * cantidad final.
+     */
+    public int updateCartItemQuantity(int idProduct, String email, String size, int quantity) {
+        // Primero lo que hay en el carrito de este producto (esto recarga la pila)...
+        int unitsInCart = getUnitsInCart(idProduct, email);
+        // ...y después la línea a cambiar, para modificar el objeto que se va a guardar
+        Product item = getCartItem(idProduct, email, size);
+        if (item == null) {
+            return 0;
+        }
+
+        Product current = loadProductFromCatalog(idProduct);
+        int stock = current == null ? 0 : current.getStock();
+        int otherSizes = unitsInCart - item.getQuantity();
+        int finalQuantity = Math.max(1, Math.min(quantity, stock - otherSizes));
+
+        item.setQuantity(finalQuantity);
+        saveCartToFile();
+        return finalQuantity;
+    }
+
+    public boolean removeCartItem(int idProduct, String email, String size) {
+        Product item = getCartItem(idProduct, email, size);
+        if (item == null) {
+            return false;
+        }
+        cartProducts.remove(item);
+        saveCartToFile();
+        return true;
+    }
+
+    public List<Product> getFavoriteItems(String email) {
+        loadFavoritesFromFile();
+        List<Product> items = new ArrayList<>();
+        for (Product item : favoriteProducts) {
+            if (sameCustomer(item, email)) {
+                items.add(item);
+            }
+        }
+        return items;
+    }
+
+    public boolean isFavorite(int idProduct, String email) {
+        for (Product item : getFavoriteItems(email)) {
+            if (item.getIdProduct() == idProduct) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Agrega o quita el producto de los favoritos del cliente (no toca el
+     * carrito). Retorna true si quedó en favoritos.
+     */
+    public boolean toggleFavorite(Product product, String email) {
+        if (product == null || email == null) {
+            return false;
+        }
+
+        loadFavoritesFromFile();
+        Product existing = null;
+        for (Product item : favoriteProducts) {
+            if (item.getIdProduct() == product.getIdProduct() && sameCustomer(item, email)) {
+                existing = item;
+                break;
+            }
+        }
+
+        if (existing != null) {
+            favoriteProducts.remove(existing);
+            saveFavoritesToFile();
+            return false;
+        }
+
+        favoriteProducts.push(copyForCustomer(product, email, null, 1));
+        saveFavoritesToFile();
+        return true;
+    }
+
+    /**
+     * Compra todo el carrito del cliente: valida que cada producto siga a la
+     * venta y tenga stock, descuenta el stock en su archivo, pasa cada línea
+     * al historial con la fecha actual y vacía el carrito. Si algo no se
+     * puede comprar no se compra nada y se retornan los problemas (lista
+     * vacía = compra hecha).
+     */
+    public List<String> checkout(String email) {
+        return checkout(email, 0, 0, null);
+    }
+
+    /**
+     * Igual que checkout(email), pero además guarda el descuento y el envío
+     * del pedido (en src/Files/OrderCharges) para que su total coincida con
+     * lo que pagó el cliente.
+     */
+    public List<String> checkout(String email, double discount, double shipping, String discountCode) {
+        List<String> problems = buyCart(email);
+        if (problems.isEmpty() && (discount > 0 || shipping > 0)) {
+            saveOrderCharges(email, lastCheckoutDate, discount, shipping, discountCode);
+        }
+        return problems;
+    }
+
+    // Fecha del último pedido comprado (la misma de sus líneas en el historial)
+    private LocalDateTime lastCheckoutDate;
+
+    private List<String> buyCart(String email) {
+        List<String> problems = new ArrayList<>();
+        List<Product> items = getCartItems(email);
+
+        if (items.isEmpty()) {
+            problems.add("El carrito está vacío.");
+            return problems;
+        }
+
+        // 1. Validar todo antes de comprar
+        Map<Integer, Integer> unitsByProduct = new LinkedHashMap<>();
+        for (Product item : items) {
+            unitsByProduct.merge(item.getIdProduct(), item.getQuantity(), Integer::sum);
+        }
+        Map<Integer, Product> current = new LinkedHashMap<>();
+        for (Map.Entry<Integer, Integer> entry : unitsByProduct.entrySet()) {
+            Product product = loadProductFromCatalog(entry.getKey());
+            if (product == null || !product.isActive()) {
+                problems.add("Un producto del carrito ya no está a la venta. Quítalo para continuar.");
+            } else if (product.getStock() < entry.getValue()) {
+                problems.add(product.getName() + ": solo quedan " + product.getStock() + " unidades y tienes " + entry.getValue() + " en el carrito.");
+            } else {
+                current.put(entry.getKey(), product);
+            }
+        }
+        if (!problems.isEmpty()) {
+            return problems;
+        }
+
+        // 2. Descontar stock
+        for (Map.Entry<Integer, Integer> entry : unitsByProduct.entrySet()) {
+            updateStockInCatalog(entry.getKey(), current.get(entry.getKey()).getStock() - entry.getValue());
+        }
+
+        // 3. Pasar al historial (misma fecha para todo el pedido) y vaciar el carrito
+        loadHistoryFromFile();
+        LocalDateTime now = LocalDateTime.now().withNano(0);
+        lastCheckoutDate = now;
+        for (Product item : items) {
+            Product purchase = copyForCustomer(current.get(item.getIdProduct()), email, item.getSelectedSize(), item.getQuantity());
+            purchase.setDate_purchase(now);
+            historyProducts.push(purchase);
+        }
+        saveHistoryToFile();
+
+        cartProducts.removeIf(item -> sameCustomer(item, email));
+        saveCartToFile();
+        return problems;
+    }
+
+    /**
+     * Pedidos de un cliente, del más reciente al más antiguo.
+     */
+    public List<Order> getOrdersByUser(String email) {
+        List<Order> orders = new ArrayList<>();
+        for (Order order : groupHistoryIntoOrders()) {
+            if (order.getEmail_customer() != null && order.getEmail_customer().equalsIgnoreCase(email)) {
+                orders.add(0, order);
+            }
+        }
+        return orders;
     }
 
     public boolean addToHistory(Product product, String email) {

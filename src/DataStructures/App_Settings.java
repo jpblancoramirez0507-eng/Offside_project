@@ -14,6 +14,10 @@ public class App_Settings {
     public static final String STOCK_BAJO = "stock_bajo";
     public static final String ULTIMAS_UNIDADES = "ultimas_unidades";
     public static final String INTERVALO_CARRUSEL = "intervalo_carrusel";
+    public static final String COSTO_ENVIO = "costo_envio";
+
+    // Límite del costo de envío que se puede configurar (en pesos)
+    public static final int MAXIMO_COSTO_ENVIO = 1000000;
 
     private final Map<String, Integer> valores = new LinkedHashMap<>();
 
@@ -34,6 +38,17 @@ public class App_Settings {
         return valores.get(INTERVALO_CARRUSEL);
     }
 
+    /**
+     * Costo del envío que se suma a cada pedido en el carrito (0 = gratis).
+     */
+    public int getCostoEnvio() {
+        return valores.get(COSTO_ENVIO);
+    }
+
+    public void setCostoEnvio(int valor) {
+        valores.put(COSTO_ENVIO, valor);
+    }
+
     public void setStockBajo(int valor) {
         valores.put(STOCK_BAJO, valor);
     }
@@ -50,6 +65,7 @@ public class App_Settings {
         valores.put(STOCK_BAJO, 20);
         valores.put(ULTIMAS_UNIDADES, 10);
         valores.put(INTERVALO_CARRUSEL, 4);
+        valores.put(COSTO_ENVIO, 12000);
     }
 
     private Path filePath() {
