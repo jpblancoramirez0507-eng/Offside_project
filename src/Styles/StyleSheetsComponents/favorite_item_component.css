@@ -1,0 +1,108 @@
+/* ==========================================================================
+   OFFSIDE - Card de "Mi lista de deseos" (mismo estilo que el card del catálogo)
+   ========================================================================== */
+
+.favorite-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 14;
+    -fx-border-color: #e3e8e6;
+    -fx-border-radius: 14;
+    -fx-cursor: hand;
+    -fx-font-family: "Segoe UI";
+}
+
+.favorite-card:hover {
+    -fx-border-color: #9fd3b6;
+    -fx-effect: dropshadow(gaussian, rgba(15, 44, 37, 0.10), 14, 0, 0, 4);
+}
+
+.favorite-image-area {
+    -fx-background-color: #f1f4f3;
+    -fx-background-radius: 10;
+}
+
+.favorite-image-placeholder {
+    -fx-fill: #d5ddd9;
+}
+
+.favorite-badge {
+    -fx-background-color: #d32f2f;
+    -fx-background-radius: 10;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-padding: 3 9 3 9;
+    -fx-text-fill: #ffffff;
+}
+
+/* Corazón lleno: al pulsarlo se quita de la lista */
+.favorite-heart-button {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 14;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.12), 4, 0, 0, 1);
+    -fx-font-size: 13px;
+    -fx-min-height: 28;
+    -fx-min-width: 28;
+    -fx-pref-height: 28;
+    -fx-pref-width: 28;
+    -fx-padding: 0;
+    -fx-text-fill: #d32f2f;
+}
+
+.favorite-heart-button:hover {
+    -fx-background-color: #fdecec;
+}
+
+.favorite-team {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #12241f;
+}
+
+.favorite-season {
+    -fx-font-size: 11px;
+    -fx-text-fill: #8a9893;
+}
+
+.favorite-league {
+    -fx-font-size: 11px;
+    -fx-text-fill: #5f6e69;
+}
+
+.league-dot {
+    -fx-fill: #8a9893;
+}
+
+.league-dot-premier    { -fx-fill: #3d195b; }
+.league-dot-laliga     { -fx-fill: #ee8707; }
+.league-dot-seriea     { -fx-fill: #008fd7; }
+.league-dot-bundesliga { -fx-fill: #d20515; }
+.league-dot-ligue1     { -fx-fill: #091c3e; }
+
+.favorite-price {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #12241f;
+}
+
+.favorite-add-button {
+    -fx-background-color: #0e4d3a;
+    -fx-background-radius: 16;
+    -fx-cursor: hand;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-min-height: 32;
+    -fx-min-width: 32;
+    -fx-pref-height: 32;
+    -fx-pref-width: 32;
+    -fx-padding: 0 0 2 0;
+    -fx-text-fill: #ffffff;
+}
+
+.favorite-add-button:hover {
+    -fx-background-color: #148a4f;
+}
+
+.favorite-add-button:disabled {
+    -fx-opacity: 0.35;
+}

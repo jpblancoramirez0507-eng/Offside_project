@@ -1,0 +1,96 @@
+/* ==========================================================================
+   OFFSIDE - Línea del carrito de compras
+   ========================================================================== */
+
+.cart-item {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent transparent #edf1ef transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-font-family: "Segoe UI";
+}
+
+.cart-item-image {
+    -fx-background-color: #f1f4f3;
+    -fx-background-radius: 10;
+}
+
+.cart-item-placeholder {
+    -fx-fill: #d5ddd9;
+}
+
+.cart-item-name {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #12241f;
+}
+
+.cart-item-muted {
+    -fx-font-size: 11px;
+    -fx-text-fill: #6b7a75;
+}
+
+.cart-item-subtotal {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #12241f;
+}
+
+.cart-item-favorite,
+.cart-item-favorite:visited {
+    -fx-border-color: transparent;
+    -fx-font-size: 11px;
+    -fx-padding: 0;
+    -fx-text-fill: #148a4f;
+    -fx-underline: false;
+}
+
+.cart-item-favorite:hover {
+    -fx-underline: true;
+}
+
+.cart-item-remove,
+.cart-item-remove:visited {
+    -fx-border-color: transparent;
+    -fx-font-size: 11px;
+    -fx-padding: 0;
+    -fx-text-fill: #d32f2f;
+    -fx-underline: false;
+}
+
+.cart-item-remove:hover {
+    -fx-underline: true;
+}
+
+/* Cantidad */
+.cart-stepper {
+    -fx-background-color: #dfe5e3, #ffffff;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 14, 13;
+    -fx-padding: 1 4 1 4;
+}
+
+.cart-stepper-button {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-pref-height: 24;
+    -fx-pref-width: 24;
+    -fx-padding: 0;
+    -fx-text-fill: #12241f;
+}
+
+.cart-stepper-button:hover {
+    -fx-background-color: #eef3f1;
+    -fx-background-radius: 12;
+}
+
+.cart-stepper-button:disabled {
+    -fx-opacity: 0.35;
+}
+
+.cart-stepper-value {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #12241f;
+}

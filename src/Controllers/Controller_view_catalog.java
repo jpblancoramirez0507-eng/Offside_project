@@ -4,6 +4,7 @@ import Controllers.ComponentsControllers.Product_ComponentController;
 import Controllers.ComponentsControllers.Product_Detail_ComponentController;
 import DataStructures.Data_Manager;
 import DataStructures.Stack_Of_Product;
+import Models.Nodes.Node_User;
 import Models.Product;
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,8 +36,10 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Popup;
+import javafx.util.Duration;
 
-public class Controller_view_catalog implements Initializable {
+public class Controller_view_catalog implements Initializable, Catalog_Navigator {
 
     // Contenedor raíz
     @FXML
@@ -56,6 +60,8 @@ public class Controller_view_catalog implements Initializable {
     private MenuButton mbMiCuenta;
     @FXML
     private MenuItem miCerrarSesion;
+    @FXML
+    private MenuItem miMiCuenta;
     @FXML
     private HBox hbCarrito;
     @FXML
@@ -151,6 +157,9 @@ public class Controller_view_catalog implements Initializable {
     private Node contenidoCatalogo;
     private Node filtrosCatalogo;
 
+    // Aviso flotante que se está mostrando
+    private Popup aviso;
+
     /**
      * Initializes the controller class.
      */
@@ -180,6 +189,13 @@ public class Controller_view_catalog implements Initializable {
         });
 
         aplicarFiltros();
+
+        // Barra superior: carrito, lista de deseos y mis compras
+        btnCarrito.setOnAction(e -> abrirCarrito());
+        btnFavoritos.setOnAction(e -> abrirFavoritos());
+        btnMisCompras.setOnAction(e -> abrirHistorial());
+        actualizarContadorCarrito();
+        actualizarFavoritosDeCards();
     }
 
     /**
@@ -198,6 +214,8 @@ public class Controller_view_catalog implements Initializable {
                 Product_ComponentController controladorCard = loader.getController();
                 controladorCard.setProducto(producto);
                 controladorCard.setAlSeleccionar(this::abrirDetalle);
+                controladorCard.setAlAgregarCarrito(p -> agregarAlCarrito(p, null, 1));
+                controladorCard.setAlAlternarFavorito(this::alternarFavorito);
 
                 cards.add(controladorCard);
                 nodosCards.add(card);
@@ -323,9 +341,37 @@ public class Controller_view_catalog implements Initializable {
         spContenido.setVvalue(0);
     }
 
+    // ---------------------------------------------------------------------
+    // Vistas del cliente: detalle, carrito, lista de deseos y mis compras
+    // ---------------------------------------------------------------------
+
     /**
-     * Muestra el detalle del producto (Product_Detail_Component) en lugar del
-     * catálogo. Se ocultan los filtros y se guardan para poder volver.
+     * Pone una vista en lugar del catálogo (se ocultan los filtros) y marca en
+     * la barra superior la opción correspondiente.
+     */
+    private void mostrarVista(Node vista, Button opcionActiva) {
+        if (vistaDetalle == null) {
+            contenidoCatalogo = paneRaiz.getCenter();
+            filtrosCatalogo = paneRaiz.getLeft();
+        }
+        vistaDetalle = vista;
+        paneRaiz.setLeft(null);
+        paneRaiz.setCenter(vista);
+        marcarOpcionBarra(opcionActiva);
+    }
+
+    private void marcarOpcionBarra(Button opcionActiva) {
+        for (Button boton : new Button[]{btnMisCompras, btnFavoritos, btnCarrito}) {
+            boton.getStyleClass().remove("topbar-logout-active");
+        }
+        mbMiCuenta.getStyleClass().remove("topbar-menu-active");
+        if (opcionActiva != null) {
+            opcionActiva.getStyleClass().add("topbar-logout-active");
+        }
+    }
+
+    /**
+     * Muestra el detalle del producto (Product_Detail_Component).
      */
     private void abrirDetalle(Product producto) {
         try {
@@ -334,30 +380,204 @@ public class Controller_view_catalog implements Initializable {
             Product_Detail_ComponentController controladorDetalle = loader.getController();
             controladorDetalle.setProducto(producto);
             controladorDetalle.setAlVolver(this::volverAlCatalogo);
-
-            if (vistaDetalle == null) {
-                contenidoCatalogo = paneRaiz.getCenter();
-                filtrosCatalogo = paneRaiz.getLeft();
-            }
-            vistaDetalle = detalle;
-            paneRaiz.setLeft(null);
-            paneRaiz.setCenter(detalle);
+            controladorDetalle.setNavegador(this);
+            mostrarVista(detalle, null);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void volverAlCatalogo() {
+    @Override
+    public void abrirProducto(Product producto) {
+        // Se usa el producto actual del catálogo (stock y precio al día)
+        Product actual = Data_Manager.getManager().getStacks_products().loadProductFromCatalog(producto.getIdProduct());
+        abrirDetalle(actual != null ? actual : producto);
+    }
+
+    @Override
+    public void volverAlCatalogo() {
         if (vistaDetalle == null) {
             return;
         }
         paneRaiz.setLeft(filtrosCatalogo);
         paneRaiz.setCenter(contenidoCatalogo);
         vistaDetalle = null;
+        marcarOpcionBarra(null);
+        // Por si cambió algo (favoritos o stock) mientras se veía otra vista
+        actualizarFavoritosDeCards();
+    }
+
+    @Override
+    public void abrirCarrito() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/View_cart.fxml"));
+            Parent vista = loader.load();
+            ((Controller_view_cart) loader.getController()).setNavegador(this);
+            mostrarVista(vista, btnCarrito);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void abrirFavoritos() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/View_favorites.fxml"));
+            Parent vista = loader.load();
+            ((Controller_view_favorites) loader.getController()).setNavegador(this);
+            mostrarVista(vista, btnFavoritos);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * "Mi cuenta" del cliente (desde el menú de la barra superior).
+     */
+    @FXML
+    private void onMiCuenta(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/View_account.fxml"));
+            Parent vista = loader.load();
+            ((Controller_view_account) loader.getController()).setNavegador(this);
+            mostrarVista(vista, null);
+            mbMiCuenta.getStyleClass().add("topbar-menu-active");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void abrirHistorial() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/View_purchase_history.fxml"));
+            Parent vista = loader.load();
+            ((Controller_view_purchase_history) loader.getController()).setNavegador(this);
+            mostrarVista(vista, btnMisCompras);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // ---------------------------------------------------------------------
+    // Carrito y favoritos desde el catálogo
+    // ---------------------------------------------------------------------
+
+    private String correoSesion() {
+        Node_User sesion = Data_Manager.getManager().getCurrent_user();
+        return sesion == null ? null : sesion.getUser().getEmail();
+    }
+
+    @Override
+    public int agregarAlCarrito(Product producto, String talla, int cantidad) {
+        String correo = correoSesion();
+        if (correo == null) {
+            mostrarAviso("Inicia sesión para usar el carrito.");
+            return 0;
+        }
+
+        String tallaFinal = talla != null ? talla : tallaPorDefecto(producto);
+        int agregadas = Data_Manager.getManager().getStacks_products().addItemToCart(producto, correo, tallaFinal, cantidad);
+        actualizarContadorCarrito();
+
+        if (agregadas == 0) {
+            mostrarAviso("No hay más stock de " + producto.getTeam() + " (ya tienes las unidades disponibles en tu carrito).");
+        } else if (agregadas < cantidad) {
+            mostrarAviso("Solo se agregaron " + agregadas + " unidades de " + producto.getTeam() + " por stock.");
+        } else {
+            mostrarAviso(producto.getTeam() + (tallaFinal == null ? "" : " (talla " + tallaFinal + ")") + " se agregó al carrito.");
+        }
+        return agregadas;
+    }
+
+    // Talla M si el producto la tiene; si no, la primera disponible
+    private String tallaPorDefecto(Product producto) {
+        if (producto.getSizes() == null || producto.getSizes().length == 0) {
+            return null;
+        }
+        for (String talla : producto.getSizes()) {
+            if (talla.equalsIgnoreCase("M")) {
+                return talla;
+            }
+        }
+        return producto.getSizes()[0];
+    }
+
+    private void alternarFavorito(Product producto) {
+        String correo = correoSesion();
+        if (correo == null) {
+            mostrarAviso("Inicia sesión para guardar favoritos.");
+            return;
+        }
+        boolean favorito = Data_Manager.getManager().getStacks_products().toggleFavorite(producto, correo);
+        actualizarFavoritosDeCards();
+        mostrarAviso(favorito ? producto.getTeam() + " se agregó a tu lista de deseos." : producto.getTeam() + " se quitó de tu lista de deseos.");
+    }
+
+    // Pinta el corazón lleno en los cards que están en favoritos
+    private void actualizarFavoritosDeCards() {
+        String correo = correoSesion();
+        Stack_Of_Product productos = Data_Manager.getManager().getStacks_products();
+        for (Product_ComponentController card : cards) {
+            card.setFavorito(correo != null && productos.isFavorite(card.getProducto().getIdProduct(), correo));
+        }
+    }
+
+    @Override
+    public void actualizarContadorCarrito() {
+        String correo = correoSesion();
+        int unidades = correo == null ? 0 : Data_Manager.getManager().getStacks_products().getCartUnits(correo);
+        lblContadorCarrito.setText(String.valueOf(unidades));
+    }
+
+    /**
+     * Muestra un aviso corto en la parte inferior de la ventana.
+     */
+    @Override
+    public void mostrarAviso(String mensaje) {
+        if (paneRaiz.getScene() == null || paneRaiz.getScene().getWindow() == null) {
+            return;
+        }
+        if (aviso != null) {
+            aviso.hide();
+        }
+
+        Label texto = new Label(mensaje);
+        texto.getStyleClass().add("catalog-toast");
+        texto.getStylesheets().addAll(paneRaiz.getStylesheets());
+
+        aviso = new Popup();
+        aviso.getContent().add(texto);
+        aviso.setAutoHide(true);
+
+        javafx.stage.Window ventana = paneRaiz.getScene().getWindow();
+        aviso.show(ventana);
+        aviso.setX(ventana.getX() + (ventana.getWidth() - texto.getWidth()) / 2);
+        aviso.setY(ventana.getY() + ventana.getHeight() - 90);
+
+        Popup mostrado = aviso;
+        PauseTransition espera = new PauseTransition(Duration.seconds(2.6));
+        espera.setOnFinished(e -> mostrado.hide());
+        espera.play();
+    }
+
+    @Override
+    public void recargarCatalogo() {
+        cards.clear();
+        nodosCards.clear();
+        cargarProductos();
+        actualizarCantidadesPorLiga();
+        aplicarFiltros();
+        actualizarFavoritosDeCards();
     }
 
     @FXML
     private void onCerrarSesion(ActionEvent event) {
+        cerrarSesion();
+    }
+
+    @Override
+    public void cerrarSesion() {
         // Regresa al inicio de sesión reutilizando la misma ventana
         Data_Manager.getManager().setCurrent_user(null);
         try {

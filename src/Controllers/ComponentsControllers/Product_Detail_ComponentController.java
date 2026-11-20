@@ -1,6 +1,8 @@
 package Controllers.ComponentsControllers;
 
+import Controllers.Catalog_Navigator;
 import DataStructures.Data_Manager;
+import Models.Nodes.Node_User;
 import Models.Product;
 import java.io.File;
 import java.net.URL;
@@ -135,6 +137,7 @@ public class Product_Detail_ComponentController implements Initializable {
     private Product producto;
     private int cantidad = 1;
     private Runnable alVolver;
+    private Catalog_Navigator navegador;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -392,17 +395,53 @@ public class Product_Detail_ComponentController implements Initializable {
 
     @FXML
     private void onAgregarCarrito(ActionEvent event) {
-        // TODO: agregar al carrito (getTallaSeleccionada() y getCantidad())
+        if (navegador != null && cantidad > 0) {
+            navegador.agregarAlCarrito(producto, getTallaSeleccionada(), cantidad);
+        }
+    }
+
+    /**
+     * Las acciones de carrito y favoritos las hace el catálogo.
+     */
+    public void setNavegador(Catalog_Navigator navegador) {
+        this.navegador = navegador;
+        actualizarBotonFavorito();
+    }
+
+    private String correoSesion() {
+        Node_User sesion = Data_Manager.getManager().getCurrent_user();
+        return sesion == null ? null : sesion.getUser().getEmail();
+    }
+
+    private void actualizarBotonFavorito() {
+        String correo = correoSesion();
+        boolean favorito = correo != null && producto != null && Data_Manager.getManager().getStacks_products().isFavorite(producto.getIdProduct(), correo);
+        btnAnadirFavoritos.setText(favorito ? "♥   En tu lista de deseos" : "♡   Añadir a favoritos");
     }
 
     @FXML
     private void onComprarAhora(ActionEvent event) {
-        // TODO: comprar ahora
+        // Agrega lo elegido y abre el carrito para finalizar la compra
+        if (navegador != null && cantidad > 0) {
+            navegador.agregarAlCarrito(producto, getTallaSeleccionada(), cantidad);
+            navegador.abrirCarrito();
+        }
     }
 
     @FXML
     private void onAnadirFavoritos(ActionEvent event) {
-        // TODO: agregar a favoritos
+        String correo = correoSesion();
+        if (correo == null) {
+            if (navegador != null) {
+                navegador.mostrarAviso("Inicia sesión para guardar favoritos.");
+            }
+            return;
+        }
+        boolean favorito = Data_Manager.getManager().getStacks_products().toggleFavorite(producto, correo);
+        actualizarBotonFavorito();
+        if (navegador != null) {
+            navegador.mostrarAviso(favorito ? producto.getTeam() + " se agregó a tu lista de deseos." : producto.getTeam() + " se quitó de tu lista de deseos.");
+        }
     }
 
 }

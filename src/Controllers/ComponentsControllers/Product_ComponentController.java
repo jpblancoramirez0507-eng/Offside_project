@@ -66,6 +66,8 @@ public class Product_ComponentController implements Initializable {
 
     private Product producto;
     private Consumer<Product> alSeleccionar;
+    private Consumer<Product> alAgregarCarrito;
+    private Consumer<Product> alAlternarFavorito;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -113,6 +115,7 @@ public class Product_ComponentController implements Initializable {
         lblPrecio.setText("$ " + formato.format(producto.getPrice()));
 
         mostrarEtiquetaStock(producto.getStock());
+        btnAgregarCarrito.setDisable(producto.getStock() <= 0);
         cargarImagen(producto.getIdProduct());
     }
 
@@ -194,14 +197,39 @@ public class Product_ComponentController implements Initializable {
         }
     }
 
+    /**
+     * Acción del botón "+" (el catálogo agrega una unidad al carrito).
+     */
+    public void setAlAgregarCarrito(Consumer<Product> alAgregarCarrito) {
+        this.alAgregarCarrito = alAgregarCarrito;
+    }
+
+    /**
+     * Acción del corazón (el catálogo agrega o quita de la lista de deseos).
+     */
+    public void setAlAlternarFavorito(Consumer<Product> alAlternarFavorito) {
+        this.alAlternarFavorito = alAlternarFavorito;
+    }
+
+    /**
+     * Corazón lleno si el producto está en la lista de deseos del cliente.
+     */
+    public void setFavorito(boolean favorito) {
+        btnFavorito.setText(favorito ? "♥" : "♡");
+    }
+
     @FXML
     private void onFavorito(ActionEvent event) {
-        // TODO: agregar a favoritos
+        if (alAlternarFavorito != null && producto != null) {
+            alAlternarFavorito.accept(producto);
+        }
     }
 
     @FXML
     private void onAgregarCarrito(ActionEvent event) {
-        // TODO: agregar al carrito
+        if (alAgregarCarrito != null && producto != null) {
+            alAgregarCarrito.accept(producto);
+        }
     }
 
 }
