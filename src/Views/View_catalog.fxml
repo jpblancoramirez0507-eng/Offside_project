@@ -7,6 +7,7 @@
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
@@ -60,6 +61,8 @@
             <Button fx:id="btnFavoritos" mnemonicParsing="false" styleClass="topbar-logout" text="♡  Favoritos" />
             <MenuButton fx:id="mbMiCuenta" mnemonicParsing="false" styleClass="topbar-menu" text="Mi cuenta">
                <items>
+                  <MenuItem fx:id="miMiCuenta" mnemonicParsing="false" onAction="#onMiCuenta" text="Mi perfil" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="miCerrarSesion" mnemonicParsing="false" onAction="#onCerrarSesion" text="Cerrar sesión" />
                </items>
             </MenuButton>

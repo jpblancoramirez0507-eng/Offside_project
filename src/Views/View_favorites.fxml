@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- "Mi lista de deseos": se muestra en el centro del catálogo (Controller_view_catalog) -->
+<ScrollPane fx:id="spFavoritos" fitToWidth="true" hbarPolicy="NEVER" styleClass="admin-scroll" stylesheets="@../Styles/Style_sheet.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Controller_view_favorites">
+   <content>
+      <VBox fx:id="vbFavoritos" spacing="16.0" styleClass="catalog-content">
+         <padding>
+            <Insets bottom="24.0" left="24.0" right="24.0" top="18.0" />
+         </padding>
+         <children>
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <VBox>
+                     <children>
+                        <Label fx:id="lblTitulo" styleClass="admin-title" text="Mi lista de deseos" />
+                        <Label fx:id="lblCantidad" styleClass="admin-subtitle" text="0 camisetas guardadas" />
+                     </children>
+                  </VBox>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button fx:id="btnAnadirTodo" mnemonicParsing="false" onAction="#onAnadirTodo" prefHeight="38.0" styleClass="admin-button-primary" text="Añadir todo al carrito" />
+               </children>
+            </HBox>
+
+            <!-- Aquí se agregan los cards (Favorite_Item_Component) desde el controlador -->
+            <FlowPane fx:id="fpFavoritos" hgap="16.0" vgap="16.0" />
+
+            <VBox fx:id="vbSinFavoritos" alignment="CENTER" managed="false" spacing="10.0" styleClass="admin-card, client-card" visible="false">
+               <padding>
+                  <Insets bottom="40.0" top="40.0" />
+               </padding>
+               <children>
+                  <Label styleClass="empty-title" text="Tu lista de deseos está vacía" />
+                  <Label styleClass="empty-state-small" text="Toca el ♡ de una camiseta en el catálogo para guardarla aquí." />
+                  <Button fx:id="btnIrCatalogo" mnemonicParsing="false" onAction="#onIrCatalogo" prefHeight="38.0" styleClass="admin-button-primary" text="Ver camisetas" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>

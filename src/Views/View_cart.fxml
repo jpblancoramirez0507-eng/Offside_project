@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- "Tu carrito": se muestra en el centro del catálogo (Controller_view_catalog) -->
+<ScrollPane fx:id="spCarrito" fitToWidth="true" hbarPolicy="NEVER" styleClass="admin-scroll" stylesheets="@../Styles/Style_sheet.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Controller_view_cart">
+   <content>
+      <VBox fx:id="vbCarrito" spacing="14.0" styleClass="catalog-content">
+         <padding>
+            <Insets bottom="24.0" left="24.0" right="24.0" top="18.0" />
+         </padding>
+         <children>
+            <Label fx:id="lblTitulo" styleClass="admin-title" text="Tu carrito (0)" />
+
+            <HBox fx:id="hbCuerpo" spacing="18.0">
+               <children>
+                  <!-- Líneas del carrito (Cart_Item_Component) -->
+                  <VBox fx:id="vbTarjetaItems" styleClass="admin-card, client-card" HBox.hgrow="ALWAYS">
+                     <children>
+                        <VBox fx:id="vbItems" />
+                        <VBox fx:id="vbCarritoVacio" alignment="CENTER" managed="false" spacing="10.0" visible="false">
+                           <padding>
+                              <Insets bottom="40.0" top="40.0" />
+                           </padding>
+                           <children>
+                              <Label styleClass="empty-title" text="Tu carrito está vacío" />
+                              <Label styleClass="empty-state-small" text="Agrega camisetas desde el catálogo o tu lista de deseos." />
+                              <Button fx:id="btnIrCatalogo" mnemonicParsing="false" onAction="#onSeguirComprando" prefHeight="38.0" styleClass="admin-button-primary" text="Ver camisetas" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+
+                  <!-- Resumen del pedido -->
+                  <VBox fx:id="vbResumen" maxHeight="-Infinity" minWidth="300.0" prefWidth="300.0" spacing="10.0" styleClass="admin-card, order-summary">
+                     <children>
+                        <Label styleClass="order-summary-title" text="Resumen del pedido" />
+                        <HBox>
+                           <VBox.margin>
+                              <Insets top="6.0" />
+                           </VBox.margin>
+                           <children>
+                              <Label styleClass="summary-label" text="Subtotal" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Label fx:id="lblSubtotalPedido" styleClass="summary-value-light" text="\$ 0" />
+                           </children>
+                        </HBox>
+                        <HBox fx:id="hbDescuento" managed="false" visible="false">
+                           <children>
+                              <Label fx:id="lblTituloDescuento" styleClass="summary-label" text="Descuento" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Label fx:id="lblDescuento" styleClass="summary-value-discount" text="- \$ 0" />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label styleClass="summary-label" text="Envío" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Label fx:id="lblEnvio" styleClass="summary-value-light" text="\$ 0" />
+                           </children>
+                        </HBox>
+                        <Separator styleClass="form-separator" />
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label styleClass="order-total-label" text="Total" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Label fx:id="lblTotal" styleClass="order-total-value" text="\$ 0" />
+                           </children>
+                        </HBox>
+
+                        <HBox spacing="8.0">
+                           <VBox.margin>
+                              <Insets top="6.0" />
+                           </VBox.margin>
+                           <children>
+                              <TextField fx:id="txtCodigoDescuento" prefHeight="36.0" promptText="Código de descuento" styleClass="admin-input" HBox.hgrow="ALWAYS" />
+                              <Button fx:id="btnAplicarCodigo" mnemonicParsing="false" onAction="#onAplicarCodigo" prefHeight="36.0" styleClass="apply-code-button" text="Aplicar" />
+                           </children>
+                        </HBox>
+                        <Label fx:id="lblMensajeCodigo" managed="false" visible="false" wrapText="true" />
+
+                        <Button fx:id="btnFinalizarCompra" defaultButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onFinalizarCompra" prefHeight="42.0" styleClass="admin-button-primary" text="Finalizar compra   →">
+                           <VBox.margin>
+                              <Insets top="4.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Label fx:id="lblMensajeCompra" managed="false" maxWidth="1.7976931348623157E308" visible="false" wrapText="true" />
+                        <Hyperlink fx:id="lnkSeguirComprando" maxWidth="1.7976931348623157E308" onAction="#onSeguirComprando" styleClass="continue-shopping-link" text="Seguir comprando" />
+                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="secure-info-box" text="Envíos a todo el país · Pago 100% seguro" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>
