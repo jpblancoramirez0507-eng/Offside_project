@@ -4,7 +4,7 @@ Equipo: Real Betis
 Liga: La Liga
 Tallas: XS, S, M, L, XL, XXL
 Precio: $529.254
-Stock: 26
+Stock: 25
 Descripcion: Camiseta Real Betis – Temporada 2026/2027
 
 Esta es la camiseta oficial auténtica del Real Betis para la temporada 2020-2021, para adultos. El Real Betis de La Liga y la Copa del Rey juegan sus partidos como local con esta camiseta en el Estadio Benito Villamarín. La camiseta del Real Betis es tradicionalmente de rayas verdes y blancas. Las mangas son verdes con ribetes blancos anchos. El cuello redondo es verde con una fina línea dorada. En el lado izquierdo del pecho se encuentra el escudo del Real Betis y en el otro, el de Kappa. Este logo de Kappa también está presente en ambos hombros. En el cuello se lee el texto #UnaPasionLlamadaBetis. Esta camiseta la usan jugadores como Fekir, Lainez, Joaquín, Guardado y otros.
