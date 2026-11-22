@@ -94,7 +94,7 @@ public class Controller_view_admin_orders implements Initializable {
         int unidades = 0;
         double ingresos = 0;
         for (Pedido pedido : pedidos) {
-            unidades += pedido.productos.size();
+            unidades += pedido.unidades;
             ingresos += pedido.total();
         }
 
@@ -164,11 +164,12 @@ public class Controller_view_admin_orders implements Initializable {
         vbProductos.setPrefWidth(260);
         for (Product producto : pedido.productos) {
             String talla = producto.getSelectedSize() == null ? "" : "  ·  Talla " + producto.getSelectedSize();
-            Label lblProducto = new Label(producto.getTeam() + talla);
+            String cantidad = producto.getQuantity() > 1 ? producto.getQuantity() + " × " : "";
+            Label lblProducto = new Label(cantidad + producto.getTeam() + talla);
             lblProducto.getStyleClass().add("cell-text");
             vbProductos.getChildren().add(lblProducto);
         }
-        Label lblUnidades = new Label(pedido.productos.size() + (pedido.productos.size() == 1 ? " camiseta" : " camisetas"));
+        Label lblUnidades = new Label(pedido.unidades + (pedido.unidades == 1 ? " camiseta" : " camisetas"));
         lblUnidades.getStyleClass().add("cell-muted");
         vbProductos.getChildren().add(lblUnidades);
 
@@ -192,6 +193,7 @@ public class Controller_view_admin_orders implements Initializable {
         private final String cliente;
         private final int numero;
         private final double total;
+        private final int unidades;
 
         private Pedido(Order orden, String cliente) {
             this.correo = orden.getEmail_customer();
@@ -199,6 +201,7 @@ public class Controller_view_admin_orders implements Initializable {
             this.productos = orden.getProducts();
             this.numero = orden.getNumber();
             this.total = orden.getTotal();
+            this.unidades = orden.getUnits();
             this.cliente = cliente;
         }
 

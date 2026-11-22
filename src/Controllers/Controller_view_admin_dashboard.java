@@ -140,7 +140,7 @@ public class Controller_view_admin_dashboard implements Initializable {
         LocalDateTime haceSieteDias = LocalDateTime.now().minusDays(7);
         for (Order pedido : pedidos) {
             ingresos += pedido.getTotal();
-            vendidas += pedido.getProducts().size();
+            vendidas += pedido.getUnits();
             if (pedido.getDate_purchase() != null && pedido.getDate_purchase().isAfter(haceSieteDias)) {
                 ultimaSemana++;
             }
@@ -186,7 +186,7 @@ public class Controller_view_admin_dashboard implements Initializable {
             Label lblNumero = etiqueta("#" + String.format("%04d", pedido.getNumber()), "cell-title");
             lblNumero.setMinWidth(64);
 
-            int cantidad = pedido.getProducts().size();
+            int cantidad = pedido.getUnits();
             String fecha = pedido.getDate_purchase() == null ? "Sin fecha" : FORMATO_FECHA_PEDIDO.format(pedido.getDate_purchase());
             VBox vbCliente = new VBox(1,
                     etiqueta(usuario == null ? "Usuario eliminado" : usuario.getUser().getName(), "cell-text"),

@@ -4,6 +4,7 @@ import DataStructures.Data_Manager;
 import DataStructures.Stack_Of_Product;
 import Models.Admin;
 import Models.Nodes.Node_User;
+import Models.Order;
 import Models.Product;
 import java.net.URL;
 import java.text.NumberFormat;
@@ -117,13 +118,19 @@ public class Controller_view_admin_reports implements Initializable {
 
     private void mostrarIndicadores(List<Product> catalogo, List<Product> ventas) {
         double ingresos = 0;
+        int vendidas = 0;
         Set<String> pedidos = new HashSet<>();
         Set<String> compradores = new HashSet<>();
         for (Product venta : ventas) {
-            ingresos += venta.getPrice();
-            String fecha = venta.getDate_purchase() == null ? "sin-fecha" : venta.getDate_purchase().truncatedTo(ChronoUnit.MINUTES).toString();
+            vendidas += venta.getQuantity();
+            String fecha = venta.getDate_purchase() == null ? "sin-fecha" : venta.getDate_purchase().truncatedTo(ChronoUnit.SECONDS).toString();
             pedidos.add(venta.getEmail_customer() + "|" + fecha);
             compradores.add(venta.getEmail_customer());
+        }
+
+        // Ingresos = lo que pagaron los clientes (camisetas - descuento + envío de cada pedido)
+        for (Order pedido : Data_Manager.getManager().getStacks_products().groupHistoryIntoOrders()) {
+            ingresos += pedido.getTotal();
         }
 
         int clientes = 0;
@@ -150,7 +157,7 @@ public class Controller_view_admin_reports implements Initializable {
         }
 
         lblIngresos.setText("$ " + formato.format(ingresos));
-        lblDetalleIngresos.setText(ventas.size() + (ventas.size() == 1 ? " camiseta vendida" : " camisetas vendidas"));
+        lblDetalleIngresos.setText(vendidas + (vendidas == 1 ? " camiseta vendida" : " camisetas vendidas"));
         lblPedidos.setText(String.valueOf(pedidos.size()));
         lblDetallePedidos.setText("Ticket promedio: $ " + formato.format(pedidos.isEmpty() ? 0 : ingresos / pedidos.size()));
         lblClientes.setText(String.valueOf(clientes));
@@ -167,7 +174,7 @@ public class Controller_view_admin_reports implements Initializable {
 
         Map<String, Integer> ventasPorLiga = contarPorLiga();
         for (Product venta : ventas) {
-            ventasPorLiga.merge(claveLiga(venta.getLeague()), 1, Integer::sum);
+            ventasPorLiga.merge(claveLiga(venta.getLeague()), venta.getQuantity(), Integer::sum);
         }
 
         chStockPorLiga.getData().setAll(serie(stockPorLiga, "#148a4f"));
@@ -250,7 +257,7 @@ public class Controller_view_admin_reports implements Initializable {
         Map<Integer, Integer> unidades = new HashMap<>();
         Map<Integer, Product> productos = new HashMap<>();
         for (Product venta : ventas) {
-            unidades.merge(venta.getIdProduct(), 1, Integer::sum);
+            unidades.merge(venta.getIdProduct(), venta.getQuantity(), Integer::sum);
             productos.put(venta.getIdProduct(), venta);
         }
 

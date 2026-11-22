@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <!-- Sección "Configuración" del panel del administrador (Controller_view_admin la pone en el centro) -->
-<ScrollPane fx:id="spConfiguracion" fitToWidth="true" hbarPolicy="NEVER" styleClass="admin-scroll" stylesheets="@../Styles/Style_sheet.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Controller_view_admin_settings">
+<ScrollPane fx:id="spConfiguracion" fitToWidth="true" hbarPolicy="NEVER" styleClass="admin-scroll" stylesheets="@../Styles/Style_sheet.css, @../Styles/StyleSheetsComponents/admin_product_component.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Controller_view_admin_settings">
    <content>
       <VBox fx:id="vbConfiguracion" spacing="14.0" styleClass="admin-content">
          <padding>
@@ -58,6 +58,14 @@
                         </Label>
                         <TextField fx:id="txtIntervaloCarrusel" prefHeight="38.0" styleClass="admin-input" />
                         <Label styleClass="settings-field-hint" text="Cada cuántos segundos rotan las camisetas del login y el registro (entre 2 y 60)." wrapText="true" />
+
+                        <Label styleClass="form-label" text="Costo del envío (COP)">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="txtCostoEnvio" prefHeight="38.0" promptText="12.000" styleClass="admin-input" />
+                        <Label styleClass="settings-field-hint" text="Se suma a cada pedido en el carrito. Escribe 0 para que el envío sea gratis." wrapText="true" />
 
                         <Label fx:id="lblMensajeTienda" managed="false" maxWidth="1.7976931348623157E308" visible="false" wrapText="true">
                            <VBox.margin>
@@ -139,6 +147,56 @@
                   </VBox>
                </children>
             </HBox>
+
+            <!-- ===== CÓDIGOS DE DESCUENTO ===== -->
+            <VBox fx:id="vbCodigos" spacing="6.0" styleClass="settings-card">
+               <children>
+                  <Label styleClass="settings-card-title" text="Códigos de descuento" />
+                  <Label styleClass="settings-field-hint" text="Los clientes los aplican en el carrito. El descuento es un porcentaje del subtotal de las camisetas (el envío no tiene descuento)." wrapText="true" />
+
+                  <!-- Nuevo código -->
+                  <HBox fx:id="hbNuevoCodigo" alignment="BOTTOM_LEFT" spacing="12.0">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <children>
+                        <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label styleClass="form-label" text="Código" />
+                              <TextField fx:id="txtNuevoCodigo" prefHeight="38.0" promptText="Ej: NAVIDAD15" styleClass="admin-input" />
+                           </children>
+                        </VBox>
+                        <VBox prefWidth="160.0" spacing="6.0">
+                           <children>
+                              <Label styleClass="form-label" text="Descuento (%)" />
+                              <TextField fx:id="txtNuevoPorcentaje" prefHeight="38.0" promptText="1 a 90" styleClass="admin-input" />
+                           </children>
+                        </VBox>
+                        <Button fx:id="btnAgregarCodigo" mnemonicParsing="false" onAction="#onAgregarCodigo" prefHeight="38.0" prefWidth="160.0" styleClass="admin-button-primary" text="+   Crear código" />
+                     </children>
+                  </HBox>
+                  <Label fx:id="lblMensajeCodigos" managed="false" maxWidth="1.7976931348623157E308" visible="false" wrapText="true">
+                     <VBox.margin>
+                        <Insets top="6.0" />
+                     </VBox.margin>
+                  </Label>
+
+                  <!-- Lista de códigos (se crea desde el controlador) -->
+                  <HBox alignment="CENTER_LEFT" styleClass="codes-header">
+                     <VBox.margin>
+                        <Insets top="12.0" />
+                     </VBox.margin>
+                     <children>
+                        <Label maxWidth="1.7976931348623157E308" minWidth="0.0" styleClass="admin-table-header-label" text="Código" HBox.hgrow="ALWAYS" />
+                        <Label minWidth="110.0" prefWidth="110.0" styleClass="admin-table-header-label" text="Descuento" />
+                        <Label minWidth="110.0" prefWidth="110.0" styleClass="admin-table-header-label" text="Usos" />
+                        <Label minWidth="110.0" prefWidth="110.0" styleClass="admin-table-header-label" text="Estado" />
+                        <Label minWidth="200.0" prefWidth="200.0" styleClass="admin-table-header-label" text="Acciones" />
+                     </children>
+                  </HBox>
+                  <VBox fx:id="vbListaCodigos" />
+               </children>
+            </VBox>
          </children>
       </VBox>
    </content>
