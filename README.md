@@ -1,5 +1,10 @@
 # OFFSIDE — Tienda de camisetas de fútbol
 
+## Integrantes
+* **uan Pablo Blanco Ramírez**
+* **Diego Alejandro Garzón Villegas**
+* **Samuel Sáncehz Sánchez**
+
 Aplicación de escritorio en **JavaFX** para vender camisetas de los equipos de las cinco grandes ligas de Europa (Premier League, La Liga, Serie A, Bundesliga y Ligue 1).
 
 Tiene dos tipos de usuario:
@@ -22,7 +27,6 @@ Tiene dos tipos de usuario:
   - [5. Vistas, controladores y componentes](#5-vistas-controladores-y-componentes)
   - [6. Cómo extender la aplicación](#6-cómo-extender-la-aplicación)
   - [7. Convenciones](#7-convenciones)
-  - [8. Limitaciones conocidas](#8-limitaciones-conocidas)
 
 ---
 
