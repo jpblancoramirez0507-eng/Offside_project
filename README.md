@@ -1,7 +1,7 @@
 # OFFSIDE — Tienda de camisetas de fútbol
 
 ## Integrantes
-* **uan Pablo Blanco Ramírez**
+* **Juan Pablo Blanco Ramírez**
 * **Diego Alejandro Garzón Villegas**
 * **Samuel Sáncehz Sánchez**
 
