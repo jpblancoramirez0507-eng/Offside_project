@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
@@ -12,17 +13,16 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.shape.SVGPath?>
 
 <BorderPane fx:id="paneRaiz" prefHeight="700.0" prefWidth="1280.0" styleClass="catalog-root" stylesheets="@../Styles/Style_sheet.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Controller_view_catalog">
 
@@ -245,22 +245,26 @@
                            </children>
                         </VBox>
                         <Region HBox.hgrow="ALWAYS" />
-                        <HBox fx:id="hbBannerCamisetas" alignment="CENTER" fillHeight="false" spacing="-10.0">
+                        <!-- Camisetas fijas del banner: imágenes reales (PNG con fondo transparente) de src/Images/ProductImages.
+                             El viewport recorta el margen transparente de cada imagen para que se vean del mismo tamaño. -->
+                        <HBox fx:id="hbBannerCamisetas" alignment="CENTER" fillHeight="false" spacing="10.0">
                            <children>
-                              <Pane fx:id="paneBannerCamisetaBarcelona" prefHeight="108.0" prefWidth="106.0">
-                                 <children>
-                                    <SVGPath content="M34,0 Q53,13 72,0 L106,18 L95,41 L80,34 L80,108 L26,108 L26,34 L11,41 L0,18 Z" styleClass="shirt-body, shirt-barcelona" />
-                                    <Rectangle height="82.0" layoutX="32.0" layoutY="25.0" styleClass="stripe-barcelona" width="10.0" />
-                                    <Rectangle height="82.0" layoutX="48.0" layoutY="25.0" styleClass="stripe-barcelona" width="10.0" />
-                                    <Rectangle height="82.0" layoutX="64.0" layoutY="25.0" styleClass="stripe-barcelona" width="10.0" />
-                                 </children>
-                              </Pane>
-                              <Pane fx:id="paneBannerCamisetaRealMadrid" prefHeight="108.0" prefWidth="106.0">
-                                 <children>
-                                    <SVGPath content="M34,0 Q53,13 72,0 L106,18 L95,41 L80,34 L80,108 L26,108 L26,34 L11,41 L0,18 Z" styleClass="shirt-body, shirt-juventus" />
-                                    <Label alignment="CENTER" layoutX="26.0" layoutY="44.0" prefWidth="54.0" styleClass="shirt-text-dark" text="RMA" />
-                                 </children>
-                              </Pane>
+                              <ImageView fx:id="imgBannerCamisetaBarcelona" fitHeight="124.0" fitWidth="118.0" pickOnBounds="true" preserveRatio="true" styleClass="login-shirt-image">
+                                 <viewport>
+                                    <Rectangle2D height="773.0" minX="125.0" minY="21.0" width="566.0" />
+                                 </viewport>
+                                 <image>
+                                    <Image url="@../Images/ProductImages/0005%20-%20Barcelona%20-%201.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="imgBannerCamisetaRealMadrid" fitHeight="124.0" fitWidth="118.0" pickOnBounds="true" preserveRatio="true" styleClass="login-shirt-image">
+                                 <viewport>
+                                    <Rectangle2D height="880.0" minX="137.0" minY="40.0" width="686.0" />
+                                 </viewport>
+                                 <image>
+                                    <Image url="@../Images/ProductImages/0004%20-%20Real%20Madrid%20-%201.png" />
+                                 </image>
+                              </ImageView>
                            </children>
                         </HBox>
                      </children>
